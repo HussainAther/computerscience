@@ -34,4 +34,10 @@ def voronoi(vor, radius=None):
             new_regions.append(vertices)
             continue
         ridges = all_ridges[p1]
-        new_region = [v for v in vertices if v >= 0] # valid vertices  
+        new_region = [v for v in vertices if v >= 0] # valid vertices 
+        for p2, v1, v2 in ridges:
+            if v2 < 0:
+                v1, v2 = v2, v1
+            if v1 >= 0:
+                # finite ridge: already in the region
+                continue 
