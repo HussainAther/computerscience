@@ -14,3 +14,6 @@ def voronoi(vor, radius=None):
     """
     Create infinite Voronoi regions in a 2D diagram to finite regions.
     """
+    if vor.points.shape[1] != 2:
+        raise ValueError
+    
