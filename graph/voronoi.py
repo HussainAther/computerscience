@@ -31,4 +31,7 @@ def voronoi(vor, radius=None):
         vertices = vor.regions[region]
         if all(v >= 0 for v in vertices):
             # finite region
-            new_regions.append(vertices)  
+            new_regions.append(vertices)
+            continue
+        ridges = all_ridges[p1]
+        new_region = [v for v in vertices if v >= 0] # valid vertices  
