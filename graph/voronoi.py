@@ -16,8 +16,8 @@ def voronoi(vor, radius=None):
     """
     if vor.points.shape[1] != 2:
         raise ValueError
-    regions = []
-    vertices = vor.vertices.tolist()
+    new_regions = []
+    new_vertices = vor.vertices.tolist()
     center = vor.points.mean(axis=0)
     if radius is None:
         radius = vor.points.ptp().max()
@@ -29,3 +29,6 @@ def voronoi(vor, radius=None):
     # reconstruct infinite regions
     for p1, region in enumerate(vor.point_region):
         vertices = vor.regions[region]
+        if all(v >= 0 for v in vertices):
+            # finite region
+            new_regions.append(vertices)  
