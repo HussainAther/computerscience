@@ -16,4 +16,7 @@ def voronoi(vor, radius=None):
     """
     if vor.points.shape[1] != 2:
         raise ValueError
+    regions = []
+    vertices = vor.vertices.tolist()
+    center = vor.points.mean(axis=0)
     
