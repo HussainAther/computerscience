@@ -26,3 +26,6 @@ def voronoi(vor, radius=None):
     for (p1, p2), (v1, v2) in zip(vor.ridge_points, vor.ridge_vertices):
         ridges.setdefault(p1, []).append((p2, v1, v2))
         ridges.setdefault(p2, []).append((p1, v1, v2))
+    # reconstruct infinite regions
+    for p1, region in enumerate(vor.point_region):
+        vertices = vor.regions[region]
