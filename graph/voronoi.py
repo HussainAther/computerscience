@@ -23,4 +23,6 @@ def voronoi(vor, radius=None):
         radius = vor.points.ptp().max()
     # use all ridges when constructing a map
     ridges = {}
-
+    for (p1, p2), (v1, v2) in zip(vor.ridge_points, vor.ridge_vertices):
+        ridges.setdefault(p1, []).append((p2, v1, v2))
+        ridges.setdefault(p2, []).append((p1, v1, v2))
