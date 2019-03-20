@@ -40,4 +40,10 @@ def voronoi(vor, radius=None):
                 v1, v2 = v2, v1
             if v1 >= 0:
                 # finite ridge: already in the region
-                continue 
+                continue
+            # compute the missing endpoint of an infinite ridge
+            t = vor.points[p2] - vor.points[p1] # tangent
+            t /= np.linalg.norm(t) # normalize
+            n = np.array([-t[1], t[0]]) 
+            midpoint = vor.points[[p1, p2]].mean(axis=0
+            direction = np.sign(np.dot(midpoint - center, n)) * n
