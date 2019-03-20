@@ -19,4 +19,8 @@ def voronoi(vor, radius=None):
     regions = []
     vertices = vor.vertices.tolist()
     center = vor.points.mean(axis=0)
-    
+    if radius is None:
+        radius = vor.points.ptp().max()
+    # use all ridges when constructing a map
+    ridges = {}
+
