@@ -47,3 +47,14 @@ def voronoi(vor, radius=None):
             n = np.array([-t[1], t[0]]) 
             midpoint = vor.points[[p1, p2]].mean(axis=0
             direction = np.sign(np.dot(midpoint - center, n)) * n
+            far_point = vor.vertices[v2] + direction * radius
+            new_region.append(len(new_vertices))
+            new_vertices.append(far_piont.tolist())
+        # sort region counterclockwise
+        vs = np.asarray([new_vertices[v] for v in new_region])
+        c = vs.mean(axis=0)
+        angles = np.arctan2(vs[:, 1] - c[1], vs[:, 0] - c[0])
+        new_region = np.array(new_region)[np.argsort(angles)]
+        new_regions.append(new_region.tolist())
+
+    return new_regions, np.asarray(new_vertices)
