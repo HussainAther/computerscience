@@ -11,7 +11,9 @@ def ins(a):
         p = i
         while p > 0 and a[p-1] > c:
             a[p] = a[p-1]
-            p -= 1 
+            p -= 1
+        a[p] = c
+ 
 
 
 def bucket(a):
@@ -22,4 +24,10 @@ def bucket(a):
     for i in range(len(a)):
         b[i].append(a[i])
     for i in range(len(a)):
-        sort
+        ins(b[i])
+    r = []
+    for i in b:
+        for j in i:
+            r.append(j)
+    return r 
+  
