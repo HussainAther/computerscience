@@ -4,12 +4,12 @@ a finite-automatan-matcher (we can call KMP-Matcher) that calls the
 auxiliary procedure compute-prefix-function (cpf) to compute pi.
 """
 
-def cpf(pattern):
+def cpf(a):
     """
-    Compute-prefix-function (cmp) 
+    Compute-prefix-function (cpf) to calclate pi as a list. 
     """
-    P = list(pattern)
-    m = len(pattern)
+    P = list(a)
+    m = len(a)
     a = [0] * m
     k = 0
     for q in range(2, m + 1):
@@ -19,7 +19,6 @@ def cpf(pattern):
             k += 1
         a[q - 1] = k
     return a
-
 def kmp(t, p):
     """
     Match text t against p using the Knuth-Morris-Pratt matching algorithm.
@@ -27,4 +26,15 @@ def kmp(t, p):
     n = len(t)
     m = len(p)
     pi = cpf(p)
-    q = 0  
+    q = 0 # number of matched characters
+    for i in range(n): # scan the text 
+        while q > 0 and p[q+1] != t[i]:
+            q = pi[q]
+        if p[q+1] == t[i]:
+            q += 1
+        if q == m:
+            print("Shifted pattern %" % (i-m))
+            q = pi[q]
+     
+
+         
