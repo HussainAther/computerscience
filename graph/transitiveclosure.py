@@ -7,14 +7,17 @@ of the graph G is G* = (V, E*) where E* = {(i, j): there is a path from vertex i
 def tc(g):
     """
     Compute the matrix T by the Transitive-Closure procedure on a sample graph g that is a tuple
-    of (vertices, edges).
+    of two dimension.s
     """
-    r =[i[:] for i in g]
-    v = g[0]
-    e = g[1]
+    r = [i[:] for i in g]
     for k in range(v):
         for i in range(v):  # Pick all vertices as source one by one
             for j in range(v):
                 r[i][j] = r[i][j] or (r[i][k] and r[k][j])
     return r
 
+
+g = [[1, 1, 0, 1],
+    [0, 1, 1, 0],
+    [0, 0, 1, 1],
+    [0, 0, 0, 1]]
