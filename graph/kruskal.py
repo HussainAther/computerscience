@@ -12,5 +12,19 @@ def kruskal(g, w)
     i = 0 # sorted edges  
     e = 0 
     g = sorted(g, key=lambda i:w[i]) # sort by weight
- 
-    
+    parent = []
+    rank = []
+    for n in g[1]: # for each vertex node
+         parent.append(n)
+         rank.append(0)
+    while e < v[1]-1:
+         u, v, w = g[0][i]
+         i += 1
+         x = find(parent, u)
+         y = find(parent, v)
+         if x != y:
+             e += 1
+             result.append([u, v, w])
+             union(parent, rank, x, y)
+    for u, v, w, in result:
+         print("%d %d %d" % (u, v, w))
