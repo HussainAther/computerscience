@@ -20,4 +20,7 @@ def cpf(pattern):
         a[q - 1] = k
     return a
 
-def kmp(
+def kmp(t, p):
+    """
+    Match text t against p using the Knuth-Morris-Pratt matching algorithm.
+    """
