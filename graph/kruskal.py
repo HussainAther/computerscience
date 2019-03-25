@@ -8,6 +8,15 @@ def union(p, r, x, y):
     """
     Return the union of two sets x and y with rank r and parents p
     """
+    xr = find(p, x)
+    yr = find(p, y)
+    if r[xr] < r[yr]: # attach the smaller rank tree under the root of the higher rank tree
+        p[xr] = yr
+    elif r[xr] > r[yr]:
+        p[yr] = xr
+    else:
+        p[yr] = xr
+        r[xr] += 1
 
 def kruskal(g, w)
     """
