@@ -15,3 +15,7 @@ def tc(g):
     n = abs(v)
     s = (n,n)
     T = np.zeros(s) # output matrix T
+    for i in range(n):
+        for j in range(n):
+            
+
