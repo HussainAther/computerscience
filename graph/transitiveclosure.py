@@ -13,4 +13,5 @@ def tc(g):
     v = g[0] # vertices array
     e = g[1] # edges array
     n = abs(v)
-    
+    s = (n,n)
+    T = np.zeros(s) # output matrix T
