@@ -19,4 +19,10 @@ def fw(g):
     """
     Input a graph g with the format as given above  
     """
-    d = map(lambda i : lambda j: j, i) g)
+    d = map(lambda i : lambda j: j, i) g) # output result
+
+    for k in range(v): # for each vertex
+         for i in range(v):
+              for j in range(v):
+                   d[i][j] = min(d[i][j], d[i][k] + d[k][j]) # get the minimum of the potential paths
+    return d
