@@ -10,4 +10,7 @@ def tc(g):
     Compute the matrix T by the Transitive-Closure procedure on a sample graph g that is a tuple
     of (vertices, edges).
     """
-    n = 
+    v = g[0] # vertices array
+    e = g[1] # edges array
+    n = abs(v)
+    
