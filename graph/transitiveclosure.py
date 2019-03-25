@@ -1,8 +1,7 @@
-
 """
 Given a directed graph (V, E) with vertex set V = {1, 2,...n} we might want to determine
 whether G contains a path from i to j for all vertex pairs i, j in the set V. Transitive closure
-of the graph G is G* = (V, E*) where E* = {(i, j): there is ap ath from vertex i to vertex j in G}
+of the graph G is G* = (V, E*) where E* = {(i, j): there is a path from vertex i to vertex j in G}
 """
 
 def tc(g):
@@ -10,19 +9,12 @@ def tc(g):
     Compute the matrix T by the Transitive-Closure procedure on a sample graph g that is a tuple
     of (vertices, edges).
     """
-    v = g[0] # vertices array
-    e = g[1] # edges array
-    n = abs(v)
-    s = (n,n)
-    T = np.zeros(s) # output matrix T
-    for i in range(n):
-        for j in range(n):
-            if i == j or (i, j) in e:
-                T[i][j] = 1
-    for k in range(n):
-        Tk = np.zeros(s) # create a new matrix Tk
-        for i in range(n):
-            for j in range(n):
-                
-
+    r =[i[:] for i in g]
+    v = g[0]
+    e = g[1]
+    for k in range(v):
+        for i in range(v):  # Pick all vertices as source one by one
+            for j in range(v):
+                r[i][j] = r[i][j] or (r[i][k] and r[k][j])
+    return r
 
