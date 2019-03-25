@@ -24,3 +24,7 @@ def kmp(t, p):
     """
     Match text t against p using the Knuth-Morris-Pratt matching algorithm.
     """
+    n = len(t)
+    m = len(p)
+    pi = cpf(p)
+    q = 0  
