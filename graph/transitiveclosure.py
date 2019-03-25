@@ -17,5 +17,8 @@ def tc(g):
     T = np.zeros(s) # output matrix T
     for i in range(n):
         for j in range(n):
-            
+            if i == j or (i, j) in e:
+                T[i][j] = 1
+    for k in range(n):
+        Tk = np.zeros(k)
 
