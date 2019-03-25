@@ -4,6 +4,11 @@ Kruskal's (Kruskal) algorithm finds a safe edge to add to the growing
 forest by finding an edge of least weight.
 """
 
+def union(p, r, x, y):
+    """
+    Return the union of two sets x and y with rank r and parents p
+    """
+
 def kruskal(g, w)
     """
     For graph g (tuple of vertices and edges) and weights w.
