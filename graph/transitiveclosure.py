@@ -20,5 +20,9 @@ def tc(g):
             if i == j or (i, j) in e:
                 T[i][j] = 1
     for k in range(n):
-        Tk = np.zeros(k)
+        Tk = np.zeros(s) # create a new matrix Tk
+        for i in range(n):
+            for j in range(n):
+                
+
 
