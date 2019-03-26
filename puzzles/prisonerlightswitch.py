@@ -1,4 +1,4 @@
-
+import random
 
 """
 One hundred prisoners are given the following challenge which if they solve will set them free. 
@@ -11,3 +11,5 @@ before any prisoners enter the room. The goal is for one of the prisoners to kno
 that all the prisoners have visited the room with the light switch. As soon as one prisoner 
 can deduce that with certainty, he can announce it and the prisoners win the challenge.
 """
+
+switch = False # light switch Boolean
