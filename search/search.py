@@ -3,6 +3,11 @@ try:
 except NameError:
     from sets import Set as set, ImmutableSet as frozenset
 
+"""
+Search a graph for a node using a specific heuristic.
+"""
+
+
 NAME="NAME"
 NODE1="NODE1"
 NODE2="NODE2"
