@@ -16,6 +16,9 @@ switch = False # light switch Boolean
 
 class Prisoner(object):
     visited = False
+   
     def visit(self):
         self.visited True
         return False
+    
+class 
