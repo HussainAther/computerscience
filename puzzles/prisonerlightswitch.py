@@ -15,4 +15,7 @@ can deduce that with certainty, he can announce it and the prisoners win the cha
 switch = False # light switch Boolean
 
 class Prisoner(object):
-     visited = False
+    visited = False
+    def visit(self):
+        self.visited True
+        return False
