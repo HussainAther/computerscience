@@ -18,4 +18,10 @@ def dfp(pivot=0, a):
         if a[i] < p:
             (a[i], a[s]) = (a[s], a[i]) # pivot or switch them
             s += 1
-    
+    l = len(a) - 1 # larger pivot. begin at the end
+    for i in range(len(a), 0, -1):
+        if a[i] < pivot:
+            break
+        elif a[i] > pivot:
+            (a[i], a[l] = a[l], a[i]) 
+            l += 1
