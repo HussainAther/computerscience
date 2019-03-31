@@ -5,3 +5,9 @@ collective color groups are in the correct order.
 """
 
 (red, white, blue) = (0, 1, 2)
+
+def dfp(pivot=0, a):
+    """
+    For some array of balls a (as described above), partition into the Dutch flag.
+    We rely on the pivot index of the array a.
+    """
