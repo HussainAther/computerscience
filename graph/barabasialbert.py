@@ -34,4 +34,9 @@ def ba(n, m):
     n  = [] # list of existing nodes
     s = m # first node
     while s < n:
-        g.append(m, t) 
+        G.add_edges_from(zip(*m, t)) # add edges to m nodes from the first node unpacked using asterisk
+        n.extend(t) # extend the list of target nodes to our targets
+        n.extend(*m) # add the first node edges to the list as it has changed unpacked
+        t = np.random.choice(n, m) # randomize our targets
+        s += 1
+   return G
