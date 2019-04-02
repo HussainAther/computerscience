@@ -1,7 +1,7 @@
 import numpy as np
 
 """
-We use the Barabasi-Albert model (BA barabasi albert) to explain power-law degree distributino
+We use the Barabasi-Albert model (BA barabasi albert Barabási) to explain power-law degree distributino
 of networks by considering growth and preferential attachment. The BA algorithm in the BA model
 starts (growth) with a small number m of connected nodes and, at every step, adds a new node with n<m edges
 that link the new node ot m different nodes already present in the network. Then it performs preferential
@@ -12,3 +12,12 @@ P ~ ki / summation for all i of ki
 
 in which ki is the degree of node i.
 """
+
+def ba(n, m):
+    """
+    Return a random graph according to the Barabási-Albert Attachment model for n 
+    number of nodes and m number of edges to attach.
+    """
+    np.random.seed(1234) # or change this whatever
+    t = list(range(m) # target nodes for new edges
+    n  = [] # list of existing nodes
