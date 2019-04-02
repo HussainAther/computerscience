@@ -29,7 +29,7 @@ def ba(n, m):
     number of nodes and m number of edges to attach.
     """
     np.random.seed(1234) # or change this whatever
-    g = []
+    G = nx.empty_graph(m)
     t = list(range(m) # target nodes for new edges
     n  = [] # list of existing nodes
     s = m # first node
