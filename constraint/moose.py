@@ -1,13 +1,15 @@
-#!/usr/bin/env python
-"""
-Implementation of the Moose/Obama/Biden/McCain/Palin problem
-from Quiz 2 of 2008.
-"""
 import sys
 from csp import CSP, Variable, BinaryConstraint, solve_csp_problem, \
     basic_constraint_checker
 
+"""
+Implementation of the Moose/Obama/Biden/McCain/Palin problem
+"""
+
 def moose_csp_problem():
+    """
+    Constraint satisfaction problem solver for Moose, Obama, Biden, McCain, and Palin.
+    """
     constraints = []
 
     # We start with the reduced domain.
