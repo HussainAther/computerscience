@@ -13,6 +13,13 @@ except NameError:
         new_lst.sort()
         return new_lst
 
+"""
+Forward chaining (or forward reasoning) is one of the two main methods of reasoning when
+using an inference engine and can be described logically as repeated application of modus ponens.
+Forward chaining is a popular implementation strategy for expert systems, business and production
+rule systems. The opposite of forward chaining is backward chaining.
+"""
+
 def forward_chain(rules, data, apply_only_one=False, verbose=False):
     """
     Apply a list of IF-expressions (rules) through a set of data
@@ -300,15 +307,19 @@ class AND(RuleExpression):
 
             
 class OR(RuleExpression):
-    """A disjunction of patterns, one of which must match."""
+    """
+    A disjunction of patterns, one of which must match.
+    """
     def test_matches(self, rules, context_so_far = {}):
         for condition in self:
             for bindings in self.test_term_matches(condition, rules):
                 yield bindings
 
 class NOT(RuleExpression):
-    """A RuleExpression for negation. A NOT clause must only have
-    one part."""
+    """
+    A RuleExpression for negation. A NOT clause must only have
+    one part.
+    """
     def test_matches(self, data, context_so_far = {}):
         assert len(self) == 1 # We're unary; we can only process
                               # one condition
