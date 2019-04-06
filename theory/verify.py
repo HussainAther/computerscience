@@ -1,3 +1,8 @@
+"""
+Verify various graphs and paths have the properties we describe.
+"""
+
+
 def Path(edges):
     return list(edges) + list(edges[0])
 
