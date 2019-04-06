@@ -1,11 +1,11 @@
-# This file implements some very rudimentary matrix-like and vector-like operations
-# It is used by the tester.
-# You are welcome to use these functions for the lab implementation as well,
-# though this isn't expected to be necessary.
-
 import random
 import operator
 import math
+
+"""
+This file implements some very rudimentary matrix-like and vector-like operations
+It is used by the tester.
+"""
 
 try:
     all([])
