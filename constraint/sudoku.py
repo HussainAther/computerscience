@@ -1,12 +1,10 @@
-#!/usr/bin/env python
-"""
-Implementation of the 9 by 9 sudoku problem
-By: Justin Cullen for 6.034 Fall 2010
-Date: Thursday, November 4th
-"""
 import sys
 from csp import CSP, Variable, BinaryConstraint, solve_csp_problem, \
     basic_constraint_checker
+
+"""
+Implementation of the 9 by 9 sudoku problem
+"""
 
 #"Diabolical" sudoku. default test board . Specify boards in this format
 grid = []
