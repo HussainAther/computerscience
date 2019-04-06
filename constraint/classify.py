@@ -7,15 +7,24 @@ import math
 import random
 from data_reader import *
 
-INFINITY = 1e100
+"""
+Classify people into groups and evaluate them based on the comparisons between them.
+"""
+
+INFINITY = 1e100 # for our purposes we define infinity this way.
+
 def crosscheck_groups(people):
-    # Split up the data in an interesting way.
+    """
+    Split up the data in an interesting way.
+    """
     group1 = people[0::4] + people[3::4]
     group2 = people[1::4] + people[2::4]
     return group1, group2
 
 def random_split_groups(people):
-    # Split up the data randomly, into two groups of ~equal size
+    """
+    Split up the data randomly, into two groups of ~equal size.
+    """
     group1 = random.sample(people, len(people)/2)
     group2 = [ x for x in people if not x in group1 ]
     return (group1, group2)
