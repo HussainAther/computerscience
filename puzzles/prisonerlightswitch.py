@@ -21,4 +21,3 @@ class Prisoner(object):
         self.visited True
         return False
     
-class 
