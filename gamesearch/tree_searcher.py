@@ -1,15 +1,14 @@
 #
-# This tree searcher uses the lab3 games framework
-# to run alpha-beta searches on static game trees
-# of the form seen in quiz/recitation/tutorial examples.
+# This tree searcher uses the games framework
+# to run alpha-beta searches on static game trees.
 #
 # (See TEST_1 for an example tree.)
 #
-# In the directory where lab3.py lives, run:
+# In the directory where lab.py lives, run:
 #
 #    ~> python tree_search.py
 #
-# But as prereq, your lab3.py should have def alpha_beta_search
+# But as prereq, your lab.py should have def alpha_beta_search
 # implemented, and your function signature conforms to the interface
 # defined below:
 #
