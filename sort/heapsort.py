@@ -18,6 +18,9 @@ def heapify(arr, n, i):
         heapify(arr, n, max1)
 
 def heapSort(a):
+    """
+    Heap sort for array a. 
+    """
     n = len(a)
     for i in range(n, -1, -1):
         heapify(a, n, i)
