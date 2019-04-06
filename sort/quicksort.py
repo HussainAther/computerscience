@@ -3,7 +3,6 @@ Quick sort algorithm on a list. Select a value (v) that pivot around it
 to split the list around that point. Divide the list for subseqeunt calls.
 """
 
-
 def quickSort(listo):
     h(listo,0,len(listo)-1)
 
