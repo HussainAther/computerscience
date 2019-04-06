@@ -17,7 +17,6 @@ def heapify(arr, n, i):
         arr[i],arr[max1] = arr[max1],arr[i] # swap
         heapify(arr, n, max1)
 
-
 def heapSort(a):
     n = len(a)
     for i in range(n, -1, -1):
