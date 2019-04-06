@@ -266,7 +266,9 @@ class RuleExpression(list):
         return hash((self.__class__.__name__, list(self)))
 
 class AND(RuleExpression):
-    """A conjunction of patterns, all of which must match."""
+    """
+    A conjunction of patterns, all of which must match.
+    """
     class FailMatchException(Exception):
         pass
     
