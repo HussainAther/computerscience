@@ -4,7 +4,7 @@ randomly arranged in a line, arrange them so all balls of the same color are tog
 collective color groups are in the correct order.
 """
 
-(red, white, blue) = (0, 1, 2)
+(red, white, blue) = (0, 1, 2) # how patriotic
 
 def dfp(pivot=0, a):
     """
