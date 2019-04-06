@@ -1,8 +1,9 @@
-#!/usr/bin/env python
 """
-A General Constraint Satisfaction Problem Solver
-@author: yks
+A General Constraint Satisfaction Problem (CSP csp) Solver
+
+Constraint satisfaction problems (CSPs) are mathematical questions defined as a set of objects whose state must satisfy a number of constraints or limitations. CSPs represent the entities in a problem as a homogeneous collection of finite constraints over variables, which is solved by constraint satisfaction methods. 
 """
+
 class Variable:
     """
     Representation of a discrete variable with a finite domain.
