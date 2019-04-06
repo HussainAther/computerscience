@@ -36,7 +36,7 @@
 #   is a function that checks whether to statically evaluate
 #   a board/node (hence terminating a search branch).
 #
-# You can modify the existing alpha_beta_search interface in lab3
+# You can modify the existing alpha_beta_search interface in lab
 # to work with this interface by definining your own is_terminal_fn
 # using optional arguments, like so:
 #
@@ -160,7 +160,7 @@ def tree_eval(node):
         return None
 
 def TEST_1(expected):
-    from lab3 import alpha_beta_search
+    from lab import alpha_beta_search
     tup_tree = ("A", None,
 		("B", None,
 		 ("C", None,
@@ -189,7 +189,7 @@ def TEST_1(expected):
     print "EXPECTED: %s" %(expected)
     
 def TEST_2(expected):
-    from lab3 import alpha_beta_search
+    from lab import alpha_beta_search
     tup_tree = ("A", None,
 		("B", None,
 		 ("C", None,
@@ -218,7 +218,7 @@ def TEST_2(expected):
     print "EXPECTED: %s" %(expected)
 
 def TEST_3(expected):
-    from lab3 import alpha_beta_search
+    from lab import alpha_beta_search
     tup_tree = ("A", None,
 		("B", None,
 		 ("E", None,
