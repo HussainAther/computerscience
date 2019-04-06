@@ -1,4 +1,3 @@
-
 """
 Let’s say we have a whole bunch of people in line waiting to see a baseball game. They
 are all hometown fans and each person has a team cap and is wearing it. However, not all
