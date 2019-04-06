@@ -5,7 +5,7 @@ where it belongs.
 """
 
 def b(listo):
-    for p in range(len(listo)-1,0,-1):
+    for p in range(len(listo)-1, 0, - 1): # so we end up sorted the right way
         for i in range(p):
             if listo[i]>listo[i+1]:
                 t = listo[i]
