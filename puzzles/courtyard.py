@@ -1,4 +1,3 @@
-
 """
 Consider the following tiling problem. We have a courtyard with 2n × 2n squares and we
 need to tile the courtyard using L-shaped tiles or trominoes. Each trominoe consists of
@@ -17,7 +16,6 @@ Is there an algorithm that tiles any 2^n × 2^n courtyard with one missing squar
 arbitrary location? As an example, below is a 2^3 × 2^3 where the missing square is
 marked Δ. Does the location of the missing square matter?
 """
-
 
 def tileFourMissingYard(n, missing):
     """
