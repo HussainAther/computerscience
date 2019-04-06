@@ -1,12 +1,10 @@
+import csv
+from copy import deepcopy
+
 """
 A set of utility functions for reading in the data format used by Keith T.
 Poole on voteview.com.
-
-You can download additional data that will work with these functions, for
-any Congress going back to the 1st, on that site.
 """
-import csv
-from copy import deepcopy
 
 def legislator_info(legislator):
     district = ''
