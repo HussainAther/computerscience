@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 """
-Implementation of the Time traveling scheduling problem from
-2009 Quiz 2
+Implementation of the Time traveling scheduling problem.
 """
 
 import sys
