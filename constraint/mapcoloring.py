@@ -1,10 +1,10 @@
-#!/usr/bin/env python
-"""
-Implementation of the Map coloring problem
-"""
 import sys
 from csp import CSP, Variable, BinaryConstraint, solve_csp_problem, \
     basic_constraint_checker
+
+"""
+Implementation of the Map coloring problem for constraint satisfaction (CSP csp).
+"""
 
 def map_coloring_csp_problem():
     constraints = []
