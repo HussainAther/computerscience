@@ -17,10 +17,7 @@ We will need to use recursion to solve the general N-queens problem. Recursion o
 when something is defined in terms of itself. The most common application of recursion
 in programming is where a function being defined is applied within its own definition.
 
-In Python a function can call itself. If a function calls itself, it is called a recursive
-function. Recursion may also correspond to a function A calling a function B, which in
-turn calls function A. We’ll focus on the simple case of recursion here, namely a function
-f calling f again.
+Let's get recursive in here.
 """
 
 def nQueens(size):
