@@ -31,6 +31,7 @@ def p(listo,first,last):
                 temp = listo[l]
                 listo[l] = listo[r]
                 listo[r] = temp
+
     temp = listo[first]
     listo[first] = listo[r]
     listo[r] = temp
