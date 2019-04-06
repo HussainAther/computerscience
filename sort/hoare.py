@@ -1,8 +1,9 @@
 """
-Hoare's (Hoare) partition scheme uses two indices that start at
+Hoare's (Hoare hoare) partition scheme uses two indices that start at
 the neds of the array partitioned and move toward one another until
 they detect an inversion. The inverted elements are swapped.  
 """
+
 def qs(a):
     """
     Quicksort algorithm
