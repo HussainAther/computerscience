@@ -19,6 +19,7 @@ def cpf(a):
             k += 1
         a[q - 1] = k
     return a
+
 def kmp(t, p):
     """
     Match text t against p using the Knuth-Morris-Pratt matching algorithm.
