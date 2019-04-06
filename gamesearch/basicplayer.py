@@ -2,8 +2,7 @@ from util import memoize, run_search_function
 
 def basic_evaluate(board):
     """
-    The original focused-evaluate function from the lab.
-    The original is kept because the lab expects the code in the lab to be modified. 
+    The original focused-evaluate function.
     """
     if board.is_game_over():
         # If the game has been won, we know that it must have been
@@ -26,7 +25,9 @@ def basic_evaluate(board):
 
 
 def get_all_next_moves(board):
-    """ Return a generator of all moves that the current player could take from this position """
+    """ 
+    Return a generator of all moves that the current player could take from this position 
+    """
     from connectfour import InvalidMoveException
 
     for i in xrange(board.board_width):
