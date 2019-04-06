@@ -2,6 +2,10 @@ from classify import *
 import math
 import numpy as np
 
+"""
+Methods for solving general constraint problems (csp CSP).
+"""
+
 from csp import BinaryConstraint, CSP, CSPState, Variable,\
     basic_constraint_checker, solve_csp_problem
 
