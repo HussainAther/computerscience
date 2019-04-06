@@ -1,8 +1,10 @@
 #!/usr/bin/env python
+
 """
 Implementation of the Time traveling scheduling problem from
 2009 Quiz 2
 """
+
 import sys
 from csp import CSP, Variable, BinaryConstraint, solve_csp_problem, \
     basic_constraint_checker
