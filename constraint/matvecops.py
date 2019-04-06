@@ -18,9 +18,10 @@ except NameError:
                 return False
         return True
 
-
 def unit_vector(vec1, vec2):
-    """ Return a unit vector pointing from vec1 to vec2 """
+    """ 
+    Return a unit vector pointing from vec1 to vec2. 
+    """
     diff_vector = map(operator.sub, vec2, vec1)
     
     scale_factor = math.sqrt( sum( map( lambda x: x**2, diff_vector ) ) )
@@ -29,8 +30,10 @@ def unit_vector(vec1, vec2):
     return map(lambda x: x/scale_factor, diff_vector)
 
 def vector_compare(vec1, vec2, delta):
-    """ Compare two vectors
-    Confirm that no two corresponding fields differ by more than delta """
+    """ 
+    Compare two vectors
+    Confirm that no two corresponding fields differ by more than delta. 
+    """
     return all( map(lambda x,y: (abs(x-y) < delta), vec1, vec2) )
     
 def validate_euclidean_distance(list1, list2, dist):
@@ -39,10 +42,12 @@ def validate_euclidean_distance(list1, list2, dist):
     between list1 and list2 by establishing a unit vector between
     the two lists and seeing if vec * dist + list1 == list2
     """
-
     vec = unit_vector(list1, list2)
     target = map(lambda jmp, base: jmp * dist + base, vec, list1)
     return vector_compare(target, list2, 0.01)
 
 def random_list(length):
+    """
+    Create a random list of integers.
+    """
     return [ random.randint(1,100) for x in xrange(length) ]
