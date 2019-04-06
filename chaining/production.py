@@ -6,7 +6,7 @@ except NameError:
     from sets import Set as set, ImmutableSet as frozenset
 
 try:
-    sorted([])
+    sorted([]) # diff versions of python
 except NameError:
     def sorted(lst):
         new_lst = list(lst)
@@ -53,7 +53,7 @@ def instantiate(template, values_dict):
     => "sister Lisa Bart"
     """
     if (isinstance(template, AND) or isinstance(template, OR) or
-        isinstance(template, NOT)):
+        isinstance(template, NOT)): # logical operators
 
         return template.__class__(*[populate(x, values_dict) 
                                     for x in template])
