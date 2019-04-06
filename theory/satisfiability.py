@@ -22,5 +22,5 @@ def Sat(B):
 
 def 3Sat(B):
     """
-    Same as Sat excpet all clauses in the input can have at most 3 literals.
+    Same as Sat except all clauses in the input can have at most 3 literals.
     """
