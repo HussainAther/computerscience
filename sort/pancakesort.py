@@ -1,6 +1,8 @@
 """
 Pancake sort algorithm for various parts of the list
-until they're sorted.
+until they're sorted. We flip over parts of the list as though
+the entire list were a stack of pancakes and the flipping would
+be how we flipped the stack of pancakse from some prat in the center.
 """
 
 def f(a, i):
