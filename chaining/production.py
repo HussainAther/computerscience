@@ -1,5 +1,6 @@
 import re
 from utils import *
+
 try:
     set()
 except NameError:
@@ -27,7 +28,7 @@ def forward_chain(rules, data, apply_only_one=False, verbose=False):
     rules.
 
     Set apply_only_one=True to get the behavior we describe in
-    class.  When it's False, a rule that fires will do so for
+    class.  When it"s False, a rule that fires will do so for
     _all_ possible bindings of its variables at the same time,
     making the code considerably more efficient. In the end, only
     DELETE rules will act differently.
@@ -45,11 +46,11 @@ def forward_chain(rules, data, apply_only_one=False, verbose=False):
 
 def instantiate(template, values_dict):
     """
-    Given an expression ('template') with variables in it,
+    Given an expression ("template") with variables in it,
     replace those variables with values from values_dict.
 
     For example:
-    >>> instantiate("sister (?x) {?y)", {'x': 'Lisa', 'y': 'Bart'})
+    >>> instantiate("sister (?x) {?y)", {"x": "Lisa", "y": "Bart"})
     => "sister Lisa Bart"
     """
     if (isinstance(template, AND) or isinstance(template, OR) or
@@ -59,7 +60,7 @@ def instantiate(template, values_dict):
                                     for x in template])
     elif isinstance(template, basestring):
         return AIStringToPyTemplate(template) % values_dict
-    else: raise ValueError, "Don't know how to populate a %s" % \
+    else: raise ValueError, "Don"t know how to populate a %s" % \
       type(template)
 
 # alternate name for instantiate
@@ -67,8 +68,8 @@ populate = instantiate
 
 def match(template, AIStr):
     """
-    Given two strings, 'template': a string containing variables
-    of the form '(?x)', and 'AIStr': a string that 'template'
+    Given two strings, "template": a string containing variables
+    of the form "(?x)", and "AIStr": a string that "template"
     matches, with certain variable substitutions.
 
     Returns a dictionary of the set of variables that would need
@@ -83,14 +84,14 @@ def match(template, AIStr):
         return None
 
 def is_variable(str):
-    """Is 'str' a variable, of the form '(?x)'?"""
-    return isinstance(str, basestring) and str[0] == '(' and \
-      str[-1] == ')' and re.search( AIStringToRegex(str) )
+    """Is "str" a variable, of the form "(?x)"?"""
+    return isinstance(str, basestring) and str[0] == "(" and \
+      str[-1] == ")" and re.search( AIStringToRegex(str) )
 
 def variables(exp):
     """
     Return a dictionary containing the names of all variables in
-    'exp' as keys, or None if there are no such variables.
+    "exp" as keys, or None if there are no such variables.
     """
     try:
         return re.search( AIStringToRegex(exp).groupdict() )
@@ -122,7 +123,7 @@ class IF(object):
         if type(conditional) == list and action == None:
             return apply(self.__init__, conditional)
         
-        # Allow 'action' to be either a single string or an
+        # Allow "action" to be either a single string or an
         # iterable list of strings
         if isinstance(action, basestring):
             action = [ action ]
@@ -136,7 +137,7 @@ class IF(object):
         Return a new set of data updated by the conditions and
         actions of this IF statement.
 
-        If 'apply_only_one' is True, after adding one datum,
+        If "apply_only_one" is True, after adding one datum,
         return immediately instead of continuing. This is the
         behavior described in class, but it is slower.
         """
@@ -206,8 +207,8 @@ class RuleExpression(list):
         return list(self)
 
     def __str__(self):
-        return '%s(%s)' % (self.__class__.__name__, 
-                           ', '.join([repr(x) for x in self]) )
+        return "%s(%s)" % (self.__class__.__name__,
+                           ", ".join([repr(x) for x in self]) )
 
     __repr__ = __str__
         
@@ -220,7 +221,7 @@ class RuleExpression(list):
         rules = set(rules)
         if context_so_far == None: context_so_far = {}
 
-        # Deal with nesting first If we're a nested term, we
+        # Deal with nesting first If we"re a nested term, we
         # already have a test function; use it
         if not isinstance(condition, basestring):
             return condition.test_matches(rules, context_so_far)
@@ -242,7 +243,7 @@ class RuleExpression(list):
                 pass
 
     def get_condition_vars(self):
-        if hasattr(self, '_condition_vars'):
+        if hasattr(self, "_condition_vars"):
             return self._condition_vars
 
         condition_vars = set()
@@ -277,7 +278,7 @@ class AND(RuleExpression):
         """
         Recursively generate all possible matches.
         """
-        # Set default values for variables.  We can't set these
+        # Set default values for variables.  We can"t set these
         # in the function header because values defined there are
         # class-local, and we need these to be reinitialized on
         # each function call.
@@ -285,7 +286,7 @@ class AND(RuleExpression):
             cumulative_dict = NoClobberDict()
 
         # If we have no more conditions to analyze, pass the
-        # dictionary that we've accumulated back up the
+        # dictionary that we"ve accumulated back up the
         # function-call stack.
         if len(conditions) == 0:
             yield cumulative_dict
@@ -321,7 +322,7 @@ class NOT(RuleExpression):
     one part.
     """
     def test_matches(self, data, context_so_far = {}):
-        assert len(self) == 1 # We're unary; we can only process
+        assert len(self) == 1 # We"re unary; we can only process
                               # one condition
 
         try:
@@ -352,7 +353,7 @@ class THEN(list):
             self.append(a)
 
     def __str__(self):
-        return '%s(%s)' % (self.__class__.__name__, ', '.join([repr(x) for x in self]) )
+        return "%s(%s)" % (self.__class__.__name__, ", ".join([repr(x) for x in self]) )
 
     __repr__ = __str__
 
@@ -360,7 +361,7 @@ class THEN(list):
 class DELETE(THEN):
     """
     A DELETE expression is a container with no interesting
-    semantics. That's why it's exactly the same as THEN.
+    semantics. That"s why it"s exactly the same as THEN.
     """
     pass
 
