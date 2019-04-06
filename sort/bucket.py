@@ -2,6 +2,7 @@
 Bucket sort uses the input drawn from a uniform 
 distribution that has an average-case running time of O(n).
 """
+
 def ins(a):
     """
     Insertion sort for array a.
@@ -14,7 +15,6 @@ def ins(a):
             p -= 1
         a[p] = c
  
-
 
 def bucket(a):
     """
