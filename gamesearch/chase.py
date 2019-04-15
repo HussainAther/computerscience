@@ -38,3 +38,18 @@ def manhattan((r0, c0), (r1, c1)):
 
     return row_dist + col_dist
 
+class Agent(object):
+    mode = "random"
+    """
+    Agent functions and actions.
+    """
+    def __init__(self, row, column, color=0):
+        self.row = row
+        self.col = column
+        self.color = color
+        self.next_steps = []
+
+    def nearest_enemy(self, agents):
+        agents = [a for a in agents if a.mode != self.mode]
+        distances = [manhattan((agent.row, agent.col), (self.row, self.col))
+                     for agent in agents]
