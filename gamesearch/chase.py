@@ -77,3 +77,15 @@ class Agent(object):
         viable_steps = [pos for pos in self.next_steps
                       if not pos in filled_positions]
 
+        try:
+            next_row, next_col = random.choice(viable_steps)
+        except IndexError:
+            next_row, next_col = self.row, self.col
+
+        filled_positions.remove((self.row, self.col))
+        self.row = next_row
+        self.col = next_col
+        filled_positions.append((self.row, self.col))
+
+        return filled_positions
+
