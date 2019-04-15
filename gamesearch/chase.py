@@ -40,9 +40,11 @@ def manhattan((r0, c0), (r1, c1)):
 
 class Agent(object):
     mode = "random"
+
     """
     Agent functions and actions.
     """
+
     def __init__(self, row, column, color=0):
         self.row = row
         self.col = column
@@ -89,3 +91,17 @@ class Agent(object):
 
         return filled_positions
 
+class SpotterAgent(Agent):
+    mode = "spotter"
+
+    """
+    Spotter agents run away. 
+    """
+
+    def get_steps(self, agents):
+        possible_steps = Agent.get_steps(self, agents)
+        enemy = self.nearest_enemy(agents)
+
+        # Attack or run if there is an enemy nearby, otherwise
+        # move randomly in any direction.
+        if enemy is None:
