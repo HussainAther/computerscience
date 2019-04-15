@@ -121,3 +121,13 @@ class SpotterAgent(Agent):
                             if dist == dist_func(distance_to_enemy)]
 
         return viable_steps
+
+class Chaser(SpotterAgent):
+    mode = "hunt"
+ 
+    """
+    Chase others.
+    """
+
+    def __init__(self, row, column):
+        Agent.__init__(self, row, column, color=1)
