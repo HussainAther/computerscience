@@ -165,3 +165,15 @@ def act_and_draw(N, image, board, agents):
 
     chasers = [a for a in agents if a.mode == "hunt"]
     targets = [a for a in agents if a.mode != "hunt"]
+
+    filled_positions = [(a.row, a.col) for a in chasers]
+    for a in chasers:
+        filled_positions = a.step(filled_positions)
+
+    for t in killed(targets, filled_positions):
+        agents.remove(t)
+
+    filled_positions.extend((a.row, a.col) for a in targets)
+    for a in targets:
+        filled_positions = a.step(filled_positions)
+
