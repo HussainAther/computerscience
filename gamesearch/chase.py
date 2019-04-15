@@ -53,3 +53,18 @@ class Agent(object):
         agents = [a for a in agents if a.mode != self.mode]
         distances = [manhattan((agent.row, agent.col), (self.row, self.col))
                      for agent in agents]
+
+        if not distances:
+            return None
+
+        md = np.argmin(distances)
+        if distances[md] <= D:
+            return agents[md]
+        else:
+            return None
+
+    def get_steps(self, agents):
+        steps = [((self.row + r) % P, (self.col + c) % Q)
+                 for (r, c) in directions]
+        steps.append((self.row, self.col))
+
