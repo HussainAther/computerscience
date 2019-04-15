@@ -210,3 +210,13 @@ if __name__ == "__main__":
 
     # Set up display
     fig = plt.figure(figsize=(10, 10 * (P / float(Q))))
+    cmap = ListedColormap(['k', 'r', 'g'])
+    image = plt.imshow(board, interpolation='nearest',
+                       cmap=cmap, vmin=0, vmax=2)
+
+    # Animate
+    anim = FuncAnimation(fig, func=act_and_draw,
+                         fargs=(image, board, agents), interval=0, blit=True)
+
+    plt.show()
+
