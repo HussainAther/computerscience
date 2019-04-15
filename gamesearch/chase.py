@@ -142,3 +142,15 @@ class Target(SpotterAgent):
     def __init__(self, row, column):
         Agent.__init__(self, row, column, color=2)
 
+def killed(targets, chaser_positions):
+    """
+    RIP in peace.
+    """
+    dead_targets = []
+    for t in targets:
+        for (r, c) in chaser_positions:
+            if (t.row == r) and (t.col == c):
+                dead_targets.append(t)
+                continue
+
+    return dead_targets
