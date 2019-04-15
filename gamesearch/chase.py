@@ -68,3 +68,12 @@ class Agent(object):
                  for (r, c) in directions]
         steps.append((self.row, self.col))
 
+        return steps
+
+    def plan(self, agents):
+        self.next_steps = self.get_steps(agents)
+
+    def step(self, filled_positions):
+        viable_steps = [pos for pos in self.next_steps
+                      if not pos in filled_positions]
+
