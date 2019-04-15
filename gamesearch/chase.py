@@ -201,3 +201,12 @@ if __name__ == "__main__":
     #
     positions = list(np.ndindex(P, Q))
     random.shuffle(positions)
+    positions_c = positions[:N_c]
+    positions_t = positions[N_c:N_c + N_t]
+
+    # Construct agents based on initial positions
+    agents = [Chaser(r, c) for (r, c) in positions_c]
+    agents.extend([Target(r, c) for (r, c) in positions_t])
+
+    # Set up display
+    fig = plt.figure(figsize=(10, 10 * (P / float(Q))))
