@@ -154,3 +154,14 @@ def killed(targets, chaser_positions):
                 continue
 
     return dead_targets
+
+def act_and_draw(N, image, board, agents):
+    # Shuffle agents before each step of the simulation
+    random.shuffle(agents)
+
+    # Run one step of the simulation
+    for a in agents:
+        a.plan(agents)
+
+    chasers = [a for a in agents if a.mode == "hunt"]
+    targets = [a for a in agents if a.mode != "hunt"]
