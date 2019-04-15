@@ -184,3 +184,11 @@ def act_and_draw(N, image, board, agents):
 
     # Update board
     image.set_data(board)
+
+    # Reset filled_positions
+    filled_positions = []
+
+    ## Uncomment to make video frames
+    # plt.savefig('/tmp/chase_escape_%05d.png' % N)
+
+    return image,
