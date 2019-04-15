@@ -192,3 +192,12 @@ def act_and_draw(N, image, board, agents):
     # plt.savefig('/tmp/chase_escape_%05d.png' % N)
 
     return image,
+
+if __name__ == "__main__":
+    # Initial placement of agents.
+    #
+    # Take all positions, shuffle them, and randomly pick
+    # the necessary number.
+    #
+    positions = list(np.ndindex(P, Q))
+    random.shuffle(positions)
