@@ -105,3 +105,19 @@ class SpotterAgent(Agent):
         # Attack or run if there is an enemy nearby, otherwise
         # move randomly in any direction.
         if enemy is None:
+            viable_steps = possible_steps
+        else:
+            distance_to_enemy = \
+                       [manhattan((enemy.row, enemy.col), (step_r, step_c))
+                        for (step_r, step_c) in possible_steps]
+
+            if self.mode == 'hunt':
+                dist_func = min
+            else:
+                dist_func = max
+
+            viable_steps = [step for (step, dist) in
+                            zip(possible_steps, distance_to_enemy)
+                            if dist == dist_func(distance_to_enemy)]
+
+        return viable_steps
