@@ -131,3 +131,14 @@ class Chaser(SpotterAgent):
 
     def __init__(self, row, column):
         Agent.__init__(self, row, column, color=1)
+
+class Target(SpotterAgent):
+    mode = "hide"
+
+    """
+    Target another agent.  
+    """
+
+    def __init__(self, row, column):
+        Agent.__init__(self, row, column, color=2)
+
