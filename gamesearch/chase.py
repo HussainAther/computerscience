@@ -177,3 +177,10 @@ def act_and_draw(N, image, board, agents):
     for a in targets:
         filled_positions = a.step(filled_positions)
 
+    # Draw agents
+    board.fill(0)
+    for a in agents:
+        board[a.row, a.col] = a.color
+
+    # Update board
+    image.set_data(board)
