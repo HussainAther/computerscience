@@ -15,3 +15,7 @@ def infhordec(x):
     We create an infinite-horizon decision problem that we can compute the optimal value by maximizing
     this objective function with assumed constraints. 
     """ 
+    E = []
+    for i in range(x):
+         E.append(g[i] + J[i])
+    J = min(E) # Bellman's equation is the optimal solution for the cost problem if mu(x) minimizes in the equation. 
