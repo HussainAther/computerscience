@@ -1,7 +1,7 @@
 import copy
 
 """
-Checkers implementation.
+Checkers game implemented using Minimax and Alpha-Beta pruning algorithms.
 """
 
 class GameState(object):
