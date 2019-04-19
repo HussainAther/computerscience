@@ -1,6 +1,8 @@
 import copy
 
 """
+Constraint Satisfaction problem(CSP) using Bactracking algorithm. Optimization using arc-consistency.
+
 The 2018 FIFA World Cup organizers divide the qualifying national teams into a given number of groups.
 The teams within each group all play each other so we have to distribute the teams across the groups
 to balance capability and geography as much as possible (between 6 continental confederations: Asia, Africa
