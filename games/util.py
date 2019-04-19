@@ -1,7 +1,13 @@
+import tree_searcher
+
 from threading import Thread
 from time import time
 from connectfour import ConnectFourBoard
-import tree_searcher
+
+"""
+Basic player functions.
+"""
+
 
 ## Define 'INFINITY' and 'NEG_INFINITY'
 try:
