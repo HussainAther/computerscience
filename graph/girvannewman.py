@@ -1,8 +1,6 @@
-import networkx as nx
-import math
-import csv
-import random as rand
 import sys
+import csv
+import networkx as nx
 
 """
 Run using:
