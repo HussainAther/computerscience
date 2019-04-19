@@ -5,6 +5,9 @@ The 2018 FIFA World Cup organizers divide the qualifying national teams into a g
 The teams within each group all play each other so we have to distribute the teams across the groups
 to balance capability and geography as much as possible (between 6 continental confederations: Asia, Africa
 North and Central America, South America, Oceania, and Europe.)
+
+We allocate the teams to K pots based on the 2017 ranking. Pot 1 has N1 teams including Russia and the N1-1
+highest-ranked teams in the 2017 FIFA World Ranking. Pots 2 to K contain the next N- ranked teams (i = 2,...,K.)
 """
 
 class Group(object):
