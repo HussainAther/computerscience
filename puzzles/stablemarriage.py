@@ -12,8 +12,9 @@ def smp(m, w):
     List of preferences for men m and women w. m should be an array of arrays with the array
     index for each women. w should be an array of arrays with the array index for each man.
     """
-    freem = [] # list of free men by array index
-    freew = [] # list of free women by array index
+    freem = np.range(len(m)) # list of free men by array index
+    freew = np.range(len(w)) # list of free women by array index
     while m:
         w0 = m[0][0] # first woman on the first man's list that has not proposed 
-        if w0 not 
+        if w0 not in freew: # if w0 is free
+            freem.remove(w0) # w0 engages to the man 
