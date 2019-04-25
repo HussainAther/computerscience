@@ -14,6 +14,7 @@ def smp(m, w):
     """
     freem = np.range(len(m)) # list of free men by array index
     freew = np.range(len(w)) # list of free women by array index
+    matches = {} # dictionary of matches with key as woman and value as man
     while m: # while there are still eligible men
         for man in m:
             if m[man] != []
@@ -23,5 +24,6 @@ def smp(m, w):
                     w[w0].remove(man) # remove the man from the woman's list
                     freem.remove(m.index(man)) # remove the man from free mwn
                     m[man].remove(w0) # remove the woman the man's list
+                    matches[w0] = man # add to dictionary of matches
                 else: # if w0 is taken then it means that a pair (m0, w0) already exists
-                    for  
+                    if w[w0].index(man) > w[w0] 
