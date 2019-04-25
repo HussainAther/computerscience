@@ -15,6 +15,11 @@ def smp(m, w):
     freem = np.range(len(m)) # list of free men by array index
     freew = np.range(len(w)) # list of free women by array index
     while m:
-        w0 = m[0][0] # first woman on the first man's list that has not proposed 
+        for man in m:
+            if m[man] != []
+                w0 = m[man][0] # first woman on the first man's list that has not proposed 
         if w0 not in freew: # if w0 is free
-            freem.remove(w0) # w0 engages to the man 
+            freew.remove(w0) # w0 engages to the man
+            freem.remove(m[0])
+        else:
+              
