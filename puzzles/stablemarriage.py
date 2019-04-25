@@ -29,4 +29,4 @@ def smp(m, w):
                     if w[w0].index(man) > w[w0].index(matches[w0]) # if the woman prefers this new man to her current match
                         freem.append(matches[w0]) # her current match becomes free
                         matches[w0] = man # she trades and gets the new man
-    
+                         
