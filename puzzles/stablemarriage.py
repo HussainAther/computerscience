@@ -26,4 +26,7 @@ def smp(m, w):
                     m[man].remove(w0) # remove the woman the man's list
                     matches[w0] = man # add to dictionary of matches
                 else: # if w0 is taken then it means that a pair (m0, w0) already exists
-                    if w[w0].index(man) > w[w0] 
+                    if w[w0].index(man) > w[w0].index(matches[w0]) # if the woman prefers this new man to her current match
+                        freem.append(matches[w0]) # her current match becomes free
+                        matches[w0] = man # she trades and gets the new man
+    
