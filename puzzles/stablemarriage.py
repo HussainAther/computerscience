@@ -11,3 +11,9 @@ def smp(m, w):
     """
     List of preferences for men m and women w.
     """
+    freem = [] # list of free men by array index
+    freew = [] # list of free women by array index
+    while m:
+        w0 = m[0][0] # first woman on the first man's list that has not proposed 
+        if w0  
+
