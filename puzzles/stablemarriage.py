@@ -19,7 +19,9 @@ def smp(m, w):
             if m[man] != []
                 w0 = m[man][0] # first woman on the first man's list that has not proposed 
                 if w0 not in freew: # if w0 is free
-       	            freew.remove(w0) # w0 engages to the man
-                    freem.remove(m.index(man))
-                else:
-                    for woman in   
+       	            freew.remove(w0) # w0 engages to the man. remove her from free women
+                    w[w0].remove(man) # remove the man from the woman's list
+                    freem.remove(m.index(man)) # remove the man from free mwn
+                    m[man].remove(w0) # remove the woman the man's list
+                else: # if w0 is taken then it means that a pair (m0, w0) already exists
+                    for  
