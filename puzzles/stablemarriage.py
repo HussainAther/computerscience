@@ -7,3 +7,7 @@ other than their current partners. When there are no such pairs of people,
 the set of marriages is deemed stable.
 """
 
+def smp(m, w):
+    """
+    List of preferences for men m and women w.
+    """
