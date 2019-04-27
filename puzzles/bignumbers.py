@@ -164,13 +164,13 @@ class Byte(object):
   
     def __str__(self):
         """
-        Debugging help: returns the Byte formatted as "0x??".
+        Debugging help: return the Byte formatted as "0x??".
         """
         return "0x" + self.hex()
   
     def __repr__(self):
         """
-        Debugging help: returns a Python expression that can create this Byte.
+        Debugging help: return a Python expression that can create this Byte.
         """
         return "Byte.h("" + self.hex() + "")"
 
@@ -343,46 +343,56 @@ class Word(object):
             return NotImplemented  # Words can only be divided by other Bytes.
         return Byte._bytes[self._word % other._byte]
 
-  def __and__(self, other):
-    """Returns the logical AND of two Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Bytes can only be ANDed with other Words.
-    return Word._words[self._word & other._word]
+    def __and__(self, other):
+        """
+        Return the logical AND of two Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Bytes can only be ANDed with other Words.
+        return Word._words[self._word & other._word]
 
-  def __or__(self, other):
-    """Returns the logical AND of two Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Bytes can only be ORed with other Words.
-    return Word._words[self._word | other._word]
+    def __or__(self, other):
+        """
+        Return the logical AND of two Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Bytes can only be ORed with other Words.
+        return Word._words[self._word | other._word]
 
-  def __xor__(self, other):
-    """Returns the logical AND of two Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Bytes can only be XORed with other Words.
-    return Word._words[self._word ^ other._word]
+    def __xor__(self, other):
+        """
+        Return the logical AND of two Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Bytes can only be XORed with other Words.
+        return Word._words[self._word ^ other._word]
 
-  def __str__(self):
-    """Debugging help: returns the Byte formatted as "0x????"."""
-    return "0x" + self.hex()
+    def __str__(self):
+        """
+        Debugging help: return the Byte formatted as "0x????".
+        """
+        return "0x" + self.hex()
 
-  def __repr__(self):
-    """Debugging help: returns a Python expression that can create this Word."""
-    return "Word.h("" + self.hex() + "")"
+    def __repr__(self):
+        """
+        Debugging help: return a Python expression that can create this Word.
+        """
+        return "Word.h("" + self.hex() + "")"
 
-  def __init__(self, value):
-    """Do not call the Word constructor directly.
-    
-    Use Word.zero(), Byte.one(), or Byte.from_hex() instead.
-    """
-    if len(Word._words) == 0x10000:  # True after Word singletons are created.
-      raise ValueError("Do not call the Word constructor directly!")
-    self._word = value
-    self._lsb = Byte._bytes[self._word & 0xFF]
-    self._msb = Byte._bytes[self._word >> 8]
-    self._hex = Byte.hex(self.msb()) + Byte.hex(self.lsb())
+    def __init__(self, value):
+        """
+        Do not call the Word constructor directly.
+        Use Word.zero(), Byte.one(), or Byte.from_hex() instead.
+        """
+        if len(Word._words) == 0x10000:  # True after Word singletons are created.
+            raise ValueError("Do not call the Word constructor directly!")
+        self._word = value
+        self._lsb = Byte._bytes[self._word & 0xFF]
+        self._msb = Byte._bytes[self._word >> 8]
+        self._hex = Byte.hex(self.msb()) + Byte.hex(self.lsb())
 
-  # Private: array of singleton Word instances.
-  _words = []
+    # Private: array of singleton Word instances.
+    _words = []
 
 
 # Private: initialize singleton Byte instances.
