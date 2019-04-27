@@ -715,18 +715,19 @@ class BigNum(object):
             return NotImplemented  # BigNums can only be divided by other BigNums.
         return self.__divmod__(other)[1]
   
-  def __divmod__(self, other):
-    """divmod() for BigNums.
+    def __divmod__(self, other):
+        """
+        divmod() for BigNums.
 
-    Dividing numbers normalizes them. The result is also normalized.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be divided by other BigNums.  
-    self.normalize()
-    other.normalize()
-    if len(self.d) <= 256 or len(other.d) <= 256:
-      return self.slow_divmod(other)
-    return self.fast_divmod(other)
+        Dividing numbers normalizes them. The result is also normalized.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be divided by other BigNums.
+        self.normalize()
+        other.normalize()
+        if len(self.d) <= 256 or len(other.d) <= 256:
+            return self.slow_divmod(other)
+        return self.fast_divmod(other)
   
   def slow_divmod(self, other):
     """
