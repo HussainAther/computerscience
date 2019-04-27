@@ -694,14 +694,15 @@ class BigNum(object):
         return ((result_high_high << (2 * split)) + (result_high << split) +
             result_low).normalize()
   
-  def __floordiv__(self, other):
-    """/ for BigNums.
+    def __floordiv__(self, other):
+        """
+        / for BigNums.
 
-    Dividing numbers normalizes them. The result is also normalized.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be divided by other BigNums.
-    return self.__divmod__(other)[0]
+        Dividing numbers normalizes them. The result is also normalized.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be divided by other BigNums.
+        return self.__divmod__(other)[0]
   
   def __mod__(self, other):
     """% for BigNums.
