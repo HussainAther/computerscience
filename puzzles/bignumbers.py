@@ -552,23 +552,25 @@ class BigNum(object):
                 return self.d[i] < other.d[i]
         return True
 
-  def __gt__(self, other):
-    """> for BigNums.
+    def __gt__(self, other):
+        """
+        > for BigNums.
     
-    Comparing BigNums normalizes them.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be compared to other BigNums.
-    return not self.__le__(other)
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be compared to other BigNums.
+        return not self.__le__(other)
 
-  def __ge__(self, other):
-    """>= for BigNums.
+    def __ge__(self, other):
+        """
+        >= for BigNums.
     
-    Comparing BigNums normalizes them.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be compared to other BigNums.
-    return not self.__lt__(other)
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be compared to other BigNums.
+        return not self.__lt__(other)
 
   def __lshift__(self, digits):
     """This BigNum, with "digits" 0 digits appended at the end.
