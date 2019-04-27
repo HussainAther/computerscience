@@ -1,12 +1,8 @@
-# Back-Propagation Neural Networks
-# 
-# Written in Python.  See http://www.python.org/
-# Placed in the public domain.
-# Neil Schemenauer <nas@arctrix.com>
-
 import math
 import random
 import string
+
+# Back-Propagation Neural Networks
 
 #random.seed(0)
 
@@ -58,7 +54,7 @@ class NN:
 
     def update(self, inputs):
         if len(inputs) != self.ni-1:
-            raise ValueError, 'wrong number of inputs'
+            raise ValueError("wrong number of inputs")
 
         # input activations
         for i in range(self.ni-1):
@@ -84,7 +80,7 @@ class NN:
 
     def backPropagate(self, targets, N, M):
         if len(targets) != self.no:
-            raise ValueError, 'wrong number of target values'
+            raise ValueError("wrong number of target values")
 
         # calculate error terms for output
         output_deltas = [0.0] * self.no
@@ -124,16 +120,15 @@ class NN:
 
     def test(self, patterns):
         for p in patterns:
-            print p[0], '->', self.update(p[0])
+            print(p[0], "->", self.update(p[0]))
 
     def weights(self):
-        print 'Input weights:'
+        print("Input weights:")
         for i in range(self.ni):
-            print self.wi[i]
-        print
-        print 'Output weights:'
+            print(self.wi[i])
+        print("Output weights:")
         for j in range(self.nh):
-            print self.wo[j]
+            print(self.wo[j])
 
     def train(self, patterns, iterations=1000, N=0.5, M=0.1):
         # N: learning rate
@@ -146,7 +141,6 @@ class NN:
                 self.update(inputs)
                 error = error + self.backPropagate(targets, N, M)
         return error
-
 
 def demo():
     # Teach network XOR function
@@ -164,7 +158,5 @@ def demo():
     # test it
     n.test(pat)
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     demo()
