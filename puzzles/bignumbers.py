@@ -826,27 +826,30 @@ class BigNum(object):
         Remove all the trailing 0 (zero) digits in this number.
     
         Return self, for easy call chaining.
-    """
-    while len(self.d) > 1 and self.d[-1] == Byte.zero():
-      self.d.pop()
-    return self
+        """
+        while len(self.d) > 1 and self.d[-1] == Byte.zero():
+            self.d.pop()
+        return self
 
-  def is_normalized(self):
-    """False if the number has at least one trailing 0 (zero) digit."""
-    return len(self.d) == 1 or self.d[-1] != Byte.zero()
-  def slow_mul(self, other):
-    """
-    Slow method for multiplying two numbers w/ good constant factors.
-    """
-    result = BigNum.zero(len(self.d) + len(other.d))
-    for i in xrange(0, len(self.d)):
-      carry = Byte.zero()
-      for j in xrange(0, len(other.d)):
-        word = self.d[i] * other.d[j] + result.d[i + j].word() + carry.word()
-        result.d[i + j] = word.lsb()
-        carry = word.msb()
-      result.d[i + len(other.d)] = carry
-    return result.normalize()
+    def is_normalized(self):
+        """
+        False if the number has at least one trailing 0 (zero) digit.
+        """
+        return len(self.d) == 1 or self.d[-1] != Byte.zero()
+        
+    def slow_mul(self, other):
+        """
+        Slow method for multiplying two numbers w/ good constant factors.
+        """
+        result = BigNum.zero(len(self.d) + len(other.d))
+        for i in xrange(0, len(self.d)):
+            carry = Byte.zero()
+            for j in xrange(0, len(other.d)):
+                word = self.d[i] * other.d[j] + result.d[i + j].word() + carry.word()
+                result.d[i + j] = word.lsb()
+                carry = word.msb()
+            result.d[i + len(other.d)] = carry
+        return result.normalize()
 
   def slow_divmod(self, other):
     """
