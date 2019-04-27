@@ -1,20 +1,18 @@
 class Expression:
-    "This abstract class does nothing on its own."
+    """
+    This abstract class does nothing on its own.
+    """
     pass
 
 class Sum(list, Expression):
     """
     A Sum acts just like a list in almost all regards, except that this code
     can tell it is a Sum using isinstance(), and we add useful methods
-    such as simplify().
-
-    Because of this:
-      * You can index into a sum like a list, as in term = sum[0].
-      * You can iterate over a sum with "for term in sum:".
-      * You can convert a sum to an ordinary list with the list() constructor:
-         the_list = list(the_sum)
-      * You can convert an ordinary list to a sum with the Sum() constructor:
-         the_sum = Sum(the_list)
+    such as simplify(). You can index into a sum like a list, as in term = sum[0].
+    You can iterate over a sum with "for term in sum:". You can convert a sum to an 
+    ordinary list with the list() constructor: the_list = list(the_sum)
+    You can convert an ordinary list to a sum with the Sum() constructor:
+    the_sum = Sum(the_list)
     """
     def __repr__(self):
         return "Sum(%s)" % list.__repr__(self)
