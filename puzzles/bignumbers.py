@@ -729,64 +729,64 @@ class BigNum(object):
             return self.slow_divmod(other)
         return self.fast_divmod(other)
   
-  def slow_divmod(self, other):
-    """
-    Slow method for dividing two numbers w/ good constant factors.
-    """
-    return self.fast_divmod(other)
+    def slow_divmod(self, other):
+        """
+        Slow method for dividing two numbers w/ good constant factors.
+        """
+        return self.fast_divmod(other)
 
-  def fast_divmod(self, other):
-    """
-    Asymptotically fast method for dividing two numbers.
-    """
-    # Special-case 1 so we don"t have to deal with its inverse.
-    if len(other.d) == 1 and other.d[0] == Byte.one():
-      return (self, BigNum.zero())
+    def fast_divmod(self, other):
+        """
+        Asymptotically fast method for dividing two numbers.
+        """
+        # Special-case 1 so we don"t have to deal with its inverse.
+        if len(other.d) == 1 and other.d[0] == Byte.one():
+            return (self, BigNum.zero())
       
-    if other.__inverse is None:
-      # First approximation: the inverse of the first digit in the divisor + 1,
-      # because 1 / 2xx is <= 1/200 and > 1/300.
-      base = Word.from_bytes(Byte.one(), Byte.zero())
-      msb_plus = (other.d[-1] + Byte.one()).lsb()
-      if msb_plus == Byte.zero():
-        msb_inverse = (base - Word.one()).lsb()
-        other.__inverse_precision = len(other.d) + 1
-      else:
-        msb_inverse = base // msb_plus
-        other.__inverse_precision = len(other.d)
-      other.__inverse = BigNum([msb_inverse], 1, True)
+        if other.__inverse is None:
+            # First approximation: the inverse of the first digit in the divisor + 1,
+            # because 1 / 2xx is <= 1/200 and > 1/300.
+            base = Word.from_bytes(Byte.one(), Byte.zero())
+            msb_plus = (other.d[-1] + Byte.one()).lsb()
+            if msb_plus == Byte.zero():
+                msb_inverse = (base - Word.one()).lsb()
+            other.__inverse_precision = len(other.d) + 1
+            else:
+                msb_inverse = base // msb_plus
+            other.__inverse_precision = len(other.d)
+        other.__inverse = BigNum([msb_inverse], 1, True)
 
-    bn_one = BigNum.one()
+        bn_one = BigNum.one()
 
-    while True:
-      # Division using other"s multiplicative inverse.
-      quotient = (self * other.__inverse) >> other.__inverse_precision
-      product = other * quotient
-      if product > self:
-        product -= other
-        quotient -= bn_one
-      if product <= self:
-        remainder = self - product
-        if remainder >= other:
-          remainder -= other
-          quotient += bn_one
-        if remainder < other:
-          return (quotient, remainder)
+        while True:
+            # Division using other"s multiplicative inverse.
+            quotient = (self * other.__inverse) >> other.__inverse_precision
+            product = other * quotient
+            if product > self:
+                product -= other
+                quotient -= bn_one
+            if product <= self:
+                remainder = self - product
+            if remainder >= other:
+                remainder -= other
+                quotient += bn_one
+            if remainder < other:
+                return (quotient, remainder)
       
-      # other needs a better multiplicative inverse approximation.
-      old_inverse = other.__inverse
-      old_precision = other.__inverse_precision
-      other.__inverse = ((old_inverse + old_inverse) << old_precision) - \
-          (other * old_inverse * old_inverse)
-      other.__inverse.normalize()
-      other.__inverse_precision *= 2
-      # Trim zero digits at the end, they don"t help.
-      zero_digits = 0
-      while other.__inverse.d[zero_digits] == Byte.zero():
-        zero_digits += 1
-      if zero_digits > 0:
-        other.__inverse = other.__inverse >> zero_digits
-        other.__inverse_precision -= zero_digits
+            # other needs a better multiplicative inverse approximation.
+            old_inverse = other.__inverse
+            old_precision = other.__inverse_precision
+            other.__inverse = ((old_inverse + old_inverse) << old_precision) - \
+                (other * old_inverse * old_inverse)
+            other.__inverse.normalize()
+            other.__inverse_precision *= 2
+            # Trim zero digits at the end, they don"t help.
+            zero_digits = 0
+            while other.__inverse.d[zero_digits] == Byte.zero():
+                zero_digits += 1
+            if zero_digits > 0:
+                other.__inverse = other.__inverse >> zero_digits
+                other.__inverse_precision -= zero_digits
     
   def powmod(self, exponent, modulus):
     """Modular ^.
