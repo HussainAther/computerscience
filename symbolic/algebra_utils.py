@@ -21,7 +21,6 @@ def encode_sumprod(lst):
 
     return retVal
 
-
 def decode_sumprod(lst):
     retVal = []
 
@@ -36,8 +35,6 @@ def decode_sumprod(lst):
     elif lst[0] == 'Product':
         retVal = Product(retVal)
     else:
-        raise Exception, "Error: List was not an encoded Sum or Product!"
+        raise Exception("Error: List was not an encoded Sum or Product!")
     
     return retVal
-
-
