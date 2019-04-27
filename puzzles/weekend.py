@@ -1,4 +1,3 @@
-
 """
 You have gotten into trouble with some of your, shall we say, difficult friends because
 they have realized that they are not being invited to your house parties. So you announce
@@ -21,44 +20,44 @@ Can you invite all of your friends A through I above following your self-imposed
 Or are you going to have go to back on your word, and not invite someone?
 """
 
-dgraph = { 'B': ['C'],
-           'C': ['B', 'D'],
-           'D': ['C', 'E', 'F'],
-           'E': ['D'],
-           'F': ['D', 'G', 'H', 'I'],
-           'G': ['F'],
-           'H': ['F'],
-           'I': ['F'],
-          'F1': ['D1', 'I1', 'G1', 'H1'],
-          'B1': ['C1'],
-          'D1': ['C1', 'E1', 'F1'],
-          'E1': ['D1'],
-          'H1': ['F1'],
-          'C1': ['D1', 'B1'],
-          'G1': ['F1'],
-          'I1': ['F1']}
+dgraph = { "B": ["C"],
+           "C": ["B", "D"],
+           "D": ["C", "E", "F"],
+           "E": ["D"],
+           "F": ["D", "G", "H", "I"],
+           "G": ["F"],
+           "H": ["F"],
+           "I": ["F"],
+          "F1": ["D1", "I1", "G1", "H1"],
+          "B1": ["C1"],
+          "D1": ["C1", "E1", "F1"],
+          "E1": ["D1"],
+          "H1": ["F1"],
+          "C1": ["D1", "B1"],
+          "G1": ["F1"],
+          "I1": ["F1"]}
 
-dgraph2 = {'F': ['D', 'I', 'G', 'H'],
-           'B': ['C'],
-           'D': ['C', 'E', 'F'],
-           'E': ['D'],
-           'H': ['F'],
-           'C': ['D', 'B'],
-           'G': ['F'],
-           'I': ['F'],
-           'A1': ['B1', 'C1'],
-           'B1': ['A1', 'C1'],
-           'C1': ['A1', 'B1']}
+dgraph2 = {"F": ["D", "I", "G", "H"],
+           "B": ["C"],
+           "D": ["C", "E", "F"],
+           "E": ["D"],
+           "H": ["F"],
+           "C": ["D", "B"],
+           "G": ["F"],
+           "I": ["F"],
+           "A1": ["B1", "C1"],
+           "B1": ["A1", "C1"],
+           "C1": ["A1", "B1"]}
 
-dgraph3 = {'A': ['B'],
-           'B': ['A'],
-           'C': ['D'],
-           'D': ['C', 'E', 'F'],
-           'E': ['D'],
-           'F': ['D', 'G', 'H', 'I'],
-           'G': ['F'],
-           'H': ['F'],
-           'I': ['F']}
+dgraph3 = {"A": ["B"],
+           "B": ["A"],
+           "C": ["D"],
+           "D": ["C", "E", "F"],
+           "E": ["D"],
+           "F": ["D", "G", "H", "I"],
+           "G": ["F"],
+           "H": ["F"],
+           "I": ["F"]}
 
 def bipartiteGraphColor(graph, start, coloring, color):
     """
@@ -92,7 +91,7 @@ def colorDisconnectedGraph(graph, coloring):
     """
     for g in graph:
         if g not in coloring:
-            success, coloring = bipartiteGraphColor(graph, g, coloring, 'Sha')
+            success, coloring = bipartiteGraphColor(graph, g, coloring, "Sha")
             if not success:
                 return False, {}
 
