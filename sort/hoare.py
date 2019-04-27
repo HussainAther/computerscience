@@ -12,7 +12,7 @@ def qs(a):
         p = hoare(a, a[0], a[-1])
         qs(a, a[0], p)
         qs(a, p+1, a[-1])
-
+    return a
 
 def hoare(a, l, h):
     """
