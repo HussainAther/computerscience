@@ -40,7 +40,6 @@ def outputFirstCard(numbers, oneTwo, cards):
     between the two cards that have the same suit.
     It returns the hidden card, the first exposed card, and the distance
     """
-
     encode = (numbers[oneTwo[0]] - numbers[oneTwo[1]]) % 13
     if encode > 0 and encode <= 6:
         hidden = oneTwo[0]
@@ -49,16 +48,13 @@ def outputFirstCard(numbers, oneTwo, cards):
         hidden = oneTwo[1]
         other = oneTwo[0]
         encode = (numbers[oneTwo[1]] - numbers[oneTwo[0]]) % 13
-
-    print ("First card is:", cards[other])
-
+    print("First card is:", cards[other])
     return hidden, other, encode
 
 def outputNext3Cards(code, ind):
     """
     Simple if-else in accordance with problem.
     """
-
     if code == 1:
         second, third, fourth = ind[0], ind[1], ind[2]
     elif code == 2:
@@ -71,7 +67,6 @@ def outputNext3Cards(code, ind):
         second, third, fourth = ind[2], ind[0], ind[1]
     else:
         second, third, fourth = ind[2], ind[1], ind[0]
-
     print ("Second card is:", deck[second])
     print ("Third card is:", deck[third])
     print ("Fourth card is:", deck[fourth])
@@ -89,21 +84,20 @@ def sortList(tlist):
 
     return
 
-
 def ComputerAssistant():
     """
     Randomly generate five cards.
     """
     print ("Cards are character strings as shown below.")
     print ("Ordering is:", deck)
-
     cards, cind, cardsuits, cnumbers = [], [], [], []
     numsuits = [0, 0, 0, 0]
     number = 0
     while number < 99999:
         number = int(input("Please give random number of at least 6 digits:"))
-
-    #Generate five "random" numbers from the input number
+    """
+    Generate five "random" numbers from the input number
+    """
     clist = []
     i = 0
     while len(clist) < 5:
@@ -112,7 +106,6 @@ def ComputerAssistant():
         i += 1
         if not n in clist:
             clist.append(n)
-
    for i in range(5):
         n = clist[i]
         cards.append(deck[n])
@@ -122,26 +115,20 @@ def ComputerAssistant():
         numsuits[n % 4] += 1
         if numsuits[n % 4] > 1:
             pairsuit = n % 4
-
     cardh = []
     for i in range(5):
         if cardsuits[i] == pairsuit:
             cardh.append(i)
-
     hidden, other, encode = outputFirstCard(cnumbers, cardh, cards)
-
     remindices = []
     for i in range(5):
         if i != hidden and i != other:
             remindices.append(cind[i])
-
     sortList(remindices)
     outputNext3Cards(encode, remindices)
-
     guess = input("What is the hidden card?")
     if guess == cards[hidden]:
-        print ("You are a Mind Reader Extraordinaire!")
+        print("You are a Mind Reader Extraordinaire!")
     else:
-        print ("Sorry, not impressed!")
-
+        print("Sorry, not impressed!")
     return
