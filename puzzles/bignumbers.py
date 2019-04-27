@@ -1,207 +1,257 @@
+import os 
+import sys 
+
 """
 Large number arithmetic optimized for massive multicore chip cores.
 Supports arithmetic on large numbers. Practical cases in encryption and
 similar computational technologies.
 """
 
-import os # Used for os.environ.
-import sys # Used to smooth over the range / xrange issue.
-
 # Python 3 doesn"t have xrange, and range behaves like xrange.
 if sys.version_info >= (3,):
     xrange = range
 
 class Byte(object):
-  """An 8-bit digit. (base 256)"""
-  
-  @staticmethod
-  def zero():
-    """A byte initialized to 0."""
-    return Byte._bytes[0]
-  
-  @staticmethod
-  def one():
-    """A byte initialized to 1."""
-    return Byte._bytes[1]
-
-  @staticmethod
-  def from_hex(hex_string):
-    """A byte initialized to the value in the given hexadecimal number.
-    
-    Args:
-      string: a 2-character string containing the hexadecimal digits 0-9, a-f,
-              and/or A-F
     """
-    if len(hex_string) != 2:
-      raise ValueError("Invalid hexadecimal string")
-    d1 = hex_string[0]
-    d2 = hex_string[1]
-    if d1 not in Byte._nibbles or d2 not in Byte._nibbles:
-      raise ValueError("Invalid hexadecimal string")
-    return Byte._bytes[(Byte._nibbles[d1] << 4) | Byte._nibbles[d2]]
-  
-  @staticmethod
-  def h(hex_string):
-    """Shorthand for from_hex(hex_string)."""
-    return Byte.from_hex(hex_string)
-
-  def hex(self):
-    """A 2-character string containing the hexadecimal value of this byte."""
-    return self._hex
-  
-  def word(self):
-    """A Word with the same value as this Byte."""
-    return self._word
-  
-  def __lt__(self, other):
-    """< for Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be compared to other Bytes.
-    return self._byte < other._byte
-
-  def __le__(self, other):
-    """<= for Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be compared to other Bytes.
-    return self._byte <= other._byte
-
-  def __gt__(self, other):
-    """> for Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be compared to other Bytes.
-    return self._byte > other._byte
-
-  def __ge__(self, other):
-    """>= for Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be compared to other Bytes.
-    return self._byte >= other._byte
-  
-  # NOTE: Bytes are singletons and  don"t need __eq__, __ne__, or __hash__.
-
-  def __add__(self, other):
-    """Returns a Word with the result of adding 2 Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be added to other Bytes.
-    return Word._words[(self._byte + other._byte) & 0xFFFF]
-
-  def __sub__(self, other):
-    """Returns a Word with the result of subtracting 2 Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be subtracted from other Bytes.
-    return Word._words[(0x10000 + self._byte - other._byte) & 0xFFFF]
-
-  def __mul__(self, other):
-    """Returns a Word with the result of multiplying 2 Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be multiplied to other Bytes.
-    return Word._words[self._byte * other._byte]
-  
-  def __floordiv__(self, other):
-    """Returns a Byte with the division quotient of 2 Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be divided by other Bytes.
-    return self.word() // other
-
-  def __mod__(self, other):
-    """Returns a Byte with the division remainder of 2 Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be divided by other Bytes.
-    return self.word() % other
-  
-  def __and__(self, other):
-    """Returns the logical AND of two Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be ANDed with other Bytes.
-    return Byte._bytes[self._byte & other._byte]
-  
-  def __or__(self, other):
-    """Returns the logical AND of two Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be ORed with other Bytes.
-    return Byte._bytes[self._byte | other._byte]
-  
-  def __xor__(self, other):
-    """Returns the logical AND of two Bytes."""
-    if not isinstance(other, Byte):
-      return NotImplemented  # Bytes can only be XORed with other Bytes.
-    return Byte._bytes[self._byte ^ other._byte]
-  
-  def __str__(self):
-    """Debugging help: returns the Byte formatted as "0x??"."""
-    return "0x" + self.hex()
-  
-  def __repr__(self):
-    """Debugging help: returns a Python expression that can create this Byte."""
-    return "Byte.h("" + self.hex() + "")"
-
-  def __init__(self, value):
-    """Do not call the Byte constructor directly.
-    
-    Use Byte.zero(), Byte.one(), or Byte.from_hex() instead.
+    An 8-bit digit. (base 256)
     """
-    if len(Byte._bytes) == 0x100:  # True after all Byte singletons are created.
-      raise ValueError("Do not call the Byte constructor directly!")
-    self._byte = value
-    self._hex = Byte._hex_digits[value >> 4] + Byte._hex_digits[value & 0xF]
-    self._word = None  # Will be set during initialization.
-
-  # Private: maps nibbles to hexadecimal digit strings.
-  _hex_digits = "0123456789ABCDEF"
-
-  # Private: maps hexadecimal digit strings to nibbles.
-  _nibbles = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
-              "8": 8, "9": 9,
-              "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15,
-              "a": 10, "b": 11, "c": 12, "d": 13, "e": 14, "f": 15}
   
-  # Private: array of singleton Byte instances.
-  _bytes = []
+    @staticmethod
+    def zero():
+        """
+        A byte initialized to 0
+        """
+        return Byte._bytes[0]
+  
+    @staticmethod
+    def one():
+        """
+        A byte initialized to 1
+        """
+        return Byte._bytes[1]
+
+    @staticmethod
+    def from_hex(hex_string):
+        """
+        A byte initialized to the value in the given hexadecimal number.
+        hex_ string is a 2-character string containing the hexadecimal digits 0-9, a-f,
+                  and/or A-F
+        """
+        if len(hex_string) != 2:
+            raise ValueError("Invalid hexadecimal string")
+        d1 = hex_string[0]
+        d2 = hex_string[1]
+        if d1 not in Byte._nibbles or d2 not in Byte._nibbles:
+            raise ValueError("Invalid hexadecimal string")
+        return Byte._bytes[(Byte._nibbles[d1] << 4) | Byte._nibbles[d2]]
+
+    @staticmethod
+    def h(hex_string):
+        """
+        "Shorthand for from_hex(hex_string)
+        """
+        return Byte.from_hex(hex_string)
+
+    def hex(self):
+        """
+        A 2-character string containing the hexadecimal value of this byte.
+        """
+        return self._hex
+  
+    def word(self):
+        """
+        A Word with the same value as this Byte.
+        """
+        return self._word
+  
+    def __lt__(self, other):
+        """
+        < for Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be compared to other Bytes.
+        return self._byte < other._byte
+
+    def __le__(self, other):
+        """
+        <= for Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be compared to other Bytes.
+        return self._byte <= other._byte
+
+    def __gt__(self, other):
+        """
+        > for Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be compared to other Bytes.
+        return self._byte > other._byte
+
+    def __ge__(self, other):
+        """
+        >= for Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be compared to other Bytes.
+        return self._byte >= other._byte
+  
+# NOTE: Bytes are singletons and  don"t need __eq__, __ne__, or __hash__.
+
+    def __add__(self, other):
+        """
+        Returns a Word with the result of adding 2 Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be added to other Bytes.
+        return Word._words[(self._byte + other._byte) & 0xFFFF]
+
+    def __sub__(self, other):
+        """
+        Returns a Word with the result of subtracting 2 Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be subtracted from other Bytes.
+        return Word._words[(0x10000 + self._byte - other._byte) & 0xFFFF]
+
+    def __mul__(self, other):
+        """
+        Returns a Word with the result of multiplying 2 Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be multiplied to other Bytes.
+        return Word._words[self._byte * other._byte]
+  
+    def __floordiv__(self, other):
+        """
+        Returns a Byte with the division quotient of 2 Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be divided by other Bytes.
+        return self.word() // other
+
+    def __mod__(self, other):
+        """
+        Returns a Byte with the division remainder of 2 Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be divided by other Bytes.
+        return self.word() % other
+  
+    def __and__(self, other):
+        """
+        Returns the logical AND of two Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be ANDed with other Bytes.
+        return Byte._bytes[self._byte & other._byte]
+  
+    def __or__(self, other):
+        """
+        Returns the logical AND of two Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be ORed with other Bytes.
+        return Byte._bytes[self._byte | other._byte]
+  
+    def __xor__(self, other):
+        """
+        Returns the logical AND of two Bytes.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Bytes can only be XORed with other Bytes.
+        return Byte._bytes[self._byte ^ other._byte]
+  
+    def __str__(self):
+        """
+        Debugging help: returns the Byte formatted as "0x??".
+        """
+        return "0x" + self.hex()
+  
+    def __repr__(self):
+        """
+        Debugging help: returns a Python expression that can create this Byte.
+        """
+        return "Byte.h("" + self.hex() + "")"
+
+    def __init__(self, value):
+        """
+        Do not call the Byte constructor directly.
+        Use Byte.zero(), Byte.one(), or Byte.from_hex() instead.
+        """
+        if len(Byte._bytes) == 0x100:  # True after all Byte singletons are created.
+            raise ValueError("Do not call the Byte constructor directly!")
+        self._byte = value
+        self._hex = Byte._hex_digits[value >> 4] + Byte._hex_digits[value & 0xF]
+        self._word = None  # Will be set during initialization.
+
+        # Private: maps nibbles to hexadecimal digit strings.
+        _hex_digits = "0123456789ABCDEF"
+
+        # Private: maps hexadecimal digit strings to nibbles.
+        _nibbles = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7,
+                  "8": 8, "9": 9,
+                  "A": 10, "B": 11, "C": 12, "D": 13, "E": 14, "F": 15,
+                  "a": 10, "b": 11, "c": 12, "d": 13, "e": 14, "f": 15}
+  
+        # Private: array of singleton Byte instances.
+        _bytes = []
 
 class Word(object):
-  """A 16-bit digit. (base 65536)"""
-
-  @staticmethod
-  def zero():
-    """A word initialized to 0."""
-    return Word._words[0]
-  
-  @staticmethod
-  def one():
-    """A word initialized to 1."""
-    return Word._words[1]
-
-  @staticmethod
-  def from_byte(byte):
-    """A word initialized to the value of a Byte."""
-    if not isinstance(byte, Byte):
-      raise ValueError("The argument is not a Byte")
-    return Word._words[byte._byte]
-  
-  @staticmethod
-  def from_bytes(msb, lsb):
-    """A word initialized from two Bytes. (msb:lsb)"""
-    if not (isinstance(msb, Byte) and isinstance(lsb, Byte)):
-      raise ValueError("The arguments are not both Bytes")
-    return Word._words[(msb._byte << 8) | lsb._byte]
-
-  @staticmethod
-  def from_hex(hex_string):
-    """A word initialized to the value in the given hexadecimal number.
-    
-    Args:
-      string: a 2-character string containing the hexadecimal digits 0-9, a-f,
-              and/or A-F
     """
-    if len(hex_string) != 4:
-      raise ValueError("Invalid hexadecimal string")
-    return Word.from_bytes(Byte.from_hex(hex_string[0:2]),
+    A 16-bit digit. (base 65536)
+    """
+
+    @staticmethod
+    def zero():
+        """
+        A word initialized to 0.
+        """
+        return Word._words[0]
+  
+    @staticmethod
+    def one():
+        """
+        A word initialized to 1.
+        """
+        return Word._words[1]
+
+    @staticmethod
+    def from_byte(byte):
+        """
+        A word initialized to the value of a Byte.
+        """
+        if not isinstance(byte, Byte):
+            raise ValueError("The argument is not a Byte")
+        return Word._words[byte._byte]
+  
+    @staticmethod
+    def from_bytes(msb, lsb):
+        """
+        A word initialized from two Bytes. (msb:lsb)
+        """
+        if not (isinstance(msb, Byte) and isinstance(lsb, Byte)):
+            raise ValueError("The arguments are not both Bytes")
+        return Word._words[(msb._byte << 8) | lsb._byte]
+
+    @staticmethod
+    def from_hex(hex_string):
+        """
+        A word initialized to the value in the given hexadecimal number.
+        hex_string is a 2-character string containing the hexadecimal digits 0-9, a-f,
+            and/or A-F
+        """
+        if len(hex_string) != 4:
+            raise ValueError("Invalid hexadecimal string")
+        return Word.from_bytes(Byte.from_hex(hex_string[0:2]),
                            Byte.from_hex(hex_string[2:4]))
   
-  @staticmethod
-  def h(hex_string):
-    """Shorthand for from_hex(hex_string)."""
-    return Word.from_hex(hex_string)
+    @staticmethod
+    def h(hex_string):
+        """
+        Shorthand for from_hex(hex_string).
+        """
+        return Word.from_hex(hex_string)
 
   def hex(self):
     """A 4-character string containing the hexadecimal value of this word."""
@@ -726,9 +776,6 @@ class BigNum(object):
   def is_normalized(self):
     """False if the number has at least one trailing 0 (zero) digit."""
     return len(self.d) == 1 or self.d[-1] != Byte.zero()
-
-  ### SOLUTION BLOCK
-  
   def slow_mul(self, other):
     """
     Slow method for multiplying two numbers w/ good constant factors.
