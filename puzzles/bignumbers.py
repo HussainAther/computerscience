@@ -795,19 +795,19 @@ class BigNum(object):
         modulus is the modulus
         Return (self ^ exponent) mod modulus.
         """
-    multiplier = BigNum(self.d)
-    result = BigNum.one()
-    exp = BigNum(exponent.d)
-    exp.normalize()
-    two = (Byte.one() + Byte.one()).lsb()
-    for i in xrange(len(exp.d)):
-      mask = Byte.one()
-      for j in xrange(0, 8):
-        if (exp.d[i] & mask) != Byte.zero():
-          result = (result * multiplier) % modulus
-        mask = (mask * two).lsb()
-        multiplier = (multiplier * multiplier) % modulus
-    return result
+        multiplier = BigNum(self.d)
+        result = BigNum.one()
+        exp = BigNum(exponent.d)
+        exp.normalize()
+        two = (Byte.one() + Byte.one()).lsb()
+        for i in xrange(len(exp.d)):
+            mask = Byte.one()
+            for j in xrange(0, 8):
+                if (exp.d[i] & mask) != Byte.zero():
+                    result = (result * multiplier) % modulus
+                mask = (mask * two).lsb()
+                multiplier = (multiplier * multiplier) % modulus
+        return result
   
   def __str__(self):
     """Debugging help: returns the BigNum formatted as "0x????..."."""
