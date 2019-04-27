@@ -397,29 +397,29 @@ class Word(object):
 
 # Private: initialize singleton Byte instances.
 for i in range(0, 0x100):
-  Byte._bytes.append(Byte(i))
+    Byte._bytes.append(Byte(i))
 
 # Private: initialize singleton Word instances.
 for i in range(0, 0x10000):
-  Word._words.append(Word(i))
+    Word._words.append(Word(i))
 
 # Private: link Byte instances to their corresponding Words.
 for i in range(0, 0x100):
-  Byte._bytes[i]._word = Word._words[i]
+    Byte._bytes[i]._word = Word._words[i]
 
 
 class BigNum(object):
-  """Large number implemented as a little-endian array of Bytes."""
-  
-  def __init__(self, digits, size = None, no_copy = False):
-    """Creates a BigNum from a sequence of digits.
-    
-    Args:
-      digits: the Bytes used to populate the BigNum
-      size: if set, the BigNum will only use the first "size" elements of digits
-      no_copy: uses the "digits" argument as the backing store for BigNum, if
-               appropriate (meant for internal use inside BigNum)
     """
+    Large number implemented as a little-endian array of Bytes.
+    """
+    def __init__(self, digits, size = None, no_copy = False):
+        """
+        Create a BigNum from a sequence of digits.
+        digits is the Bytes used to populate the BigNum
+        size is if set, the BigNum will only use the first "size" elements of digits
+        no_copy is uses the "digits" argument as the backing store for BigNum, if
+               appropriate (meant for internal use inside BigNum)
+        """
     if size is None:
       size = len(digits)
     elif size < 0:
