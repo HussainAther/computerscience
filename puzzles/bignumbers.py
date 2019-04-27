@@ -633,26 +633,26 @@ class BigNum(object):
         Subtracting numbers does not normalize them. However, the result is
         normalized.
         """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be subtracted from BigNums.    
-    result = BigNum.zero(max(len(self.d), len(other.d)))
-    carry = Byte.zero()
-    for i in xrange(0, len(result.d)):
-      if i < len(self.d):
-        a = self.d[i].word()
-      else:
-        a = Word.zero()
-      if i < len(other.d):
-        b = other.d[i] + carry
-      else:
-        b = carry.word()
-      word = a - b
-      result.d[i] = word.lsb()
-      if a < b:
-        carry = Byte.one()
-      else:
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be subtracted from BigNums.
+        result = BigNum.zero(max(len(self.d), len(other.d)))
         carry = Byte.zero()
-    return result.normalize()
+        for i in xrange(0, len(result.d)):
+            if i < len(self.d):
+                a = self.d[i].word()
+            else:
+                a = Word.zero()
+            if i < len(other.d):
+                b = other.d[i] + carry
+            else:
+                b = carry.word()
+            word = a - b
+            result.d[i] = word.lsb()
+            if a < b:
+                carry = Byte.one()
+            else:
+                carry = Byte.zero()
+        return result.normalize()
   
   def __mul__(self, other):
     """* for BigNums.
