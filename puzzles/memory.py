@@ -23,16 +23,18 @@ def coinsVariant(row, table):
     """
     Recursively select coins satisfying the adjacency constraint.
     """
-
-    #Base case: no coins
+    """
+    Base case: no coins
+    """
     if len(row) == 0:
         table[0] = 0
         return 0, table
-    #base case: one coin, select it
+    """
+    Base case: one coin, select it
+    """
     elif len(row) == 1:
         table[1] = row[0]
         return row[0], table
-
     """
     Take the maximum amount and store it. With the
     recursive calls, we can skip, pick the coin and skip the next,
@@ -43,7 +45,6 @@ def coinsVariant(row, table):
     pickPick = coinsVariant(row[4:], table)[0] + row[0] + row[1]
     result = max(skip, pickSkip, pickPick)
     table[len(row)] = result
-    
     return result, table
 
 def tracebackVariant(row, table):
@@ -51,10 +52,8 @@ def tracebackVariant(row, table):
     Input row of coins and the maximum value of each subproblem
     stored in the dictionary.
     """
-
     #Tracing back the coin selection
     select = []
-
     i = 0
     print("  Row:", row)
     print("Table:", table)
@@ -84,7 +83,6 @@ def coinsVariantMemoize(row, memo):
     We look up in this dictionary to  make sure subprolems are not solved more
     than once.
     """
-
     if len(row) == 0:
         memo[0] = 0
         return 0, memo
@@ -95,20 +93,17 @@ def coinsVariantMemoize(row, memo):
         return memo[len(row)], memo
     except KeyError:
         #Subproblem was not solved, need to solve it
-
         skip = coinsVariantMemoize(row[1:], memo)[0]
         pickSkip = coinsVariantMemoize(row[2:], memo)[0] + row[0]
         pickPick = coinsVariantMemoize(row[4:], memo)[0] + row[0] + row[1]
         result = max(skip, pickSkip, pickPick)
         memo[len(row)] = result
-        
         return result, memo
 
 def coinsVariantIterative(row):
     """
     Iteratively select coins.
     """
-
     table = {}
     table[0] = 0
     table[1] = row[-1]
@@ -118,7 +113,6 @@ def coinsVariantIterative(row):
         resulti = max(table[i-4] + row[1-i] + row[-i],\
                        table[i-2] + row[-i], table[i-1])
         table[i] = resulti
-
     return table[len(row)], table
 
 row = [14, 3, 27, 4, 5, 15, 1]
@@ -128,7 +122,6 @@ result, memo = coinsVariantMemoize(row, {})
 tracebackVariant(row, memo)
 result, memo = coinsVariantIterative(row)
 tracebackVariant(row, memo)
-
 
 lrow = [3, 15, 17, 23, 11, 3, 4, 5, 17, 23, 34, 17, 18, 14, 12, 15]
 result, memo = coinsVariant(lrow, {})
