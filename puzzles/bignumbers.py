@@ -100,7 +100,7 @@ class Byte(object):
 
     def __add__(self, other):
         """
-        Returns a Word with the result of adding 2 Bytes.
+        Return a Word with the result of adding 2 Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be added to other Bytes.
@@ -108,7 +108,7 @@ class Byte(object):
 
     def __sub__(self, other):
         """
-        Returns a Word with the result of subtracting 2 Bytes.
+        Return a Word with the result of subtracting 2 Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be subtracted from other Bytes.
@@ -116,7 +116,7 @@ class Byte(object):
 
     def __mul__(self, other):
         """
-        Returns a Word with the result of multiplying 2 Bytes.
+        Return a Word with the result of multiplying 2 Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be multiplied to other Bytes.
@@ -124,7 +124,7 @@ class Byte(object):
   
     def __floordiv__(self, other):
         """
-        Returns a Byte with the division quotient of 2 Bytes.
+        Return a Byte with the division quotient of 2 Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be divided by other Bytes.
@@ -132,7 +132,7 @@ class Byte(object):
 
     def __mod__(self, other):
         """
-        Returns a Byte with the division remainder of 2 Bytes.
+        Return a Byte with the division remainder of 2 Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be divided by other Bytes.
@@ -140,7 +140,7 @@ class Byte(object):
   
     def __and__(self, other):
         """
-        Returns the logical AND of two Bytes.
+        Return the logical AND of two Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be ANDed with other Bytes.
@@ -148,7 +148,7 @@ class Byte(object):
   
     def __or__(self, other):
         """
-        Returns the logical AND of two Bytes.
+        Return the logical AND of two Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be ORed with other Bytes.
@@ -156,7 +156,7 @@ class Byte(object):
   
     def __xor__(self, other):
         """
-        Returns the logical AND of two Bytes.
+        Return the logical AND of two Bytes.
         """
         if not isinstance(other, Byte):
             return NotImplemented  # Bytes can only be XORed with other Bytes.
@@ -253,73 +253,95 @@ class Word(object):
         """
         return Word.from_hex(hex_string)
 
-  def hex(self):
-    """A 4-character string containing the hexadecimal value of this word."""
-    return self._hex
+    def hex(self):
+        """
+        A 4-character string containing the hexadecimal value of this word.
+        """
+        return self._hex
 
-  def lsb(self):
-    """The word"s least significant Byte."""
-    return self._lsb
+    def lsb(self):
+        """
+        The word"s least significant Byte.
+        """
+        return self._lsb
 
-  def msb(self):
-    """The word"s most significant Byte."""
-    return self._msb
+    def msb(self):
+        """
+        The word"s most significant Byte.
+        """
+        return self._msb
 
-  def __lt__(self, other):
-    """< for Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be compared to other Words.
-    return self._word < other._word
+    def __lt__(self, other):
+        """
+        < for Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be compared to other Words.
+        return self._word < other._word
 
-  def __le__(self, other):
-    """<= for Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be compared to other Words.
-    return self._word <= other._word
+    def __le__(self, other):
+        """
+        <= for Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be compared to other Words.
+        return self._word <= other._word
 
-  def __gt__(self, other):
-    """> for Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be compared to other Words.
-    return self._word > other._word
+    def __gt__(self, other):
+        """
+        > for Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be compared to other Words.
+        return self._word > other._word
 
-  def __ge__(self, other):
-    """>= for Words."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be compared to other Words.
-    return self._word >= other._word
+    def __ge__(self, other):
+        """
+        >= for Words.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be compared to other Words.
+        return self._word >= other._word
 
-  # NOTE: Words are singletons and  don"t need __eq__, __ne__, or __hash__.
+# NOTE: Words are singletons and  don"t need __eq__, __ne__, or __hash__.
 
-  def __add__(self, other):
-    """Returns a Word with the result of adding 2 Words modulo 65,536."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be added to other Words.
-    return Word._words[(self._word + other._word) & 0xFFFF]
+    def __add__(self, other):
+        """
+        Return a Word with the result of adding 2 Words modulo 65,536.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be added to other Words.
+        return Word._words[(self._word + other._word) & 0xFFFF]
 
-  def __sub__(self, other):
-    """Returns a Word with the result of subtracting 2 Words modulo 65,536."""
-    if not isinstance(other, Word):
-      return NotImplemented  # Words can only be subtracted from other Words.
-    return Word._words[(0x10000 + self._word - other._word) & 0xFFFF]
+    def __sub__(self, other):
+        """
+        Return a Word with the result of subtracting 2 Words modulo 65,536.
+        """
+        if not isinstance(other, Word):
+            return NotImplemented  # Words can only be subtracted from other Words.
+        return Word._words[(0x10000 + self._word - other._word) & 0xFFFF]
 
-  def __mul__(self, other):
-    """Do not call. Multiply two Bytes to obtain a Word."""
-    return NotImplemented  # Multiply two Bytes to obtain a Word.
+    def __mul__(self, other):
+        """
+        Do not call. Multiply two Bytes to obtain a Word.
+        """
+        return NotImplemented  # Multiply two Bytes to obtain a Word.
 
-  def __floordiv__(self, other):
-    """Returns a Byte with the division quotient between this Word and a Byte.
-    """
-    if not isinstance(other, Byte):
-      return NotImplemented  # Words can only be divided by Bytes.
-    return Byte._bytes[(self._word // other._byte) & 0xFF]
+    def __floordiv__(self, other):
+        """
+        Return a Byte with the division quotient between this Word and a Byte.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Words can only be divided by Bytes.
+        return Byte._bytes[(self._word // other._byte) & 0xFF]
 
-  def __mod__(self, other):
-    """Returns a Byte with the division remainder between this Word and a Byte.
-    """
-    if not isinstance(other, Byte):
-      return NotImplemented  # Words can only be divided by other Bytes.
-    return Byte._bytes[self._word % other._byte]
+    def __mod__(self, other):
+        """
+        Return a Byte with the division remainder between this Word and a Byte.
+        """
+        if not isinstance(other, Byte):
+            return NotImplemented  # Words can only be divided by other Bytes.
+        return Byte._bytes[self._word % other._byte]
 
   def __and__(self, other):
     """Returns the logical AND of two Words."""
