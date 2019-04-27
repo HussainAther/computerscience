@@ -851,22 +851,20 @@ class BigNum(object):
             result.d[i + len(other.d)] = carry
         return result.normalize()
 
-  def slow_divmod(self, other):
-    """
-    Slow method for dividing two numbers w/ good constant factors.
-    """
-    remainder = BigNum(self.d)
-    divisors = [BigNum(other.d)]
-    two = BigNum.one() + BigNum.one()
-    while divisors[-1] < remainder:
-      divisors.append((divisors[-1] + divisors[-1]).normalize())
+    def slow_divmod(self, other):
+        """
+        Slow method for dividing two numbers w/ good constant factors.
+        """
+        remainder = BigNum(self.d)
+        divisors = [BigNum(other.d)]
+        two = BigNum.one() + BigNum.one()
+        while divisors[-1] < remainder:
+            divisors.append((divisors[-1] + divisors[-1]).normalize())
     
-    quotient = BigNum.zero()
-    for i in xrange(len(divisors) - 1, -1, -1):
-      quotient = (quotient + quotient).normalize()
-      if remainder >= divisors[i]:
-        remainder = (remainder - divisors[i]).normalize()
-        quotient.d[0] |= Byte.one()
-    return (quotient.normalize(), remainder)    
-  
-  ### END SOLUTION BLOCK
+        quotient = BigNum.zero()
+        for i in xrange(len(divisors) - 1, -1, -1):
+            quotient = (quotient + quotient).normalize()
+            if remainder >= divisors[i]:
+                remainder = (remainder - divisors[i]).normalize()
+            quotient.d[0] |= Byte.one()
+        return (quotient.normalize(), remainder)
