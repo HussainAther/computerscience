@@ -6,7 +6,9 @@ be how we flipped the stack of pancakse from some prat in the center.
 """
 
 def f(a, i):
-    # flip the array
+    """
+    Flip the array a at index i.
+    """
     s = 0
     while s < i:
         t = a[s]
