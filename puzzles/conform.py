@@ -9,7 +9,7 @@ that the cap on the left below is being normally worn and the one on the right i
 worn backwards.
 
 Input is a vector of F's and B's, in terms of forwards and backwards caps
-Output is a set of commands (printed out) to get either all F"s or all B"s
+Output is a set of commands (printed out) to get either all F's or all B's
 Our goal is to perform this in the fewest number of commands.
 """
 
@@ -52,7 +52,7 @@ def pleaseConform(caps):
         if t[2] == flip:
             #Exercise: if t[0] == t[1] change the printing!
             if t[0] == t[1]:
-                print ("Person at position", t[0], "flip your cap!")
+                print("Person at position", t[0], "flip your cap!")
             else:
-                print ("People in positions", t[0], "through", t[1], "flip your caps!")
+                print("People in positions", t[0], "through", t[1], "flip your caps!")
 
