@@ -572,23 +572,25 @@ class BigNum(object):
             return NotImplemented  # BigNums can only be compared to other BigNums.
         return not self.__lt__(other)
 
-  def __lshift__(self, digits):
-    """This BigNum, with "digits" 0 digits appended at the end.
+    def __lshift__(self, digits):
+        """
+        This BigNum, with "digits" 0 digits appended at the end.
     
-    Shifting to the left multiplies the BigNum by 256^digits.
-    """
-    new_digits = [Byte.zero()] * digits
-    new_digits.extend(self.d)
-    return BigNum(new_digits, None, True)
+        Shifting to the left multiplies the BigNum by 256^digits.
+        """
+        new_digits = [Byte.zero()] * digits
+        new_digits.extend(self.d)
+        return BigNum(new_digits, None, True)
 
-  def __rshift__(self, digits):
-    """This BigNum, without the last "digits" digits.
+    def __rshift__(self, digits):
+        """
+        This BigNum, without the last "digits" digits.
     
-    Shifting to the left multiplies the BigNum by 256^digits.
-    """
-    if digits >= len(self.d):
-      return BigNum.zero()
-    return BigNum(self.d[digits:], None, True)
+        Shifting to the left multiplies the BigNum by 256^digits.
+        """
+        if digits >= len(self.d):
+            return BigNum.zero()
+        return BigNum(self.d[digits:], None, True)
   
   def __add__(self, other):
     """+ for BigNums.
