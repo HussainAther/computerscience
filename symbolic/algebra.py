@@ -66,7 +66,9 @@ class Product(list, Expression):
         return result.flatten()
 
     def flatten(self):
-        """Simplifies nested products."""
+        """
+        Simplifies nested products.
+        """
         factors = []
         for factor in self:
             if isinstance(factor, Product):
@@ -105,20 +107,11 @@ def do_multiply(expr1, expr2):
     You have two Expressions, and you need to make a simplified expression
     representing their product. They are guaranteed to be of type Expression
     -- that is, either Sums or Products -- by the multiply() function that
-    calls this one.
-
-    So, you have four cases to deal with:
-    * expr1 is a Sum, and expr2 is a Sum
-    * expr1 is a Sum, and expr2 is a Product
-    * expr1 is a Product, and expr2 is a Sum
-    * expr1 is a Product, and expr2 is a Product
-
-    You need to create Sums or Products that represent what you get by
-    applying the algebraic rules of multiplication to these expressions,
-    and simplifying.
-
-    Look above for details on the Sum and Product classes. The Python operator
-    '*' will not help you.
+    calls this one. Our classes are: expr1 is a Sum, and expr2 is a Sum;
+    expr1 is a Sum, and expr2 is a Product; expr1 is a Product, and expr2 is a Sum;
+    expr1 is a Product, and expr2 is a Product. We create Sums or Products 
+    that represent what we get by applying the algebraic rules of 
+    multiplication to these expressions, and simplifying.
     """
     # Replace this with your solution.
     raise NotImplementedError
