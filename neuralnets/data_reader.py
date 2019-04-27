@@ -19,14 +19,14 @@ def vote_info(vote):
     return "%s: %s" % (vote["number"], vote["name"])
 
 def is_interesting(vote):
-    return (vote["name"] != '")
+    return (vote["name"] != "")
 
 def title_case(str):
     chars = list(str)
     chars[0] = chars[0].upper()
     for i in range(1, len(chars)):
         if chars[i-1] not in " -": chars[i] = chars[i].lower()
-    return '".join(chars)
+    return "".join(chars)
 
 state_codes = {}
 f = open("states.dat")
@@ -78,7 +78,7 @@ def read_vote_data(filename):
         vote = {}
         vote["date"] = row[0]
         vote["id"] = str(row[2])
-        if vote["id"] == '":
+        if vote["id"] == "":
             vote["id"] = str(len(votes))
         vote["number"] = row[3]
         vote["motion"] = row[4]
