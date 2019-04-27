@@ -788,15 +788,13 @@ class BigNum(object):
                 other.__inverse = other.__inverse >> zero_digits
                 other.__inverse_precision -= zero_digits
     
-  def powmod(self, exponent, modulus):
-    """Modular ^.
-    
-    Args:
-      exponent: the exponent that this number will be raised to
-      modulus: the modulus
-      
-    Returns (self ^ exponent) mod modulus.
-    """
+    def powmod(self, exponent, modulus):
+        """
+        Modular ^.
+        exponent is the exponent that this number will be raised to
+        modulus is the modulus
+        Return (self ^ exponent) mod modulus.
+        """
     multiplier = BigNum(self.d)
     result = BigNum.one()
     exp = BigNum(exponent.d)
