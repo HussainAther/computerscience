@@ -673,25 +673,25 @@ class BigNum(object):
         """
         return self.fast_mul(other)
 
-  def fast_mul(self, other):
-    """
-    Asymptotically fast method for multiplying two numbers.
-    """
-    in_digits = max(len(self.d), len(other.d))
-    if in_digits == 1:
-      product = self.d[0] * other.d[0]
-      return BigNum([product.lsb(), product.msb()], 2, True)
-    split = in_digits // 2
-    self_low = BigNum(self.d[:split], None, True)
-    self_high = BigNum(self.d[split:], None, True)
-    other_low = BigNum(other.d[:split], None, True)
-    other_high = BigNum(other.d[split:], None, True)
-    
-    result_high_high = self_high * other_high
-    result_low = self_low * other_low
-    result_high = (self_low + self_high) * (other_low + other_high) - \
+    def fast_mul(self, other):
+        """
+        Asymptotically fast method for multiplying two numbers.
+        """
+        in_digits = max(len(self.d), len(other.d))
+        if in_digits == 1:
+            product = self.d[0] * other.d[0]
+            return BigNum([product.lsb(), product.msb()], 2, True)
+        split = in_digits // 2
+        self_low = BigNum(self.d[:split], None, True)
+        self_high = BigNum(self.d[split:], None, True)
+        other_low = BigNum(other.d[:split], None, True)
+        other_high = BigNum(other.d[split:], None, True)
+
+        result_high_high = self_high * other_high
+        result_low = self_low * other_low
+        result_high = (self_low + self_high) * (other_low + other_high) - \
                   (result_high_high + result_low)
-    return ((result_high_high << (2 * split)) + (result_high << split) +
+        return ((result_high_high << (2 * split)) + (result_high << split) +
             result_low).normalize()
   
   def __floordiv__(self, other):
