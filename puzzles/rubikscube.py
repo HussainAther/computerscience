@@ -1,4 +1,5 @@
 import rubik
+
 from collections import deque
 
 """
