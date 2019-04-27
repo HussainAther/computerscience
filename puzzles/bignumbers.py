@@ -654,17 +654,18 @@ class BigNum(object):
                 carry = Byte.zero()
         return result.normalize()
   
-  def __mul__(self, other):
-    """* for BigNums.
+    def __mul__(self, other):
+        """
+        * for BigNums.
     
-    Multiplying numbers does not normalize them. However, the result is
-    normalized.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be multiplied by BigNums.    
-    if len(self.d) <= 64 or len(other.d) <= 64:
-      return self.slow_mul(other)
-    return self.fast_mul(other)
+        Multiplying numbers does not normalize them. However, the result is
+        normalized.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be multiplied by BigNums.
+        if len(self.d) <= 64 or len(other.d) <= 64:
+            return self.slow_mul(other)
+        return self.fast_mul(other)
 
   def slow_mul(self, other):
     """
