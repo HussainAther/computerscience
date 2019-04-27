@@ -453,38 +453,40 @@ class BigNum(object):
         digits[0] = Byte.one()
         return BigNum(digits, size, True)
   
-  @staticmethod
-  def from_hex(hex_string):
-    """BigNum representing the given hexadecimal number.
-    
-    Args:
-      hex_string: string containing the desired number in hexadecimal; the
+    @staticmethod
+    def from_hex(hex_string):
+        """
+        BigNum representing the given hexadecimal number.
+        hex_string is a string containing the desired number in hexadecimal; the
                   allowed digits are 0-9, A-F, a-f
-    """
-    digits = []
-    for i in xrange(len(hex_string), 0, -2):
-      if i == 1:
-        byte_string = "0" + hex_string[0]
-      else:
-        byte_string = hex_string[(i - 2):i]
-      digits.append(Byte.from_hex(byte_string))
-    return BigNum(digits, None, True)
+        """
+        digits = []
+        for i in xrange(len(hex_string), 0, -2):
+            if i == 1:
+                byte_string = "0" + hex_string[0]
+            else:
+                byte_string = hex_string[(i - 2):i]
+        digits.append(Byte.from_hex(byte_string))
+        return BigNum(digits, None, True)
   
-  @staticmethod
-  def h(hex_string):
-    """Shorthand for from_hex(hex_string)."""
-    return BigNum.from_hex(hex_string)
+    @staticmethod
+    def h(hex_string):
+        """
+        Shorthand for from_hex(hex_string).
+        """
+        return BigNum.from_hex(hex_string)
   
-  def hex(self):
-    """Hexadecimal string representing this BigNum.
+    def hex(self):
+        """
+        Hexadecimal string representing this BigNum.
     
-    This method does not normalize the BigNum, because it is used during
-    debugging.
-    """
-    start = len(self.d) - 1
-    while start > 0 and self.d[start] == Byte.zero():
-      start -= 1
-    return "".join([self.d[i].hex() for i in xrange(start, -1, -1)])
+        This method does not normalize the BigNum, because it is used during
+        debugging.
+        """
+        start = len(self.d) - 1
+        while start > 0 and self.d[start] == Byte.zero():
+            start -= 1
+        return "".join([self.d[i].hex() for i in xrange(start, -1, -1)])
   
   def __eq__(self, other):
     """== for BigNums.
