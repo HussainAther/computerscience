@@ -667,11 +667,11 @@ class BigNum(object):
             return self.slow_mul(other)
         return self.fast_mul(other)
 
-  def slow_mul(self, other):
-    """
-    Slow method for multiplying two numbers w/ good constant factors.
-    """
-    return self.fast_mul(other)
+    def slow_mul(self, other):
+        """
+        Slow method for multiplying two numbers w/ good constant factors.
+        """
+        return self.fast_mul(other)
 
   def fast_mul(self, other):
     """
