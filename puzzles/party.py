@@ -1,4 +1,3 @@
-
 """
 There is a party to celebrate celebrities that you get to attend because you won a ticket at
 your office lottery. Because of the high demand for tickets you only get to stay for one
@@ -42,8 +41,7 @@ def bestTimeToPartySmart(schedule, ystart, yend):
 
     sortlist(times)
     maxcount, time = chooseTimeConstrained(times, ystart, yend)
-
-    print ("The best time to attend the party is at", time,\
+    print("The best time to attend the party is at", time,\
            "o\"clock", ":", maxcount, "celebrities will be attending!")
 
 def sortlist(tlist):
@@ -63,11 +61,12 @@ def sortlist(tlist):
 
 
 def chooseTimeConstrained(times, ystart, yend):
-
+    """
+    Use the contraint to choose times.
+    """
     rcount = 0
     maxcount = 0
     time = 0
-    
     for t in times: # max number of celebrities
         if t[1] == "start":
             rcount = rcount + 1
