@@ -624,14 +624,15 @@ class BigNum(object):
             carry = word.msb()
         return result.normalize()
 
-  def __sub__(self, other):
-    """- for BigNums.
+    def __sub__(self, other):
+        """
+        - for BigNums.
     
-    Subtraction is done using 2s complement.
+        Subtraction is done using 2s complement.
     
-    Subtracting numbers does not normalize them. However, the result is
-    normalized.
-    """
+        Subtracting numbers does not normalize them. However, the result is
+        normalized.
+        """
     if not isinstance(other, BigNum):
       return NotImplemented  # BigNums can only be subtracted from BigNums.    
     result = BigNum.zero(max(len(self.d), len(other.d)))
