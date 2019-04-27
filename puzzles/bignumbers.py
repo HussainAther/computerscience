@@ -488,27 +488,31 @@ class BigNum(object):
             start -= 1
         return "".join([self.d[i].hex() for i in xrange(start, -1, -1)])
   
-  def __eq__(self, other):
-    """== for BigNums.
+    def __eq__(self, other):
+        """
+        == for BigNums.
     
-    Comparing BigNums normalizes them."""
-    if not isinstance(other, BigNum):
-      return False
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return False
     
-    self.normalize()
-    other.normalize()
-    return self.d == other.d
+        self.normalize()
+        other.normalize()
+        return self.d == other.d
     
-  def __ne__(self, other):
-    """!= for BigNums.
+    def __ne__(self, other):
+        """
+        != for BigNums.
     
-    Comparing BigNums normalizes them."""
-    if not isinstance(other, BigNum):
-      return True
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return True
     
-    self.normalize()
-    other.normalize()
-    return self.d != other.d
+        self.normalize()
+        other.normalize()
+        return self.d != other.d
 
   def __lt__(self, other):
     """< for BigNums.
