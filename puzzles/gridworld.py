@@ -1,7 +1,7 @@
 import copy
 
 """
-Markov Decision Process(MDP) for Grid world using Value iteration algorithm and Prioritized Sweeping.
+Markov Decision Process (MDP) for Grid world using Value iteration algorithm and Prioritized Sweeping.
 
 GridWorld is a 2D rectangular grid of size (Nrows,Ncolumns) with an agent starting off at one grid cell, 
 moving from cell to cell through the grid, and eventually exiting after collecting a reward. This grid 
