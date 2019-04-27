@@ -10,11 +10,9 @@ def mergeSort(listo):
         mid = len(listo)//2
         l = listo[:mid]
         r = listo[mid:]
-        
         # recursive mergeSort
         mergeSort(l)
         mergeSort(r)
-        
         # initialize the indices for l and r
         i, j, k = 0, 0, 0
         while i < len(l) and j < len(r):
@@ -25,12 +23,10 @@ def mergeSort(listo):
                 listo[k] = r[j]
                 j = j + 1
             k=k+1
-
         while i < len(l):
             listo[k] = l[i]
             i = i + 1
             k = k + 1
-
         while j < len(r):
             listo[k] = r[j]
             j = j + 1
