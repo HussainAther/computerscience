@@ -514,40 +514,43 @@ class BigNum(object):
         other.normalize()
         return self.d != other.d
 
-  def __lt__(self, other):
-    """< for BigNums.
+    def __lt__(self, other):
+        """
+        < for BigNums.
     
-    Comparing BigNums normalizes them."""
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be compared to other BigNums.
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be compared to other BigNums.
 
-    self.normalize()
-    other.normalize()
-    if len(self.d) != len(other.d):
-      return len(self.d) < len(other.d)
+        self.normalize()
+        other.normalize()
+        if len(self.d) != len(other.d):
+            return len(self.d) < len(other.d)
     
-    for i in xrange(len(self.d) - 1, -1, -1):
-      if self.d[i] != other.d[i]:
-        return self.d[i] < other.d[i]
-    return False
+        for i in xrange(len(self.d) - 1, -1, -1):
+            if self.d[i] != other.d[i]:
+                return self.d[i] < other.d[i]
+        return False
 
-  def __le__(self, other):
-    """<= for BigNums.
+    def __le__(self, other):
+        """
+        <= for BigNums.
     
-    Comparing BigNums normalizes them.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be compared to other BigNums.
+        Comparing BigNums normalizes them.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be compared to other BigNums.
      
-    self.normalize()
-    other.normalize()
-    if len(self.d) != len(other.d):
-      return len(self.d) < len(other.d)
+        self.normalize()
+        other.normalize()
+        if len(self.d) != len(other.d):
+            return len(self.d) < len(other.d)
     
-    for i in xrange(len(self.d) - 1, -1, -1):
-      if self.d[i] != other.d[i]:
-        return self.d[i] < other.d[i]
-    return True
+        for i in xrange(len(self.d) - 1, -1, -1):
+            if self.d[i] != other.d[i]:
+                return self.d[i] < other.d[i]
+        return True
 
   def __gt__(self, other):
     """> for BigNums.
