@@ -420,34 +420,38 @@ class BigNum(object):
         no_copy is uses the "digits" argument as the backing store for BigNum, if
                appropriate (meant for internal use inside BigNum)
         """
-    if size is None:
-      size = len(digits)
-    elif size < 0:
-      raise ValueError("BigNums cannot hold a negative amount of digits")
-    if size == 0:
-      size = 1
-    if no_copy and len(digits) == size:
-      self.d = digits
-    else:
-      self.d = digits[0:size]
-    while len(self.d) < size:
-      self.d.append(Byte.zero())
+        if size is None:
+            size = len(digits)
+        elif size < 0:
+            raise ValueError("BigNums cannot hold a negative amount of digits")
+        if size == 0:
+            size = 1
+        if no_copy and len(digits) == size:
+            self.d = digits
+        else:
+            self.d = digits[0:size]
+        while len(self.d) < size:
+            self.d.append(Byte.zero())
       
-    # Used by the Newton-Raphson division code.
-    self.__inverse = None
-    self.__inverse_precision = None
+        # Used by the Newton-Raphson division code.
+        self.__inverse = None
+        self.__inverse_precision = None
     
-  @staticmethod
-  def zero(size = 1):
-    """BigNum representing the number 0 (zero)."""
-    return BigNum([Byte.zero()] * size, size, True)
+        @staticmethod
+    def zero(size = 1):
+        """
+        BigNum representing the number 0 (zero).
+        """
+        return BigNum([Byte.zero()] * size, size, True)
   
-  @staticmethod
-  def one(size = 1):
-    """BigNum representing the number 1 (one)."""
-    digits = [Byte.zero()] * size
-    digits[0] = Byte.one()
-    return BigNum(digits, size, True)
+    @staticmethod
+    def one(size = 1):
+        """
+        BigNum representing the number 1 (one).
+        """
+        digits = [Byte.zero()] * size
+        digits[0] = Byte.one()
+        return BigNum(digits, size, True)
   
   @staticmethod
   def from_hex(hex_string):
