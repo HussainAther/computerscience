@@ -592,36 +592,37 @@ class BigNum(object):
             return BigNum.zero()
         return BigNum(self.d[digits:], None, True)
   
-  def __add__(self, other):
-    """+ for BigNums.
+    def __add__(self, other):
+        """
+        + for BigNums.
     
-    Shifting to the left has the effect of multiplying the BigNum by 256^digits.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be added to BigNums.
+        Shifting to the left has the effect of multiplying the BigNum by 256^digits.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be added to BigNums.
     
-    # One would think that it"d be faster to have a for loop for the digits
-    # between 0 and min(len(self.d), len(other.d)), and another loop between
-    # min(...) and max(...), so the ifs would be eliminated.
-    # Turns out pypy"s JITter can eliminate the range checks on list accesses
-    # for the code below, so this method ends up being significantly faster than
-    # the one mentioned above, which intuitively seems better.
+        # One would think that it"d be faster to have a for loop for the digits
+        # between 0 and min(len(self.d), len(other.d)), and another loop between
+        # min(...) and max(...), so the ifs would be eliminated.
+        # Turns out pypy"s JITter can eliminate the range checks on list accesses
+        # for the code below, so this method ends up being significantly faster than
+        # the one mentioned above, which intuitively seems better.
         
-    result = BigNum.zero(1 + max(len(self.d), len(other.d)))
-    carry = Byte.zero()
-    for i in xrange(0, len(result.d)):
-      if i < len(self.d):
-        a = self.d[i] + carry
-      else:
-        a = carry.word()
-      if i < len(other.d):
-        b = other.d[i].word()
-      else:
-        b = Word.zero()
-      word = a + b
-      result.d[i] = word.lsb()
-      carry = word.msb()
-    return result.normalize()
+        result = BigNum.zero(1 + max(len(self.d), len(other.d)))
+        carry = Byte.zero()
+        for i in xrange(0, len(result.d)):
+            if i < len(self.d):
+                a = self.d[i] + carry
+            else:
+                a = carry.word()
+            if i < len(other.d):
+                b = other.d[i].word()
+            else:
+                b = Word.zero()
+            word = a + b
+            result.d[i] = word.lsb()
+            carry = word.msb()
+        return result.normalize()
 
   def __sub__(self, other):
     """- for BigNums.
