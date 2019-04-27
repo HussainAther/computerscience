@@ -704,15 +704,16 @@ class BigNum(object):
             return NotImplemented  # BigNums can only be divided by other BigNums.
         return self.__divmod__(other)[0]
   
-  def __mod__(self, other):
-    """% for BigNums.
+    def __mod__(self, other):
+        """
+        % for BigNums.
     
-    Multiplying numbers does not normalize them. However, the result is
-    normalized.
-    """
-    if not isinstance(other, BigNum):
-      return NotImplemented  # BigNums can only be divided by other BigNums.
-    return self.__divmod__(other)[1]
+        Multiplying numbers does not normalize them. However, the result is
+        normalized.
+        """
+        if not isinstance(other, BigNum):
+            return NotImplemented  # BigNums can only be divided by other BigNums.
+        return self.__divmod__(other)[1]
   
   def __divmod__(self, other):
     """divmod() for BigNums.
