@@ -29,7 +29,9 @@ class Sum(list, Expression):
             return Sum([simplify_if_possible(term) for term in terms]).flatten()
 
     def flatten(self):
-        """Simplifies nested sums."""
+        """
+        Simplify nested sums.
+        """
         terms = []
         for term in self:
             if isinstance(term, Sum):
@@ -101,7 +103,6 @@ def multiply(expr1, expr2):
     if not isinstance(expr2, Expression): expr2 = Product([expr2])
     return do_multiply(expr1, expr2)
 
-
 def do_multiply(expr1, expr2):
     """
     You have two Expressions, and you need to make a simplified expression
@@ -113,6 +114,7 @@ def do_multiply(expr1, expr2):
     that represent what we get by applying the algebraic rules of 
     multiplication to these expressions, and simplifying.
     """
-    # Replace this with your solution.
-    raise NotImplementedError
-
+    prod = 0
+    for i in range(len(expr1)):
+        prod += expr[1]*expr[2]
+    return prod
