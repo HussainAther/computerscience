@@ -1,4 +1,3 @@
-
 """
 A handyman has a whole collection of nuts and bolts of different sizes in a bag. Each nut
 is unique and has a corresponding unique bolt, but the disorganized handyman has
@@ -37,7 +36,9 @@ def pivotPartitionClever(lst, start, end):
     while not done:
 
         while not done:
-            #Move rightward from left searching for element > pivot
+            """
+            Move rightward from left searching for element > pivot
+            """
             bottom += 1
             if bottom == top:
                 done = True
@@ -49,7 +50,9 @@ def pivotPartitionClever(lst, start, end):
                 break
     
         while not done:
-            #Move leftward from right searching for element < pivot
+            """
+            Move leftward from right searching for element < pivot
+            """
             top -= 1
             if top == bottom:
                 done = True
