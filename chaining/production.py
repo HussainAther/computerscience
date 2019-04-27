@@ -1,4 +1,5 @@
 import re
+
 from utils import *
 
 try:
@@ -369,8 +370,8 @@ class DELETE(THEN):
 
 def uniq(lst):
     """
-    this is like list(set(lst)) except that it gets around
-    unhashability by stringifying everything.  If str(a) ==
+    This is like list(set(lst)) except that it gets around
+    unhashability by stringifying everything. If str(a) ==
     str(b) then this will get rid of one of them.
     """
     seen = {}
@@ -423,4 +424,3 @@ def _simplify_or(branches):
 PASS = AND()
 FAIL = OR()
 run_conditions = forward_chain
-
