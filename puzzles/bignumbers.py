@@ -809,18 +809,23 @@ class BigNum(object):
                 multiplier = (multiplier * multiplier) % modulus
         return result
   
-  def __str__(self):
-    """Debugging help: returns the BigNum formatted as "0x????..."."""
-    return "0x" + self.hex()
+    def __str__(self):
+        """
+        Debugging help: return the BigNum formatted as "0x????...".
+        """
+        return "0x" + self.hex()
   
-  def __repr__(self):
-    """Debugging help: returns an expression that can create this BigNum."""
-    return "BigNum.h("" + self.hex() + "", " + str(len(self.d)) + ")"
+    def __repr__(self):
+        """
+        Debugging help: return an expression that can create this BigNum.
+        """
+        return "BigNum.h("" + self.hex() + "", " + str(len(self.d)) + ")"
 
-  def normalize(self):
-    """Removes all the trailing 0 (zero) digits in this number.
+    def normalize(self):
+        """
+        Remove all the trailing 0 (zero) digits in this number.
     
-    Returns self, for easy call chaining.
+        Return self, for easy call chaining.
     """
     while len(self.d) > 1 and self.d[-1] == Byte.zero():
       self.d.pop()
