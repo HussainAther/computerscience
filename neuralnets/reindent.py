@@ -2,9 +2,9 @@
 
 """reindent [-d][-r][-v] [ path ... ]
 
--d (--dryrun)  Dry run.  Analyze, but don't make any changes to files.
+-d (--dryrun)  Dry run.  Analyze, but don"t make any changes to files.
 -r (--recurse) Recurse.  Search for all .py files in subdirectories too.
--B (--no-backup)         Don't write .bak backup files.
+-B (--no-backup)         Don"t write .bak backup files.
 -v (--verbose) Verbose.  Print informative msgs; else only names of changed files.
 -h (--help)    Help.     Print this usage information and exit.
 
@@ -25,7 +25,7 @@ If output is not to standard output, reindent overwrites files in place,
 renaming the originals with a .bak extension.  If it finds nothing to
 change, the file is left alone.  If reindent does change a file, the changed
 file is a fixed-point for future runs (i.e., running reindent on the
-resulting .py file won't change it again).
+resulting .py file won"t change it again).
 
 The hard part of reindenting is figuring out what to do with comment
 lines.  So long as the input files get a clean bill of health from
@@ -67,15 +67,15 @@ def main():
         usage(msg)
         return
     for o, a in opts:
-        if o in ('-d', '--dryrun'):
+        if o in ("-d", "--dryrun"):
             dryrun += 1
-        elif o in ('-r', '--recurse'):
+        elif o in ("-r", "--recurse"):
             recurse += 1
-        elif o in ('-v', '--verbose'):
+        elif o in ("-v", "--verbose"):
             verbose += 1
-        elif o in ('-B', '--no-backup'):
+        elif o in ("-B", "--no-backup"):
             no_backup += 1
-        elif o in ('-h', '--help'):
+        elif o in ("-h", "--help"):
             usage()
             return
     if not args:
@@ -89,7 +89,7 @@ def main():
 def check(file):
     if os.path.isdir(file) and not os.path.islink(file):
         if verbose:
-            print "listing directory", file
+            print("listing directory", file)
         names = os.listdir(file)
         for name in names:
             fullname = os.path.join(file, name)
@@ -100,7 +100,7 @@ def check(file):
         return
 
     if verbose:
-        print "checking", file, "...",
+        print("checking", file, "...")
     try:
         f = open(file)
     except IOError, msg:
@@ -111,9 +111,9 @@ def check(file):
     f.close()
     if r.run():
         if verbose:
-            print "changed."
+            print("changed.")
             if dryrun:
-                print "But this is a dry run, so leaving it alone."
+                print("But this is a dry run, so leaving it alone.")
         else:
             print "reindented", file, (dryrun and "(dry run => not really)" or "")
         if not dryrun:
@@ -123,15 +123,15 @@ def check(file):
                     os.remove(bak)
                 os.rename(file, bak)
                 if verbose:
-                    print "renamed", file, "to", bak
+                    print("renamed", file, "to", bak)
             f = open(file, "w")
             r.write(f)
             f.close()
             if verbose:
-                print "wrote new", file
+                print("wrote new", file)
     else:
         if verbose:
-            print "unchanged."
+            print("unchanged.")
 
 
 class Reindenter:
@@ -144,17 +144,17 @@ class Reindenter:
         self.raw = f.readlines()
 
         # File lines, rstripped & tab-expanded.  Dummy at start is so
-        # that we can use tokenize's 1-based line numbering easily.
-        # Note that a line is all-blank iff it's "\n".
-        self.lines = [line.rstrip('\n \t').expandtabs() + "\n"
+        # that we can use tokenize"s 1-based line numbering easily.
+        # Note that a line is all-blank iff it"s "\n".
+        self.lines = [line.rstrip("\n \t").expandtabs() + "\n"
                       for line in self.raw]
         self.lines.insert(0, None)
         self.index = 1  # index into self.lines of next line
 
         # List of (lineno, indentlevel) pairs, one for each stmt and
         # comment line.  indentlevel is -1 for comment lines, as a
-        # signal that tokenize doesn't know what to do about them;
-        # indeed, they're our headache!
+        # signal that tokenize doesn"t know what to do about them;
+        # indeed, they"re our headache!
         self.stats = []
 
     def run(self):
@@ -170,7 +170,7 @@ class Reindenter:
         have2want = {}
         # Program after transformation.
         after = self.after = []
-        # Copy over initial empty lines -- there's nothing to do until
+        # Copy over initial empty lines -- there"s nothing to do until
         # we see a line with *something* on it.
         i = stats[0][0]
         after.extend(lines[1:i])
@@ -194,7 +194,7 @@ class Reindenter:
                                 if have == getlspace(lines[jline]):
                                     want = jlevel * 4
                                 break
-                    if want < 0:           # Maybe it's a hanging
+                    if want < 0:           # Maybe it"s a hanging
                                            # comment like this one,
                         # in which case we should shift it like its base
                         # line got shifted.
@@ -263,7 +263,7 @@ class Reindenter:
         elif type == COMMENT:
             if self.find_stmt:
                 self.stats.append((sline, -1))
-                # but we're still looking for a new stmt, so leave
+                # but we"re still looking for a new stmt, so leave
                 # find_stmt alone
 
         elif type == NL:
@@ -284,5 +284,5 @@ def getlspace(line):
         i += 1
     return i
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
