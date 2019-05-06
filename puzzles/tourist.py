@@ -13,4 +13,19 @@ def mantour(n, m, d, r):
     to the sink (n, m) in the grid n * m the edgdes of the matrices
     down and right.
     """
+
+    # initialize the distance dictionary
+    s = {(0,0):0}
     
+    for i in range(1,n+1):
+        s[(i,0)] = s[(i-1,0)] + d[i-1][0]
+        
+    for j in range(1,m+1):
+        s[(0,j)] = s[(0,j-1)] + r[0][j-1]
+
+    # calculation the distances
+    for i in range(1,n+1):
+        for j in range(1,m+1):
+            s(i,j)] = max(s[(i-1,j)] + d[i-1][j], s[(i,j-1)] + r[i][j-1])
+
+    return s[(n,m)]  
