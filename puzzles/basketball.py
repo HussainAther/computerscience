@@ -18,3 +18,22 @@ def solve():
     """
     Solve as dictated above.
     """
+    if weight(a[:3]) > weight(a[3:6]): # scenario (1)
+        if weight(a[0]) > weight(a[1]):
+            return 0 
+        elif weight(a[1]) > weight(a[0]):
+            return 1
+        else:
+            return 2
+    elif weight(a[:3]) < weight(a[3:6]): # scenario (2)
+        if weight(a[3]) > weight(a[4]):
+            return 3
+        elif weight(a[3]) < weight(a[4]):
+            return 4
+        else:
+            return 5
+    elif weight(a[6]) > weight(a[7]):
+        return 6
+    else:
+        return 7
+       
