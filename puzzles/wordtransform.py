@@ -1,3 +1,4 @@
+import numpy as np
 import enchant
 d = enchant.Dict("en_US")
 
@@ -13,6 +14,11 @@ present in an English dictionary.
 Use enchant to check if words are in the dictionary like this d.check("Hello").
 """
 
+alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
+            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] 
+
 def eqwords(a, b):
     """
     Given two words a and b, find out whether they're equivalent.
@@ -21,3 +27,8 @@ def eqwords(a, b):
     with all intermediate words still being words in the dictionary.
     If a and b are not equivalent, return False.
     """
+    s = 0 # number of substitutions
+    for i in a:
+        for j in alphabet:
+        if a == b: 
+                
