@@ -9,5 +9,9 @@ on an empty rod. No larger disk may be placed on top of a smaller disk.
 def hanoi(n, i, m, f):
     """
     For the number of disks and the numbers representing the initial
-    peg i, middle peg m, and final peg f, solve the Hanoi problem. 
+    peg i, middle peg m, and final peg f, solve the Hanoi problem.
+    This function moves n disks from initial to middle, then from
+    middle to final. 
     """
+    if n > 0:
+        hanoi
