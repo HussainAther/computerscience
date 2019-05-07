@@ -28,8 +28,8 @@ def parsimony(n, edges, labels):
     # l, size of string labels
     l = len(labels[0])
     
-    # Alphabet of characters of labels
-    alphabet = sorted(list(set(''.join(labels))))
+    # alphabet of characters of labels
+    alphabet = sorted(list(set("".join(labels))))
     
     # k, number of characters in string labels
     k = len(alphabet)
