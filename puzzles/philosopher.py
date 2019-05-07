@@ -48,4 +48,11 @@ class phil(threading.Thread):
             return
         self.dining()
         fork2.release()
-        fork1.release() 
+        fork1.release()
+    def dining(self):		
+        """
+        After dining, begin sleeping or thinking.
+        """	
+        print("%s starts eating "% self.name)
+        time.sleep(random.uniform(1,10))
+        print("%s finishes eating and leaves to think." % self.name) 
