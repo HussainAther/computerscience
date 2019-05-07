@@ -5,3 +5,9 @@ smallest at the top. We must move the entire stack to another rod. Only one disk
 move consists of taking the upper disk from one of the stacks and placing it on top of another stack or 
 on an empty rod. No larger disk may be placed on top of a smaller disk.
 """
+
+def hanoi(n, i, m, f):
+    """
+    For the number of disks and the numbers representing the initial
+    peg i, middle peg m, and final peg f, solve the Hanoi problem. 
+    """
