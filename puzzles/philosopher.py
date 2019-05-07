@@ -11,9 +11,41 @@ Solving this to practice threading.
 """
 
 class phil(threading.Thread):
+    """
+    Let's get philosophical up in here.
+    """
     running = True
     def __init__(self, xname, forkOnLeft, forkOnRight):
+        """
+        Initialize variables for each person and forks on either side.
+        """
         threading.Thread.__init__(self)
         self.name = xname
         self.forkOnLeft = forkOnLeft
         self.forkOnRight = forkOnRight
+    def run(self):
+        """
+        The philosopher is sleeping or thinking. 
+        """
+        while(self.running):
+            #  Philosopher is thinking (but really is sleeping).
+            time.sleep(random.uniform(3,13))
+            print("%s is hungry." % self.name)
+            self.dine()
+    def dine(self):
+        """
+        The philosopher is dining.
+        """
+        fork1, fork2 = self.forkOnLeft, self.forkOnRight
+        while self.running:
+            fork1.acquire(True)
+            locked = fork2.acquire(False)
+            if locked: break
+            fork1.release()
+            print("%s swaps forks" % self.name)
+            fork1, fork2 = fork2, fork1
+        else:
+            return
+        self.dining()
+        fork2.release()
+        fork1.release() 
