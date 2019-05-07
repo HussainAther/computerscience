@@ -28,7 +28,14 @@ def eqwords(a, b):
     If a and b are not equivalent, return False.
     """
     s = 0 # number of substitutions
-    for i in a:
-        for j in alphabet:
-        if a == b: 
-                
+    for i, j in enumerate(a): # for each index and letter in a
+        p = [] # possible substitutions
+        for k in alphabet: # for each alphabet letter we may substitute
+            if j != k: # if we can substitute this letter for the letter in a
+                tempa = a[:i] + k + s[i + 1:]  
+                if d.check(tempa) and tempa != b:
+                    p.append(tempa)
+                    s += 1
+                elif d.check(tempa) and tempa == b:
+                    return s
+    return False
