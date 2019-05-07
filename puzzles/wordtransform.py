@@ -1,10 +1,16 @@
+import enchant
+d = enchant.Dict("en_US")
+
 """
 In 1879, Lewis Carroll proposed the following puzzle to the readers of Vanity Fair: 
 transform one English word into another by going through a series of intermediate English 
 words, where each word in the sequence differs from the next by only one substitution. 
 To transform head into tail one can use four intermediates: head → heal → teal → tell → tall → tail. 
 We say that two words v and w are equivalent if v can be transformed into w by 
-substituting individual letters in such a way that all intermediate words are English words present in an English dictionary.
+substituting individual letters in such a way that all intermediate words are English words 
+present in an English dictionary.
+
+Use enchant to check if words are in the dictionary like this d.check("Hello").
 """
 
 def eqwords(a, b):
