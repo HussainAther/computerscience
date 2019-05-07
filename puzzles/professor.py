@@ -28,6 +28,10 @@ def solve(a):
                 if question(pair) == (h, h): # ask both of them the opinion of each other. if the answer is (honest, honest)
                     honest.append(pair[0])
                     honest.append(pair[1])
+                    a = a - 2
+                    pair = []
+            else:
+                pair = []
     return honest, dishonest
                
        
