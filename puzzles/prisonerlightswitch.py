@@ -22,12 +22,16 @@ class Prisoner(object):
         return False
   
 """
-Designated prisoner turns on light if it's off and counts the number
+A designated prisoner turns on light if it's off and counts the number
 of times they've entered the room with the light off. If that count
-reaches 2n - 3, the designated prisoner claims with certainty all 100
-prisoners have visited the room. 
+reaches 197, the designated prisoner knows all 100 prisoners have 
+visited the room. All other prisoners will each turn off the light twice.
+They turn it off the first two times they find it on, but don't touch it
+afterwards. This means the designated prisoner's count needs to be 2n - 3,
+or 197 to know the answer. 
 """
 
 count = 0 # number of times described above
 
-if count  
+if count == 197:
+    print("We won.")
