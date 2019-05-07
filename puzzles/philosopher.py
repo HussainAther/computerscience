@@ -6,4 +6,14 @@ chopstick may be picked up by any one of its adjacent followers but not both. Wh
 cannot grab both forks it sits and waits. Eating takes random time, then the philosopher puts the 
 forks down and leaves the dining room. After spending some random time thinking about the nature 
 of the universe, he again becomes hungry, and the circle repeats itself.
+
+Solving this to practice threading.
 """
+
+class phil(threading.Thread):
+    running = True
+    def __init__(self, xname, forkOnLeft, forkOnRight):
+        threading.Thread.__init__(self)
+        self.name = xname
+        self.forkOnLeft = forkOnLeft
+        self.forkOnRight = forkOnRight
