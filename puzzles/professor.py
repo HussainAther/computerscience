@@ -11,4 +11,7 @@ you to figure out which of the 100 professors are honest (thus identifying
 possible research advisors). It is known that there are more honest than dishonest professors.
 """
 
-
+def solve(a):
+    """
+    For a number of professors a, deduce which professors are honest.
+    """
