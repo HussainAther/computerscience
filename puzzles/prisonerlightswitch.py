@@ -20,4 +20,14 @@ class Prisoner(object):
     def visit(self):
         self.visited True
         return False
-    
+  
+"""
+Designated prisoner turns on light if it's off and counts the number
+of times they've entered the room with the light off. If that count
+reaches 2n - 3, the designated prisoner claims with certainty all 100
+prisoners have visited the room. 
+"""
+
+count = 0 # number of times described above
+
+if count  
