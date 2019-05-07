@@ -19,15 +19,15 @@ alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
             "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] 
 
-def eqwords(a, b):
+def eqwords(a, b, s=0):
     """
     Given two words a and b, find out whether they're equivalent.
     We may find the Lewis Carroll distance between a and b as the 
     smallest number of substitutions needed to transform a into v
     with all intermediate words still being words in the dictionary.
-    If a and b are not equivalent, return False.
+    If a and b are not equivalent, return False. s is the number of 
+    substitutions.
     """
-    s = 0 # number of substitutions
     for i, j in enumerate(a): # for each index and letter in a
         p = [] # possible substitutions
         for k in alphabet: # for each alphabet letter we may substitute
@@ -38,4 +38,7 @@ def eqwords(a, b):
                     s += 1
                 elif d.check(tempa) and tempa == b:
                     return s
+            if p != []:
+                for t in p:
+                    eqwords(t, b) 
     return False
