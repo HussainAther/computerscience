@@ -55,4 +55,16 @@ class phil(threading.Thread):
         """	
         print("%s starts eating "% self.name)
         time.sleep(random.uniform(1,10))
-        print("%s finishes eating and leaves to think." % self.name) 
+        print("%s finishes eating and leaves to think." % self.name)
+
+def DiningPhilosophers():
+    forks = [threading.Lock() for n in range(5)]
+    philosopherNames = ("Aristotle", "Kant", "Buddha", "Marx", "Russel")
+    philosophers= [Philosopher(philosopherNames[i], forks[i%5], forks[(i+1)%5]) \
+            for i in range(5)]
+    random.seed(12345)
+    Philosopher.running = True
+    for p in philosophers: p.start()
+    time.sleep(100)
+    Philosopher.running = False
+    print ("Now we're finishing.")
