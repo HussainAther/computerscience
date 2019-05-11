@@ -49,7 +49,7 @@ def alphabeta_full_search(state, game):
     
     def max_value(state, alpha, beta):
         """
-        Return the maximum value for given alpha and beta values.
+        Return the maximum state value for given alpha and beta values.
         """
         if game.terminal_test(state):
             return game.utility(state, player)
@@ -59,4 +59,18 @@ def alphabeta_full_search(state, game):
             if v >= beta:
                 return v
             alpha = max(alpha, v)
+        return v
+    
+    def min_value(state, alpha, beta):
+        """
+        Return the minimum state value for given alpha and beta values. 
+        """
+        if game.terminal_test(state):
+            return game.utility(state, player)
+        v = infinity
+        for (a, s) in game.successors(state):
+            v = min(v, max_value(s, alpha, beta))
+            if v <= alpha:
+                return v
+            beta = min(beta, v)
         return v
