@@ -37,3 +37,12 @@ def minimax_decision(state, game):
     action, state = argmax(game.successors(state),
                            lambda ((a, s)): min_value(s))
     return action
+
+def alphabeta_full_search(state, game):
+    """
+    Search game to determine best action. Use alpha-beta pruning.
+    Alpha beta Alpha-Beta Beta beta. 
+    This version searches all the way to the leaves.
+    """
+
+    player = game.to_move(state)
