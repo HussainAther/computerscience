@@ -39,3 +39,23 @@ def mincut(graph, n):
             if len(aux) < cost:
                 components, cost = aux[0], len(aux)
     return components, cost
+
+
+"""
+Test out a fully connected graph.
+"""
+
+nodes_a = [f"A{i}" for i in range(20)]
+graph_a = [(u, v) for u, v in combinations(nodes_a, 2)]
+
+"""
+Test out some interconnections.
+"""
+
+graph_b = [(choice(nodes_a), choice(nodes_b)) for i in range(10)]
+
+"""
+Combine them.
+"""
+
+graph = graph_a + graph_b
