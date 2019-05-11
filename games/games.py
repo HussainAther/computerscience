@@ -97,3 +97,17 @@ def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
                 return v
             alpha = max(alpha, v)
         return v
+
+   def min_value(state, alpha, beta, depth):
+        """
+        Return the minimum value of a state.
+        """
+        if cutoff_test(state, depth):
+            return eval_fn(state)
+        v = infinity
+        for (a, s) in game.successors(state):
+            v = min(v, max_value(s, alpha, beta, depth+1))
+            if v <= alpha:
+                return v
+            beta = min(beta, v)
+        return v
