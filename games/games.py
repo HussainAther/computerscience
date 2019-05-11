@@ -11,7 +11,6 @@ def minimax_decision(state, game):
     forward all the way to the terminal states.
     """
     player = game.to_move(state)
-    
     def max_value(state):
         """
         Return the maximum value of a state.
@@ -44,9 +43,7 @@ def alphabeta_full_search(state, game):
     Alpha beta Alpha-Beta Beta beta. 
     This version searches all the way to the leaves.
     """
-
     player = game.to_move(state)
-    
     def max_value(state, alpha, beta):
         """
         Return the maximum state value for given alpha and beta values.
@@ -86,5 +83,17 @@ def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
     Alpha beta Alpha-Beta Beta beta. 
     This version cuts off search and uses an evaluation function.
     """
-
     player = game.to_move(state)
+    def max_value(state, alpha, beta, depth):
+        """
+        Return the maximum value of a state.
+        """
+        if cutoff_test(state, depth):
+            return eval_fn(state)
+        v = -infinity
+        for (a, s) in game.successors(state):
+            v = max(v, min_value(s, alpha, beta, depth+1))
+            if v >= beta:
+                return v
+            alpha = max(alpha, v)
+        return v
