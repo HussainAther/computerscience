@@ -65,7 +65,7 @@ for our metrics for our loss metrics.
 policy = EpsGreedyQPolicy()
 memory = SequentialMemory(limit=50000, window_length=1)
 dqn = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
-target_model_update=1e-2, policy=policy)
+      target_model_update=1e-2, policy=policy)
 dqn.compile(Adam(lr=1e-3), metrics=["mae"])
 
 """
