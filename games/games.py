@@ -216,7 +216,29 @@ class TicTacToe(Game):
     a dict of {(x, y): Player} entries, where Player is "X" or "O".
      """
     def __init__(self, h=3, v=3, k=3):
+        """
+        Initialize the positions.
+        """
         update(self, h=h, v=v, k=k)
         moves = [(x, y) for x in range(1, h+1)
                  for y in range(1, v+1)]
-        self.initial = Struct(to_move='X', utility=0, board={}, moves=moves)
+        self.initial = Struct(to_move="X", utility=0, board={}, moves=moves)
+
+    def legal_moves(self, state):
+        """
+        Legal moves are any square not yet taken.
+        """
+        return state.moves
+
+    def make_move(self, move, state):
+        """
+        Make a move and return.
+        """
+        if move not in state.moves:
+            return state # Illegal move has no effect
+        board = state.board.copy(); board[move] = state.to_move
+        moves = list(state.moves); moves.remove(move)
+        return Struct(to_move=if_(state.to_move == "X", "O", "X"),
+                      utility=self.compute_utility(board, move, state.to_move),
+                      board=board, moves=moves)
+
