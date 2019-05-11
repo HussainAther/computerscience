@@ -118,3 +118,35 @@ def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
     action, state = argmax(game.successors(state),
                            lambda ((a, s)): min_value(s, -infinity, infinity, 0))
     return action
+
+def query_player(game, state):
+    """"
+    Make a move by querying standard input.
+    """
+    game.display(state)
+    return num_or_str(raw_input('Your move? '))
+
+def random_player(game, state):
+    """
+    A player that chooses a legal move at random.
+    """
+    return random.choice(game.legal_moves())
+
+def alphabeta_player(game, state):
+    """
+    Perform the alpha beta search for a state and game.
+    """
+    return alphabeta_search(state, game)
+
+def play_game(game, *players):
+    """
+    Play an n-person, move-alternating game.
+    """
+    state = game.initial
+    while True:
+        for player in players:
+            move = player(game, state)
+            state = game.make_move(move, state)
+            if game.terminal_test(state):
+                return game.utility(state, players[0])
+
