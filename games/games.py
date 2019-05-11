@@ -74,3 +74,8 @@ def alphabeta_full_search(state, game):
                 return v
             beta = min(beta, v)
         return v
+    
+    action, state = argmax(game.successors(state),
+                           lambda ((a, s)): min_value(s, -infinity, infinity))
+    return action
+
