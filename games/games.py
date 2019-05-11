@@ -192,3 +192,18 @@ class Game:
         """
         return state.to_move
 
+    def display(self, state):
+        """
+        Print or otherwise display the state.
+        """"
+        print(state)
+
+    def successors(self, state):
+        """
+        Return a list of legal (move, state) pairs.
+        """
+        return [(move, self.make_move(move, state))
+                for move in self.legal_moves(state)]
+
+    def __repr__(self):
+        return "<%s>" % self.__class__.__name__
