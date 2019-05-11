@@ -207,3 +207,16 @@ class Game:
 
     def __repr__(self):
         return "<%s>" % self.__class__.__name__
+
+class TicTacToe(Game):
+    """
+    Play TicTacToe on an h x v board, with Max (first player) playing "X".
+    A state has the player to move, a cached utility, a list of moves in
+    the form of a list of (x, y) positions, and a board, in the form of
+    a dict of {(x, y): Player} entries, where Player is "X" or "O".
+     """
+    def __init__(self, h=3, v=3, k=3):
+        update(self, h=h, v=v, k=k)
+        moves = [(x, y) for x in range(1, h+1)
+                 for y in range(1, v+1)]
+        self.initial = Struct(to_move='X', utility=0, board={}, moves=moves)
