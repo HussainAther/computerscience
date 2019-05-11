@@ -33,3 +33,7 @@ def minimax_decision(state, game):
         for (a, s) in game.successors(state):
             v = min(v, max_value(s))
         return v
+
+    action, state = argmax(game.successors(state),
+                           lambda ((a, s)): min_value(s))
+    return action
