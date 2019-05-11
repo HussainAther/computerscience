@@ -290,3 +290,24 @@ class TicTacToe(Game):
             x, y = x - delta_x, y - delta_y
         n -= 1 # Because we counted move itself twice
         return n >= self.k
+
+class ConnectFour(TicTacToe):
+    """
+    A TicTacToe-like game in which you can only make a move on the bottom
+    row, or in a square directly above an occupied square. Traditionally
+    played on a 7x6 board and requiring 4 in a row.
+    """
+
+    def __init__(self, h=7, v=6, k=4):
+        """
+        Initialize the board horizontally and vertically with the number
+        in a row needed to win.
+        """
+        TicTacToe.__init__(self, h, v, k)
+
+    def legal_moves(self, state):
+        """
+        Legal moves are any square not yet taken.
+        """
+        return [(x, y) for (x, y) in state.moves
+                if y == 0 or (x, y-1) in state.board]
