@@ -55,14 +55,16 @@ model.add(Activation("linear"))
 print(model.summary())
 
 """
-Configure and compile the agent.
+Configure and compile the agent. We use epsilon greedy that either takes a random
+action with probability epsilon or takes the current best action with probability
+1 - epsilon.  
 """
 
 policy = EpsGreedyQPolicy()
 memory = SequentialMemory(limit=50000, window_length=1)
 dqn = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
 target_model_update=1e-2, policy=policy)
-dqn.compile(Adam(lr=1e-3), metrics=['mae'])
+dqn.compile(Adam(lr=1e-3), metrics=["mae"])
 
 """
 We visualize the training here for show, but this slows down training quite a lot. 
