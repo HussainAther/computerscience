@@ -79,3 +79,12 @@ def alphabeta_full_search(state, game):
                            lambda ((a, s)): min_value(s, -infinity, infinity))
     return action
 
+
+def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
+    """
+    Search game to determine best action; use alpha-beta pruning.
+    Alpha beta Alpha-Beta Beta beta. 
+    This version cuts off search and uses an evaluation function.
+    """
+
+    player = game.to_move(state)
