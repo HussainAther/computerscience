@@ -111,3 +111,10 @@ def alphabeta_search(state, game, d=4, cutoff_test=None, eval_fn=None):
                 return v
             beta = min(beta, v)
         return v
+
+    cutoff_test = (cutoff_test or
+                   (lambda state,depth: depth>d or game.terminal_test(state)))
+    eval_fn = eval_fn or (lambda state: game.utility(state, player))
+    action, state = argmax(game.successors(state),
+                           lambda ((a, s)): min_value(s, -infinity, infinity, 0))
+    return action
