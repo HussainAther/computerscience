@@ -160,4 +160,35 @@ class Game:
     methods. You will also need to set the .initial attribute to the
     initial state; this can be done in the constructor.
     """
+   def legal_moves(self, state):
+        """
+        Return a list of the allowable moves at this point.
+        """"
+	return ["l", "r", "u", "d"] 
+
+    def make_move(self, move, state):
+        """
+        Return the state that results from making a move from a state.
+        """
+        action, state = argmax(game.successors(state),
+                           lambda ((a, s)): min_value(s, -infinity, infinity, 0))
+        return state
+
+    def utility(self, state, player):
+        """
+        Return the value of this final state to player.
+        """
+        return state 
+
+    def terminal_test(self, state):
+        """
+        Return True if this is a final state for the game.
+        """
+        return not self.legal_moves(state)
+
+    def to_move(self, state):
+        """
+        Return the player whose move it is in this state.
+        """
+        return state.to_move
 
