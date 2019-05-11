@@ -242,3 +242,23 @@ class TicTacToe(Game):
                       utility=self.compute_utility(board, move, state.to_move),
                       board=board, moves=moves)
 
+    def utility(self, state):
+        """
+        Return the value to X; 1 for win, -1 for loss, 0 otherwise.
+        """
+        return state.utility
+
+    def terminal_test(self, state):
+        """
+        A state is terminal if it is won or there are no empty squares.
+        """
+        return state.utility != 0 or len(state.moves) == 0
+
+    def display(self, state):
+        """
+        Display the board.
+        """
+        board = state.board
+        for x in range(1, self.h+1):
+            for y in range(1, self.v+1):
+                print(board.get((x, y), ".")),
