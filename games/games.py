@@ -150,3 +150,14 @@ def play_game(game, *players):
             if game.terminal_test(state):
                 return game.utility(state, players[0])
 
+class Game:
+    """
+    A game is similar to a problem, but it has a utility for each
+    state and a terminal test instead of a path cost and a goal
+    test. To create a game, subclass this class and implement
+    legal_moves, make_move, utility, and terminal_test. You may
+    override display and successors or you can inherit their default
+    methods. You will also need to set the .initial attribute to the
+    initial state; this can be done in the constructor.
+    """
+
