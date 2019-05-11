@@ -57,7 +57,8 @@ print(model.summary())
 """
 Configure and compile the agent. We use epsilon greedy that either takes a random
 action with probability epsilon or takes the current best action with probability
-1 - epsilon.  
+1 - epsilon. SequentialMemory means that we make observations, take actions,
+receive a reward, and then choose the next state.
 """
 
 policy = EpsGreedyQPolicy()
