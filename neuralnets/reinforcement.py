@@ -8,3 +8,4 @@ def reward(env, ep=500):
     """
     Reward the actions in each state.
     """ 
+    table = np.zeros((5, 2)) # Initialize the table
