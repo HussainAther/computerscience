@@ -21,3 +21,21 @@ def contract(graph, u, v):
         elif x > y:
             aux.append((y, x))
     return aux
+
+def mincut(graph, n):
+    """
+    Perform a minimum cut so we can partition the vertices
+    of our graph into disjoint sets using n**2 number of attempts
+    by creating an n x n array.
+    """
+    components, cost = ["", ""], float("inf")
+    # n^2 attempts
+    for i in range(n * n):
+        aux = graph
+        # remove edges one by one
+        while len(set(aux)) > 1:
+            aux = contract(aux, *choice(aux))
+            # min cut so far
+            if len(aux) < cost:
+                components, cost = aux[0], len(aux)
+    return components, cost
