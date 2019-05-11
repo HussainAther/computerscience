@@ -59,3 +59,10 @@ Combine them.
 """
 
 graph = graph_a + graph_b
+
+
+"""
+Test it out with n = 40.
+"""
+
+components, cost = mincut(graph, 40)
