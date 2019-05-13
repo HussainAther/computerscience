@@ -10,5 +10,6 @@ def mccreight(a):
     t = {0: "root"} # start with root node. key for level. value for node.
     for i, j in enumerate(a):
         d = len(t) # depth
-        t[d+1] = i # add the first node
-        t[d+1] = j # add the second node
+        t[d] = j # add the first node
+        t[d] = j+2 # add the second node
+    return t
