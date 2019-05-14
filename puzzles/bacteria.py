@@ -13,4 +13,12 @@ def bacteria(b, v):
     For b bacteria and v viruses at the beginning, we can use recurrence relations of b(t)
     and v(t) (as they depend on time, to determine how long it would take for the viruses
     to kill all the bacteria.
+    b(t) = 2[b(t-1) - v(t-1)]
+    v(t) = 2v(t-1)
+    When we solve, we get
+    b(t) = 2^t (n-t)
+    v(t) = 2^t
+    which gives us
+    t = n
     """
+    return n 
