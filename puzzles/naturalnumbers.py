@@ -12,3 +12,8 @@ def solve(m):
     """
     For some matrix m, transform it into all zeros.
     """
+    lowestone = np.inf
+    for i, j in enumerate(m[0]): # get the lowest non-zero non-2 item in the first column
+        if j != 2 and j!= 0 and j < lowest one:
+            lowestone = j
+    
