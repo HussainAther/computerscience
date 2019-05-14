@@ -68,3 +68,22 @@ class KdTree(object):
                                     nk2(s2, exset[m + 1:]))
         self.n = nk2(0, pts)
         self.bounds = bounds
+
+T3 = namedtuple("T3", "nearest dist_sqd nodes_visited")
+
+def find_nearest(k, t, p):
+    """
+    For target p, kd tree t, k number of nodes, find the nearest nodes 
+    using the nn function.  
+    """
+    def nn(kd, target, hr, max_dist_sqd):
+        if kd is None:
+            return T3([0.0] * k, float("inf"), 0)
+ 
+        nodes_visited = 1
+        s = kd.split
+        pivot = kd.dom_elt
+        left_hr = deepcopy(hr)
+        right_hr = deepcopy(hr)
+        left_hr.max[s] = pivot[s]
+        right_hr.min[s] = pivot[s]
