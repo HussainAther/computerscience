@@ -33,5 +33,8 @@ def build_suffix_trie(s):
      Root.add_link(s[0], Longest)
      # for every character left in the string
      for c in s[1:]:
-     Current = Longest; Previous = None
-     while c not in Current.children: 
+         Current = Longest; Previous = None
+         while c not in Current.children: 
+             # create new node r1 with transition Current -c->r1
+             r1 = SuffixNode()
+             Current.add_link(c, r1)
