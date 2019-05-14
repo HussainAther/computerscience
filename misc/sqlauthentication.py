@@ -71,3 +71,16 @@ def randomValue(length):
     """
     salt_chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
     return "".join(random.choice(salt_chars) for x in range(length)) 
+
+if __name__ == "__main__":  
+    user = randomValue(10)
+    passwd = randomValue(16)	 
+    new_user_id = create_user(user, passwd)
+    if new_user_id is None:
+        print 'Failed to create user %s' % user
+        sys.exit(1)
+    auth = authenticate_user(user, passwd)	 
+    if auth:	 
+        print("User %s authenticated successfully" % user) 
+    else:	 
+        print("User %s failed" % user)
