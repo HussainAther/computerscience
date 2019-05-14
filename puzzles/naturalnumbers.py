@@ -13,8 +13,15 @@ def solve(m):
     For some matrix m, transform it into all zeros.
     """
     lowestone = np.inf
-    for i, j in enumerate(m[0]): # get the lowest non-zero non-2 item in the first column
-        if j != 2 and j!= 0 and j < lowest one:
-            lowestone = j
-    for i in range(lowestone-1): # subtract this column lowest-1 times
-        m[0] -= 1 
+    for c in m: # for each column
+        for i, j in enumerate(m[c]): # get the lowest non-zero non-2 item in the first column
+            if j != 2 and j!= 0 and j < lowest one:
+                lowestone = j
+        for i in range(lowestone-1): # subtract this column lowest-1 times
+            m[c] -= 1
+    for c in m:
+        for j in m:
+            if m[c][j] == 1:
+                m[c] *= 2
+                m[c] -=1 
+                m[i] -=1 
