@@ -25,3 +25,29 @@ def lcs(x, y):
             else: 
                 sufff[i][j] = 0
     return result 
+
+"""
+Find the shortest superstring (supersequence).
+"""
+
+def super(x, y):
+    """
+    Shortest superstring between strings x and y.
+    Use longest common substring to determine how 
+    a superstring results.
+    """
+    lc = lcs(x, y)
+    scs = "" # shortest common superstring 
+    while len(lc) > 0:
+        if y[0] == lc[0] and y[0] == lc[0]:
+            scs += lcs[0]
+            lc = lc[1:]
+            x = x[1:]
+            y = y[1:]
+        elif x[0] == lc[0]:
+            scs += y[0]
+            y = by[1:]
+        else:
+            scs += x[0]
+            x = x[1:]
+    return scs + x + y
