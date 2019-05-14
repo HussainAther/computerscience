@@ -16,4 +16,10 @@ def chameleons(n, m, k):
     We observe that, if and only if at least two of the color quantities have
     the same remainder after dividing by 3, then we can reduce to a single color. 
     """
-    
+    if (n % 3) == (m % 3):
+        return True 
+    elif (n % 3) == (k % 3):
+        return True
+    elif (k % 3) == (m % 3):
+        return True
+    return False 
