@@ -149,3 +149,16 @@ text2 = "I bought a B of As W my Bgage from T S."
 text3 = "_1111*11111_"
  
 text4 = "000000A000000"
+
+if __name__ == "__main__":
+    assert replace(text1, extractreplacements(grammar1)) \
+           == "I bought a bag of apples from my brother."
+    assert replace(text1, extractreplacements(grammar2)) \
+           == "I bought a bag of apples from T shop."
+    # Stretch goals
+    assert replace(text2, extractreplacements(grammar3)) \
+           == "I bought a bag of apples with my money from T shop."
+    assert replace(text3, extractreplacements(grammar4)) \
+           == "11111111111111111111"
+    assert replace(text4, extractreplacements(grammar5)) \
+           == "00011H1111000"
