@@ -45,3 +45,8 @@ def build_suffix_trie(s):
              # walk down the suffix links
              Previous = r1
              Current = Current.suffix_link
+        # make the last suffix link
+        if Current is Root:
+            Previous.suffix_link = Root
+        else:
+            Previous.suffix_link = Current.children[c]
