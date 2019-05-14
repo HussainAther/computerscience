@@ -20,4 +20,10 @@ tree, burning, space = "TB."
 hood = ((-1,-1), (-1,0), (-1,1), # neighborhood around tre # neighborhood around treee
         (0,-1),          (0, 1),
         (1,-1),  (1,0),  (1,1))
- 
+
+def initialize():
+    """
+    Let's get it started.
+    """
+    grid = {(x,y): (tree if random.random()<= initial_trees else space) for x in range(L) for y in range(L) }
+    return grid 
