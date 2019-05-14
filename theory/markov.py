@@ -141,3 +141,11 @@ B1 -> 1B
 0C1 -> H01
 1C1 -> H11
 """
+
+text1 = "I bought a B of As from T S."
+ 
+text2 = "I bought a B of As W my Bgage from T S."
+ 
+text3 = "_1111*11111_"
+ 
+text4 = "000000A000000"
