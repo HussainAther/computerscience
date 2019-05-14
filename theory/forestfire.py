@@ -15,3 +15,9 @@ L = 15
 initial_trees = 0.55
 p = 0.01
 f = 0.001
+
+tree, burning, space = "TB."
+hood = ((-1,-1), (-1,0), (-1,1), # neighborhood around tre # neighborhood around treee
+        (0,-1),          (0, 1),
+        (1,-1),  (1,0),  (1,1))
+ 
