@@ -12,4 +12,8 @@ def chameleons(n, m, k):
     For a given input choice of n, m, and k for black, green, and brown chameleons
     respectively, determine whether all the chameleons will reach the same color
     after some times.
+
+    We observe that, if and only if at least two of the color quantities have
+    the same remainder after dividing by 3, then we can reduce to a single color. 
     """
+    
