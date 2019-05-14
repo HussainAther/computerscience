@@ -17,4 +17,6 @@ def king(p)
     make his/her first move by moving the king to the diagnol. This
     means player one will move into a losing position for the next turn. 
     """
-    
+    if p[0] == p[1]:
+        return False
+    return True 
