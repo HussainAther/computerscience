@@ -21,3 +21,9 @@ class SuffixNode:
           Link this node to node v via string c.
           """
           self.children[c] = v
+
+def build_suffix_trie(s):
+     """
+     Construct a suffix trie.
+     """
+     assert len(s) > 0
