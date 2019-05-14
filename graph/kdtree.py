@@ -79,7 +79,6 @@ def find_nearest(k, t, p):
     def nn(kd, target, hr, max_dist_sqd):
         if kd is None:
             return T3([0.0] * k, float("inf"), 0)
- 
         nodes_visited = 1
         s = kd.split
         pivot = kd.dom_elt
@@ -87,3 +86,9 @@ def find_nearest(k, t, p):
         right_hr = deepcopy(hr)
         left_hr.max[s] = pivot[s]
         right_hr.min[s] = pivot[s]
+        if target[s] <= pivot[s]:
+            nearer_kd, nearer_hr = kd.left, left_hr
+            further_kd, further_hr = kd.right, right_hr
+        else:
+            nearer_kd, nearer_hr = kd.right, right_hr
+            further_kd, further_hr = kd.left, left_hr
