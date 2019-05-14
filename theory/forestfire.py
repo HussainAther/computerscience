@@ -9,6 +9,8 @@ except:
 Forest-Fire Cellular automation http://en.wikipedia.org/wiki/Forest-fire_model
 
 forest fire Forest Fire
+
+Someone dropped my mixtape in the forest.
 """
 
 L = 15
@@ -50,3 +52,20 @@ def quickprint(grid):
                     b += 1
     print(("Of %6i cells, %6i are trees of which %6i are currently burning." + " (%6.3f%%, %6.3f%%)") 
             % (ll, t, b, 100. * t / ll, 100. * b / ll))
+
+def gnew(grid):
+    """
+    Createa new grid.
+    """
+    newgrid = {}
+    for x in range(L):
+        for y in range(L):
+            if grid[(x,y)] == burning:
+                newgrid[(x,y)] = space
+            elif grid[(x,y)] == space:
+                newgrid[(x,y)] = tree if random.random() <= p else space
+            elif grid[(x,y)] == tree:
+                newgrid[(x,y)] = (burning if any(grid.get((x+dx,y+dy),space) == burning for dx,dy in hood)
+                                              or random.random()<= f 
+                                          else tree)
+    return newgrid
