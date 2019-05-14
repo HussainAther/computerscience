@@ -25,5 +25,12 @@ def initialize():
     """
     Let's get it started.
     """
-    grid = {(x,y): (tree if random.random()<= initial_trees else space) for x in range(L) for y in range(L) }
+    grid = {(x,y): (tree if random.random() <= initial_trees else space) for x in range(L) for y in range(L) }
     return grid 
+
+def gprint(grid):
+    """
+    Print grid.
+    """
+    txt = "\n".join("".join(grid[(x,y)] for x in range(L)) for y in range(L))
+    print(txt)
