@@ -22,7 +22,6 @@ class KdNode(object):
     Initialize the node class.
     """
     __slots__ = ("dom_elt", "split", "left", "right")
- 
     def __init__(self, dom_elt, split, left, right):
         """
         Node characteristics.
@@ -39,4 +38,33 @@ class Orthotope(object):
     __slots__ = ("min", "max")
  
     def __init__(self, mi, ma):
-        self.min, self.max = mi, ma 
+        """
+        Min and max for the orthotope.
+        """
+        self.min, self.max = mi, ma
+
+class KdTree(object):
+    """
+    Initialize the k-dimensional tree.
+    """
+    __slots__ = ("n", "bounds")
+    def __init__(self, pts, bounds):
+        """
+        Use the points and boundaries to create the tree.
+        """
+        def nk2(split, exset):
+            """
+            Split along an exset to create the tree.
+            """
+            if not exset:
+                return None
+            exset.sort(key=itemgetter(split))
+            m = len(exset) // 2
+            d = exset[m]
+            while m + 1 < len(exset) and exset[m + 1][split] == d[split]:
+                m += 1
+            s2 = (split + 1) % len(d)  # cycle coordinates
+            return KdNode(d, split, nk2(s2, exset[:m]),
+                                    nk2(s2, exset[m + 1:]))
+        self.n = nk2(0, pts)
+        self.bounds = bounds
