@@ -8,4 +8,18 @@ strategy for each n.
 def nucleotide(n):
     """
     For a starting length n, player one will definitely win. Player one 
-    must 
+    must force player two to always be given an odd number n. That way,
+    when player two is given a 3-length nucleotide sequence, player one
+    wins no matter what player two does. For this function, we assume the
+    input is the length of the sequence player one has. Player one loses
+    if he/she starts out with a nucleotide of length 3.
+    """
+    if n == 3:
+        return False
+    elif n == 2 or n == 1:
+        return True
+    elif n % 2 == 0:
+        return n - 1
+    else:
+        return n - 2
+          
