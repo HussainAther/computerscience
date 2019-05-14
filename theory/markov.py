@@ -68,3 +68,18 @@ T -> the
 the shop -> my brother
 a never used -> .terminating rule
 """
+
+# BNF (Backus-Naur form) Syntax testing rules backus naur Backus Naur
+grammar3 = """\
+A -> apple
+WWWW -> with
+Bgage -> ->.*
+B -> bag
+->.* -> money
+W -> WW
+S -> .shop
+T -> the
+the shop -> my brother
+a never used -> .terminating rule
+"""
+ 
