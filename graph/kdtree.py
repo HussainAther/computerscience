@@ -113,3 +113,15 @@ def find_nearest(k, t, p):
             dist_sqd = n2.dist_sqd
         return T3(nearest, dist_sqd, nodes_visited)
     return nn(t.n, p, t.bounds, float("inf")) 
+
+def show_nearest(k, heading, kd, p):
+    """
+    Functionality to show the nearest k neighbors for a certain heading, kd tree, and 
+    point p.
+    """
+    print(heading + ":")
+    print("Point:           ", p)
+    n = find_nearest(k, kd, p)
+    print("Nearest neighbor:", n.nearest)
+    print("Distance:        ", sqrt(n.dist_sqd))
+    print("Nodes visited:   ", n.nodes_visited, "\n")
