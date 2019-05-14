@@ -8,4 +8,8 @@ is always possible, check the case n = 1, m = 3, and k = 5).
 """
 
 def chameleons(n, m, k):
-
+    """
+    For a given input choice of n, m, and k for black, green, and brown chameleons
+    respectively, determine whether all the chameleons will reach the same color
+    after some times.
+    """
