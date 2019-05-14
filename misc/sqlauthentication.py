@@ -21,4 +21,16 @@ def connect_db():
     try:	 
         return mysql.connector.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASS, db=DB_NAME)	 
     except:	 
-        return False	 
+        return False	
+
+def create_user(username, passwd): 
+    """
+    If user was successfully created, returns its ID; returns None on error.
+    """
+    db = connect_db()	 
+    if not db:	 
+        print("Can't connect MySQL!")
+        return None
+    cursor = db.cursor()	 
+    salt = randomValue(16)	 	 
+    passwd_md5 = hashlib.md5(salt+passwd).hexdigest()	  
