@@ -1,5 +1,8 @@
 """
-This is a game between two players. It starts with two piles of rocks, ten chips per pile. On each turn, a
-player may take one chip from one pile, or two chips, one from each pile. If one pile is empty, you can
-only take one chip from the other pile. The player who takes the last chip or chips wins the game.
+This is a game between two players. It starts with two piles of rocks, n and m rocks per pile. On each turn, a
+player may take one rock from one pile, or two rocks, one from each pile. If one pile is empty, you can
+only take one rock from the other pile. The player who takes the last rock or rocks wins the game.
 """
+
+def rocks(n, m):
+   
