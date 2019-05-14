@@ -112,3 +112,32 @@ _1 -> 1
 1+_ -> 1
 _+_ -> 
 """ 
+
+"""
+Turing machine: three-state busy beaver used in the Busy Beaver game.
+
+More precisely, the busy beaver game consists of designing a halting, 
+binary-alphabet Turing machine which writes the most 1s on the tape, 
+using only a given set of states. The rules for the 2-state game are as follows: 
+The machine must have two states in addition to the halting state, and
+the tape initially contains 0s only.
+"""
+
+grammar5 = """\
+# state A, symbol 0 => write 1, move right, new state B
+A0 -> 1B
+# state A, symbol 1 => write 1, move left, new state C
+0A1 -> C01
+1A1 -> C11
+# state B, symbol 0 => write 1, move left, new state A
+0B0 -> A01
+1B0 -> A11
+# state B, symbol 1 => write 1, move right, new state B
+B1 -> 1B
+# state C, symbol 0 => write 1, move left, new state B
+0C0 -> B01
+1C0 -> B11
+# state C, symbol 1 => write 1, move left, halt
+0C1 -> H01
+1C1 -> H11
+"""
