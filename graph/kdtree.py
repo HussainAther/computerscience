@@ -125,3 +125,16 @@ def show_nearest(k, heading, kd, p):
     print("Nearest neighbor:", n.nearest)
     print("Distance:        ", sqrt(n.dist_sqd))
     print("Nodes visited:   ", n.nodes_visited, "\n")
+
+def random_point(k):
+    """
+    Random point in k.
+    """
+    return [random() for _ in range(k)]
+ 
+def random_points(k, n):
+    """
+    n random points in k.
+    """
+    return [random_point(k) for _ in range(n)]
+ 
