@@ -19,6 +19,7 @@ def profile_score(p, seqs):
     For a given profile p and list of seqs, output the probability
     you would observe the given letters.
     """
+    return .25*len(p[0])
 
 def gibbs(seqs, k):
     """
