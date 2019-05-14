@@ -1,7 +1,8 @@
 import random
 
 """
-Use the breakpoints to sort for reversals.
+Use the breakpoints to sort for reversals. We try to use reversals to 
+get rid of breakpoints to get our desired permutation.
 """
 
 def makePermutation(n):
