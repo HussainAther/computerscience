@@ -6,3 +6,6 @@ choice of n, m, and k decide whether it is possible that after some time
 all the chameleons on the island are the same color (if you think that it 
 is always possible, check the case n = 1, m = 3, and k = 5).
 """
+
+def chameleons(n, m, k):
+
