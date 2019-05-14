@@ -45,4 +45,14 @@ def create_user(username, passwd):
     except:	 
         print("Username was already taken. Please select another") 
         return None
+
+ def authenticate_user(username, passwd):
+    """
+    Authenticate.
+    """
+    db = connect_db()	 
+    if not db:	 
+        print("Can't connect MySQL!")
+        return False
+    cursor = db.cursor()	 
   
