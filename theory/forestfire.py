@@ -69,3 +69,22 @@ def gnew(grid):
                                               or random.random()<= f 
                                           else tree)
     return newgrid
+
+if __name__ == "__main__":
+    grid = initialise()
+    iter = 0
+    while True:
+        quickprint(grid)
+        inp = raw_input("Print/Quit/<int>/<return> %6i: " % iter).lower().strip()
+        if inp:
+            if inp[0] == "p":
+                gprint(grid)
+            elif inp.isdigit():
+                for i in range(int(inp)):
+                    iter +=1
+                    grid = gnew(grid)
+                    quickprint(grid)
+            elif inp[0] == "q":
+                break
+        grid = gnew(grid)
+        iter += 1
