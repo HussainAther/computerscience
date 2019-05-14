@@ -21,3 +21,13 @@ def stern_brocot():
     while True:
         sb += [sb[0] + sb[1], sb[1]]
         yield sb.popleft()
+
+# Generate s-b numbers
+[s for _, s in zip(range(15), stern_brocot())]
+[1 + sum(1 for i in takewhile(lambda x: x != occur, stern_brocot()))
+     for occur in (list(range(1, 11)) + [100])]
+
+# Test verify our tree
+prev, this = tee(stern_brocot(), 2)
+next(this) # should return 1
+all(gcd(p, t) == 1 for p, t in islice(zip(prev, this), 1000)) # should return True
