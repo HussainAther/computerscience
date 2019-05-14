@@ -1,7 +1,7 @@
 import re
 
 """
-A Markov interpreter.
+A Markov interpreter. markov
 
 The example uses a regexp to parse the syntax of the grammar. This regexp is 
 multi-line and verbose, and uses named groups to aid in understanding the regexp 
