@@ -38,3 +38,10 @@ def build_suffix_trie(s):
              # create new node r1 with transition Current -c->r1
              r1 = SuffixNode()
              Current.add_link(c, r1)
+             # if we came from some previous node, make that
+             # node's suffix link point here
+             if Previous is not None:
+                 Previous.suffix_link = r1
+             # walk down the suffix links
+             Previous = r1
+             Current = Current.suffix_link
