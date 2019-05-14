@@ -27,3 +27,7 @@ def build_suffix_trie(s):
      Construct a suffix trie.
      """
      assert len(s) > 0
+     # explicitly build the two-node suffix tree
+     Root = SuffixNode() # the root node
+     Longest = SuffixNode(suffix_link = Root)
+     Root.add_link(s[0], Longest)
