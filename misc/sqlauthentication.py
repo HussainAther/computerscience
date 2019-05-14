@@ -55,4 +55,13 @@ def create_user(username, passwd):
         print("Can't connect MySQL!")
         return False
     cursor = db.cursor()	 
+    row = cursor.fetchone()
+    cursor.close()
+    db.close()
+    if row is None: # username not found
+        return False
+    salt = row[0]
+    correct_md5 = row[1]
+    tried_md5 = hashlib.md5(salt+passwd).hexdigest()
+    return correct_md5 == tried_md5
   
