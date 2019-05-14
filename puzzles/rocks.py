@@ -5,4 +5,9 @@ only take one rock from the other pile. The player who takes the last rock or ro
 """
 
 def rocks(n, m):
-   
+    """
+    For integer piles n and m, check if the player loses.
+    """
+    if n % 2 == 0 and m % 2 == 0:
+        return "lose"
+    return "win"
