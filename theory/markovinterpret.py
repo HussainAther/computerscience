@@ -58,3 +58,13 @@ T -> the
 the shop -> my brother
 a never used -> .terminating rule
 """
+
+# Slightly modified from the rules on Wikipedia
+grammar2 = """\
+A -> apple
+B -> bag
+S -> .shop
+T -> the
+the shop -> my brother
+a never used -> .terminating rule
+"""
