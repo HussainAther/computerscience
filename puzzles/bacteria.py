@@ -7,3 +7,10 @@ bacteria; again, the remaining bacteria reproduce. This process continues every 
 the viruses eventually kill all the bacteria? If so, design an algorithm that computes how 
 many steps it will take. How does the running time of your algorithm depend on n?
 """
+
+def bacteria(b, v):
+    """
+    For b bacteria and v viruses at the beginning, we can use recurrence relations of b(t)
+    and v(t) (as they depend on time, to determine how long it would take for the viruses
+    to kill all the bacteria.
+    """
