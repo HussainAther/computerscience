@@ -50,3 +50,7 @@ def build_suffix_trie(s):
             Previous.suffix_link = Root
         else:
             Previous.suffix_link = Current.children[c]
+        # move to the newly added child of the longest path
+        # (which is the new longest path)
+        Longest = Longest.children[c]
+    return Root 
