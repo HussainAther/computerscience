@@ -64,4 +64,10 @@ def create_user(username, passwd):
     correct_md5 = row[1]
     tried_md5 = hashlib.md5(salt+passwd).hexdigest()
     return correct_md5 == tried_md5
-  
+ 
+def randomValue(length):	 
+    """
+    Creates random value with given length.
+    """
+    salt_chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+    return "".join(random.choice(salt_chars) for x in range(length)) 
