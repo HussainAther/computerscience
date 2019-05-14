@@ -13,7 +13,7 @@ def lcs(x, y):
     m, n = len(x, len(y)
     for i in range(m):
         match = ""
-        for j in range(y):
+        for j in range(n):
             if (i + j < m and x[i + j] == y[j]):
                 match += y[j]
             else:
@@ -43,9 +43,6 @@ def lcsl(x, y):
                 suff[i][j] = 0
     return result
     
-
-lcs("baab", "aa") 
-
 """
 Find the shortest superstring (supersequence).
 """
