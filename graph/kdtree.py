@@ -31,4 +31,12 @@ class KdNode(object):
         self.split = split # splitting dimension
         self.left = left # kd-tree representing the points to the left of the splitting plane
         self.right = right # to the right of the splitting plane
+
+class Orthotope(object):
+    """
+    k-dimensional rectangle.
+    """
+    __slots__ = ("min", "max")
  
+    def __init__(self, mi, ma):
+        self.min, self.max = mi, ma 
