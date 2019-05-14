@@ -16,4 +16,5 @@ def solve(m):
     for i, j in enumerate(m[0]): # get the lowest non-zero non-2 item in the first column
         if j != 2 and j!= 0 and j < lowest one:
             lowestone = j
-    
+    for i in range(lowestone-1): # subtract this column lowest-1 times
+        m[0] -= 1 
