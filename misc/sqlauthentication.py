@@ -33,4 +33,16 @@ def create_user(username, passwd):
         return None
     cursor = db.cursor()	 
     salt = randomValue(16)	 	 
-    passwd_md5 = hashlib.md5(salt+passwd).hexdigest()	  
+    passwd_md5 = hashlib.md5(salt+passwd).hexdigest()	 
+    try:	 
+        cursor.execute("INSERT INTO users (`username`, `pass_salt`, `pass_md5`) VALUES (%s, %s, %s)", (username, salt, passwd_md5)) 
+        cursor.execute("SELECT userid FROM users WHERE username=%s", (username,) ) 
+        id = cursor.fetchone()
+        db.commit()
+        cursor.close()
+        db.close()
+        return id[0]	 
+    except:	 
+        print("Username was already taken. Please select another") 
+        return None
+  
