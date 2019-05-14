@@ -31,3 +31,7 @@ def build_suffix_trie(s):
      Root = SuffixNode() # the root node
      Longest = SuffixNode(suffix_link = Root)
      Root.add_link(s[0], Longest)
+     # for every character left in the string
+     for c in s[1:]:
+     Current = Longest; Previous = None
+     while c not in Current.children: 
