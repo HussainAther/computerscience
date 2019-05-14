@@ -34,4 +34,11 @@ def replace(text, replacements):
                 break
         else:
             return text
- 
+
+syntaxre = r"""(?mx)
+^(?: 
+  (?: (?P<comment> \# .* ) ) |
+  (?: (?P<blank>   \s*  ) (?: \n | $ )  ) |
+  (?: (?P<rule>    (?P<pat> .+? ) \s+ -> \s+ (?P<term> \.)? (?P<repl> .+) ) )
+)$
+""" 
