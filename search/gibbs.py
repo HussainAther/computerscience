@@ -14,6 +14,12 @@ def profile_for(seqs, s, k):
         result.append(seqs[i:i+k])
     return results
 
+def profile_score(p, seqs):
+    """
+    For a given profile p and list of seqs, output the probability
+    you would observe the given letters.
+    """
+
 def gibbs(seqs, k):
     """
     For a list of sequences seqs, find the best motif using Gibbs sampling
