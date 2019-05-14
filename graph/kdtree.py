@@ -92,3 +92,8 @@ def find_nearest(k, t, p):
         else:
             nearer_kd, nearer_hr = kd.right, right_hr
             further_kd, further_hr = kd.left, left_hr
+        n1 = nn(nearer_kd, target, nearer_hr, max_dist_sqd)
+        nearest = n1.nearest
+        dist_sqd = n1.dist_sqd
+        nodes_visited += n1.nodes_visited
+ 
