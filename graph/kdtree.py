@@ -106,4 +106,10 @@ def find_nearest(k, t, p):
             nearest = pivot
             dist_sqd = d
             max_dist_sqd = dist_sqd
-  
+         n2 = nn(further_kd, target, further_hr, max_dist_sqd)
+        nodes_visited += n2.nodes_visited
+        if n2.dist_sqd < dist_sqd:
+            nearest = n2.nearest
+            dist_sqd = n2.dist_sqd
+        return T3(nearest, dist_sqd, nodes_visited)
+    return nn(t.n, p, t.bounds, float("inf")) 
