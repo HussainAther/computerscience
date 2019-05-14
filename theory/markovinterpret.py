@@ -42,3 +42,14 @@ syntaxre = r"""(?mx)
   (?: (?P<rule>    (?P<pat> .+? ) \s+ -> \s+ (?P<term> \.)? (?P<repl> .+) ) )
 )$
 """ 
+
+# This rules file is extracted from Wikipedia:
+# http://en.wikipedia.org/wiki/Markov_Algorithm
+grammar1 = """\
+A -> apple
+B -> bag
+S -> shop
+T -> the
+the shop -> my brother
+a never used -> .terminating rule
+"""
