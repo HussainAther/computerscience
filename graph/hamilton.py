@@ -46,3 +46,11 @@ class Graph:
             else:
                 return [self.vertex[i] for i in path]
         return []
+
+G1 = Graph(binary)
+for vsrc in binary:
+    G1.addEdge(vsrc,vsrc[1:]+"0")
+    G1.addEdge(vsrc,vsrc[1:]+"1")
+# This takes about 30 mins
+%time path = G1.hamiltonianPath()
+print(path)
