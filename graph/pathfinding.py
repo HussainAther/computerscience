@@ -69,7 +69,41 @@ class Graph:
         self.PathV2result = []
         self.SearchTree([],sorted(self.index.values()))                
         return self.PathV2result
-
+   def eulerianPath(self):
+        """
+        Eulerian (eulerian) cycle starts and ends on same vertex.
+        """
+        graph = [(src,dst) for src,dst in self.edge]
+        currentVertex = self.verifyAndGetStart()
+        path = [currentVertex]
+        # "next" is where vertices get inserted into our tour
+        # it starts at the end (i.e. it is the same as appending),
+        # but later "side-trips" will insert in the middle
+        next = 1
+        while len(graph) > 0:
+            # follows a path until it ends
+            for edge in graph:
+                if (edge[0] == currentVertex):
+                    currentVertex = edge[1]
+                    graph.remove(edge)
+                    path.insert(next, currentVertex)
+                    next += 1
+                    break
+            else:
+                # Look for side-trips along the path
+                for edge in graph:
+                    try:
+                        # insert our side-trip after the
+                        # "u" vertex that is starts from
+                        next = path.index(edge[0]) + 1
+                        currentVertex = edge[0]
+                        break
+                    except ValueError:
+                        continue
+                else:
+                    print("There is no path!")
+                    return False
+        return path
 
 G1 = Graph(binary)
 for vsrc in binary:
