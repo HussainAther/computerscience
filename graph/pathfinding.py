@@ -104,6 +104,40 @@ class Graph:
                     print("There is no path!")
                     return False
         return path
+    def degrees(self):
+        """ 
+        Returns two dictionaries with the inDegree and outDegree
+        of each node from the graph. 
+        """
+        inDegree = {}
+        outDegree = {}
+        for src, dst in self.edge:
+            outDegree[src] = outDegree.get(src, 0) + 1
+            inDegree[dst] = inDegree.get(dst, 0) + 1
+        return inDegree, outDegree
+    def verifyAndGetStart(self):
+        """
+        Verify our methods are working.
+        """
+        inDegree, outDegree = self.degrees()
+        start = 0
+        end = 0
+        for vert in self.vertex.iterkeys():
+            ins = inDegree.get(vert,0)
+            outs = outDegree.get(vert,0)
+            if (ins == outs):
+                continue
+            elif (ins - outs == 1):
+                end = vert
+            elif (outs - ins == 1):
+                start = vert
+            else:
+                start, end = -1, -1
+                break
+        if (start >= 0) and (end >= 0):
+            return start
+        else:
+            return -1
 
 G1 = Graph(binary)
 for vsrc in binary:
