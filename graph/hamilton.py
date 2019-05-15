@@ -4,7 +4,8 @@ import itertools
 The Hamiltonian path problem (hamiltonian)
 
 We need an algorithm to find a path in a graph that visits every node exactly once, 
-if such a path exists.
+if such a path exists. We use recursion to extend paths along edges that include
+unvisited vertices. If we use all vertices, we've found a path. 
 """
 
 class Graph:
@@ -46,6 +47,29 @@ class Graph:
             else:
                 return [self.vertex[i] for i in path]
         return []
+    def SearchTree(self, path, verticesLeft):
+        """ 
+        A recursive Branch-and-Bound Hamiltonian Path search. 
+        Paths are extended one node at a time using only available
+        edges from the graph. 
+        """
+        if (len(verticesLeft) == 0):
+            self.PathV2result = [self.vertex[i] for i in path]
+            return True
+        for v in verticesLeft:
+            if (len(path) == 0) or ((path[-1],v) in self.edge):
+                if self.SearchTree(path+[v], [r for r in verticesLeft if r != v]):
+                    return True
+        return False
+    def hamiltonianPathV2(self):
+        """ 
+        A wrapper function for invoking the Branch-and-Bound 
+        Hamiltonian Path search. 
+        """
+        self.PathV2result = []
+        self.SearchTree([],sorted(self.index.values()))                
+        return self.PathV2result
+
 
 G1 = Graph(binary)
 for vsrc in binary:
