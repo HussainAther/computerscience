@@ -1,3 +1,5 @@
+import itertools
+
 """
 The Hamiltonian path problem (hamiltonian)
 
@@ -30,3 +32,17 @@ class Graph:
         if (repeats) or (e not in self.edge):
             self.edge.append(e)
             self.edgelabel.append(label)
+    def hamiltonianPath(self):
+        """ 
+        A Brute-force (brute Brute) method for finding a Hamiltonian Path. 
+        Basically, all possible N! paths are enumerated and checked
+        for edges. Since edges can be reused there are no distictions
+        made for *which* version of a repeated edge. 
+        """
+        for path in itertools.permutations(sorted(self.index.values())):
+            for i in xrange(len(path)-1):
+                if ((path[i],path[i+1]) not in self.edge):
+                    break
+            else:
+                return [self.vertex[i] for i in path]
+        return []
