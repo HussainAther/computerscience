@@ -109,6 +109,26 @@ def train(network, train, l_rate, n_epoch, n_outputs):
             updateWeights(network, row, l_rate)
             print(">epoch=%d, lrate=%.3f, error=%.3f" % (epoch, l_rate, sum_error))
 
+def loadcsv(filename):
+    """
+    Load a given csv file.
+    """
+    dataset = list()
+    with open(filename, "r") as file:
+        csv_reader = reader(file)
+        for row in csv_reader:
+            if not row:
+                continue
+            dataset.append(row)
+    return dataset
+
+def strColumnToFloat(dataset, column):
+    """
+    Convert string column to float.
+    """
+    for row in dataset:
+        row[column] = float(row[column].strip())
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
