@@ -129,6 +129,19 @@ def strColumnToFloat(dataset, column):
     for row in dataset:
         row[column] = float(row[column].strip())
 
+def strColumnToInt(dataset, column):
+    """
+    Convert string column to integer.
+    """
+    class_values = [row[column] for row in dataset]
+    unique = set(class_values)
+    lookup = dict()
+    for i, value in enumerate(unique):
+        lookup[value] = i
+    for row in dataset:
+        row[column] = lookup[row[column]]
+    return lookup
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
