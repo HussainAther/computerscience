@@ -2,6 +2,7 @@ import numpy as np
 
 from random import seed
 from random import random
+from csv import reader
 
 """
 Neural network backpropagation used for classification are part of the supervised learning
