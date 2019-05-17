@@ -26,11 +26,6 @@ def initNN(n_inputs, n_hidden, n_outputs):
     network.append(output_layer)
     return network
 
-seed(1234)
-network = initNN(2, 1, 2)
-for layer in network:
-    print(layer)
-
 def activate(weights, inputs):
     """
     Calculate neuron activation for weights and input.
@@ -98,7 +93,7 @@ def updateWeights(network, row, l_rate):
                 neuron["weights"][j] += l_rate * neuron["delta"] * inputs[j]
 	    neuron["weights"][-1] += l_rate * neuron["delta"]
 
-def train_network(network, train, l_rate, n_epoch, n_outputs):
+def train(network, train, l_rate, n_epoch, n_outputs):
     """
     Train a network for a fixed number of epochs.
     """
@@ -112,3 +107,20 @@ def train_network(network, train, l_rate, n_epoch, n_outputs):
             backprop(network, expected)
             updateWeights(network, row, l_rate)
             print(">epoch=%d, lrate=%.3f, error=%.3f" % (epoch, l_rate, sum_error))
+
+dataset = [[2.7810836,2.550537003,0],
+	[1.465489372,2.362125076,0],
+	[3.396561688,4.400293529,0],
+	[1.38807019,1.850220317,0],
+	[3.06407232,3.005305973,0],
+	[7.627531214,2.759262235,1],
+	[5.332441248,2.088626775,1],
+	[6.922596716,1.77106367,1],
+	[8.675418651,-0.242068655,1],
+	[7.673756466,3.508563011,1]]
+
+seed(1234)
+n_inputs = len(dataset[0]) - 1
+n_outputs = len(set([row[-1] for row in dataset]))
+network = initNN(n_inputs, 2, n_outputs)
+train(network, dataset, 0.5, 20, n_outputs)
