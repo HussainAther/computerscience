@@ -83,3 +83,17 @@ def backprop(network, expected):
         for j in range(len(layer)):
             neuron = layer[j]
             neuron["delta"] = errors[j] * transfer_derivative(neuron["output"])
+
+def updateWeights(network, row, l_rate):
+    """
+    Update network weights with error, row inputs, and 
+    learning rate l_rate.
+    """
+    for i in range(len(network)):
+        inputs = row[:-1]
+        if i != 0:
+            inputs = [neuron["output"] for neuron in network[i - 1]
+        for neuron in network[i]:
+            for j in range(len(inputs)):
+                neuron["weights"][j] += l_rate * neuron["delta"] * inputs[j]
+	    neuron["weights"][-1] += l_rate * neuron["delta"]
