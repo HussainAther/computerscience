@@ -150,6 +150,15 @@ def datasetMinMax(dataset):
     stats = [[min(column), max(column)] for column in zip(*dataset)]
     return stats
 
+def normalizeDataset(dataset, minmax):
+    """
+    Rescale the dataset columns to the range 0-1 using the minmax minimum
+    and maximum.
+    """
+    for row in dataset:
+        for i in range(len(row)-1):
+            row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
