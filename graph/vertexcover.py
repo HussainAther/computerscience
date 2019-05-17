@@ -12,3 +12,8 @@ class vertexcover:
     """
     For a graph, we want to check vertex covers.
     """
+    def __init__(self, graph):
+        """
+        Initialize a graph using a list of vertices and edges.
+        """
+        self.graph = graph
