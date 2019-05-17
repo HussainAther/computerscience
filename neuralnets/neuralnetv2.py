@@ -13,7 +13,10 @@ a known expected output to modify the internal state.
 
 The seeds dataset involves the prediction of species given measurements seeds from different varieties of wheat.
 
-There are 201 records and 7 numerical input variables. It is a classification problem with 3 output classes. The scale for each numeric input value vary, so some data normalization may be required for use with algorithms that weight inputs like the backpropagation algorithm.
+There are 201 records and 7 numerical input variables. It is a classification problem 
+with 3 output classes. The scale for each numeric input value vary, so some data 
+normalization may be required for use with algorithms that weight inputs 
+like the backpropagation algorithm.
 """
 
 def initNN(n_inputs, n_hidden, n_outputs):
