@@ -187,6 +187,27 @@ def accuracy(actual, predicted):
             correct += 1
     return correct / float(len(actual)) * 100.0
 
+def evalAlg(dataset, algorithm, n_folds, *args):
+    """
+    Evaluate an algorithm using the cross validation split.
+    """
+    folds = cvSplit(dataset, n_folds)
+    scores = list()
+    for fold in folds:
+        train_set = list(folds)
+        train_set.remove(fold)
+        train_set = sum(train_set, [])
+        test_set = list()
+        for row in fold:
+            row_copy = list(row)
+            test_set.append(row_copy)
+            row_copy[-1] = None
+	predicted = algorithm(train_set, test_set, *args)
+        actual = [row[-1] for row in fold]
+        acc = accuracy(actual, predicted)
+        scores.append(acc)
+	return scores
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
@@ -203,3 +224,17 @@ n_inputs = len(dataset[0]) - 1
 n_outputs = len(set([row[-1] for row in dataset]))
 network = initNN(n_inputs, 2, n_outputs)
 train(network, dataset, 0.5, 20, n_outputs)
+filename = "seeds_dataset.csv" # load that data yeet
+dataset = loadcsv(filename)
+for i in range(len(dataset[0])-1):
+    strColumnToFloat(dataset, i)
+strColumnToInt(dataset, len(dataset[0])-1)
+minmax = datasetMinMax(dataset) # normalize
+normalizeDataset(dataset, minmax) 
+n_folds = 5 # number of folds for cross validation
+l_rate = 0.3 # learning rate
+n_epoch = 500 # number of epochs
+n_hidden = 5 # number of hidden layers
+scores = evalAlg(dataset, backprop, n_folds, l_rate, n_epoch, n_hidden)
+print("Scores: %s" % scores)
+print("Mean Accuracy: %.3f%%" % (sum(scores)/float(len(scores))))
