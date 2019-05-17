@@ -7,3 +7,8 @@ The set V' is said to "cover" the edges of G. A minimum vertex cover is a vertex
 of the smallest possible size. If every vertex has a cost, we want to minimize the total
 cost while covering every edge of the graph.  
 """
+
+class vertexcover:
+    """
+    For a graph, we want to check vertex covers.
+    """
