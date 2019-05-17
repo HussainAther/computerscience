@@ -14,7 +14,9 @@ class vertexcover:
     """
     def __init__(self, graph):
         """
-        Initialize a graph using a list of vertices and edges.
+        Initialize a graph using a list of vertices and edges
+        in matrix form. For each vertex, 0 and 1 correspond to 
+        the edges they're connected to and unconnected to, respectively.
         """
         self.graph = graph
 
@@ -32,4 +34,16 @@ class vertexcover:
     def naiveSearch(self):
         """
         Search for vertex covers.
-        """ 
+        """
+        n = len(self.graph)
+        minvc = n # minimum vertex cover
+        for i in list(itertools.product(*["01"] *n)):
+            if vertexcover.validityCheck(ins, i):
+                counter = 0
+                for j in i:
+                    if j == "1":
+                        counter += 1
+                minvc = min(counter, minvc)
+       return minvc
+
+ins = vertexcover(graph)
