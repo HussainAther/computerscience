@@ -15,7 +15,7 @@ The seeds dataset involves the prediction of species given measurements seeds fr
 There are 201 records and 7 numerical input variables. It is a classification problem with 3 output classes. The scale for each numeric input value vary, so some data normalization may be required for use with algorithms that weight inputs like the backpropagation algorithm.
 """
 
-def initialize_network(n_inputs, n_hidden, n_outputs):
+def initNN(n_inputs, n_hidden, n_outputs):
     """
     Initialize a neural network with inputs, hidden neurons, and outputs.
     """
@@ -27,10 +27,9 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
     return network
 
 seed(1234)
-network = initialize_network(2, 1, 2)
+network = initNN(2, 1, 2)
 for layer in network:
     print(layer)
-
 
 def activate(weights, inputs):
     """
@@ -49,8 +48,7 @@ def transfer(activation):
     """
     return 1.0 / (1.0 + np.exp(-activation))
 
-# Forward propagate input to a network output
-def forward_propagate(network, row):
+def forprop(network, row):
     """
     For a network and row inputs, propagate forward.
     """
@@ -63,3 +61,25 @@ def forward_propagate(network, row):
                 new_inputs.append(neuron["output"])
                 inputs = new_inputs
     return inputs
+
+def backprop(network, expected):
+    """
+    Backpropagate error and store in neurons for a given network and
+    expected values.
+    """
+    for i in reversed(range(len(network))):
+        layer = network[i]
+        errors = list()
+        if i != len(network)-1:
+            for j in range(len(layer)):
+                error = 0.0
+                for neuron in network[i + 1]:
+                    error += (neuron["weights"][j] * neuron["delta"])
+                errors.append(error)
+        else:
+            for j in range(len(layer)):
+                neuron = layer[j]
+                errors.append(expected[j] - neuron["output"])
+        for j in range(len(layer)):
+            neuron = layer[j]
+            neuron["delta"] = errors[j] * transfer_derivative(neuron["output"])
