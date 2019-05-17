@@ -17,3 +17,8 @@ class vertexcover:
         Initialize a graph using a list of vertices and edges.
         """
         self.graph = graph
+
+    def validitycheck(self, cover):
+        """
+        Check if a cover is valid.
+        """
