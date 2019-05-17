@@ -142,6 +142,14 @@ def strColumnToInt(dataset, column):
         row[column] = lookup[row[column]]
     return lookup
 
+def datasetMinMax(dataset):
+    """
+    Find the minimum and maximum values for each column.
+    """
+    minmax = list()
+    stats = [[min(column), max(column)] for column in zip(*dataset)]
+    return stats
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
