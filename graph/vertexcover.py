@@ -20,5 +20,11 @@ class vertexcover:
 
     def validitycheck(self, cover):
         """
-        Check if a cover is valid.
+        Check if a cover is valid by testing the conditions that would
+        prove it invalid.
         """
+        for i in range(len(self.graph)):
+            for j in range(i+1, len(self.graph[i])): # check em
+                if self.graph[i][j] == 1 and cover[i] != "1" and cover[j] != "1": # check coverage
+                    return False
+        return True
