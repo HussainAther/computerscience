@@ -174,6 +174,16 @@ def cvSplit(dataset, n_folds):
         dataset_split.append(fold)
     return dataset_split
 
+def accuracy(actual, predicted):
+    """
+    Calculate accuracy.
+    """
+    correct = 0
+    for i in range(len(actual)):
+        if actual[i] == predicted[i]:
+            correct += 1
+    return correct / float(len(actual)) * 100.0
+
 dataset = [[2.7810836,2.550537003,0],
 	[1.465489372,2.362125076,0],
 	[3.396561688,4.400293529,0],
