@@ -18,7 +18,7 @@ class vertexcover:
         """
         self.graph = graph
 
-    def validitycheck(self, cover):
+    def validityCheck(self, cover):
         """
         Check if a cover is valid by testing the conditions that would
         prove it invalid.
@@ -28,3 +28,8 @@ class vertexcover:
                 if self.graph[i][j] == 1 and cover[i] != "1" and cover[j] != "1": # check coverage
                     return False
         return True
+    
+    def naiveSearch(self):
+        """
+        Search for vertex covers.
+        """ 
