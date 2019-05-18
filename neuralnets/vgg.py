@@ -34,3 +34,11 @@ def vggblock(layer_in, n_filters, n_conv):
         layer_in = Conv2D(n_filters, (3,3), padding="same", activation="relu")(layer_in)
     layer_in = MaxPooling2D((2,2), strides=(2,2))(layer_in) # max pooling layer
     return layer_in
+
+visible = Input(shape=(256, 256, 3)) # define model input
+layer = vgg_block(visible, 64, 2) # add vgg module
+layer = vgg_block(layer, 128, 2) 
+layer = vgg_block(layer, 256, 4)
+model = Model(inputs=visible, outputs=layer) # create mode
+model.summary() # summarize model
+plot_model(model, show_shapes=True, to_file="multiplevggblocks.png") # plot model architecture
