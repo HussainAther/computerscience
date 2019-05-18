@@ -25,3 +25,12 @@ Specifically, models that have achieved state-of-the-art results for tasks like 
 use discrete architecture elements repeated multiple times, such as the VGG block in the VGG models, 
 the inception module in the GoogLeNet, and the residual module in the ResNet.
 """
+
+def vggblock(layer_in, n_filters, n_conv):
+    """
+    Create VGG block.
+    """
+    for _ in range(n_conv):
+        layer_in = Conv2D(n_filters, (3,3), padding="same", activation="relu")(layer_in)
+    layer_in = MaxPooling2D((2,2), strides=(2,2))(layer_in) # max pooling layer
+    return layer_in
