@@ -2,8 +2,10 @@ import numpy as np
 
 from keras.models import Model
 from keras.layers import Input
+from keras.layers import Activation
 from keras.layers import Conv2D
 from keras.layers import MaxPooling2D
+from keras.layers import add
 from keras.utils import plot_model
 
 """
@@ -38,24 +40,54 @@ def vggblock(layer_in, n_filters, n_conv):
     layer_in = MaxPooling2D((2,2), strides=(2,2))(layer_in) # max pooling layer
     return layer_in
 
-def inception_module(layer_in, f1, f2, f3):
+def inceptionmodule(layer_in, f1, f2_in, f2_out, f3_in, f3_out, f4_out):
     """
-    Create naive inception block.
+    Create a projected inception module for type of input layer layer_in and numbers
+    that dictate the input and output of each convolution.
     """
-    conv1 = Conv2D(f1, (1,1), padding="same", activation="relu")(layer_in) # 1x1 
-    conv3 = Conv2D(f2, (3,3), padding="same", activation="relu")(layer_in) # 3x3
+    conv1 = Conv2D(f1, (1,1), padding="same", activation="relu")(layer_in)
+    conv3 = Conv2D(f2_in, (1,1), padding="same", activation="relu")(layer_in)
     conv3 = Conv2D(f2_out, (3,3), padding="same", activation="relu")(conv3)
-    conv5 = Conv2D(f3, (5,5), padding="same", activation="relu")(layer_in) # 5x5
+    conv5 = Conv2D(f3_in, (1,1), padding="same", activation="relu")(layer_in)
     conv5 = Conv2D(f3_out, (5,5), padding="same", activation="relu")(conv5)
-    pool = MaxPooling2D((3,3), strides=(1,1), padding="same")(layer_in) # Max pooling
+    pool = MaxPooling2D((3,3), strides=(1,1), padding="same")(layer_in)
     pool = Conv2D(f4_out, (1,1), padding="same", activation="relu")(pool)
-    layer_out = np.concatenate([conv1, conv3, conv5, pool], axis=-1)
+    layer_out = concatenate([conv1, conv3, conv5, pool], axis=-1)
     return layer_out
 
-visible = Input(shape=(256, 256, 3)) # define model input
-layer = vggblock(visible, 64, 2) # add vgg module
-layer = vggblock(layer, 128, 2) 
+def residualmodule(layer_in, n_filters):
+    """
+    For a type of input layer layer_in and number of filters, create an identity
+    or projection residual.
+    """
+    merge_input = layer_in
+    # check if the number of filters needs to be increase, assumes channels last format
+    if layer_in.shape[-1] != n_filters:
+        merge_input = Conv2D(n_filters, (1,1), padding="same", activation="relu", kernel_initializer="he_normal")(layer_in)
+    conv1 = Conv2D(n_filters, (3,3), padding="same", activation="relu", kernel_initializer="he_normal")(layer_in)
+    conv2 = Conv2D(n_filters, (3,3), padding="same", activation="linear", kernel_initializer="he_normal")(conv1)
+    layer_out = add([conv2, merge_input])
+    layer_out = Activation("relu")(layer_out)
+    return layer_out
+
+# VGG architecture
+visible = Input(shape=(256, 256, 3))
+layer = vggblock(visible, 64, 2)
+layer = vggblock(layer, 128, 2)
 layer = vggblock(layer, 256, 4)
-model = Model(inputs=visible, outputs=layer) # create mode
-model.summary() # summarize model
-plot_model(model, show_shapes=True, to_file="multiplevggblocks.png") # plot model architecture
+model = Model(inputs=visible, outputs=layer)
+model.summary()
+plot_model(model, show_shapes=True, to_file="multiple_vgg_blocks.png")
+
+# Inception module
+layer = inceptionmodule(visible, 64, 96, 128, 16, 32, 32)
+layer = inceptionmodule(layer, 128, 128, 192, 32, 96, 64)
+model = Model(inputs=visible, outputs=layer)
+model.summary()
+plot_model(model, show_shapes=True, to_file="inception_module.png")
+
+# Residual model
+layer = residualmodule(visible, 64)
+model = Model(inputs=visible, outputs=layer)
+model.summary()
+plot_model(model, show_shapes=True, to_file="residual_module.png")
