@@ -14,4 +14,8 @@ examples illustrate the use of stochastic gradient descent with momentum, the de
 objective function, the construction of mini-batches of data, and data jittering. The last part 
 shows how powerful CNN models can be downloaded off-the-shelf and used directly in applications, 
 bypassing the expensive training process.
+
+Specifically, models that have achieved state-of-the-art results for tasks like image classification 
+use discrete architecture elements repeated multiple times, such as the VGG block in the VGG models, 
+the inception module in the GoogLeNet, and the residual module in the ResNet.
 """
