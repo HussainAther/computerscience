@@ -185,3 +185,6 @@ class HuffmanCoding:
                 bits = bin(byte)[2:].rjust(8, "0")
                 bitstring += bits
                 byte = file.read(1)
+            encodedtext = self.removepadding(bitstring)
+            decompressedtext = self.decodetext(encodedtext)
+            output.write(decompressedtext)
