@@ -119,3 +119,6 @@ class HuffmanCoding:
         """
         Create a byte array for the padded encoded text.
         """
+        if len(paddedencodedtext) % 8 != 0:
+            print("Not padded properly.")
+            exit(0)
