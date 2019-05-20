@@ -188,3 +188,4 @@ class HuffmanCoding:
             encodedtext = self.removepadding(bitstring)
             decompressedtext = self.decodetext(encodedtext)
             output.write(decompressedtext)
+        return outputpath
