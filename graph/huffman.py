@@ -47,3 +47,9 @@ class HuffmanCoding:
         """
         Initialize a frequency dictionary for text containing the characters.
         """
+        freq = {}
+        for c in text: # for each character
+            if not c in freq:
+                freq[c] = 0
+            freq[c] += 1
+        return freq
