@@ -29,3 +29,8 @@ class HeapNode:
         elif not isinstance(other, HeapNode)):
             return -1
         return self.freq > other.freq
+
+class HuffmanCoding:
+    """
+    Derive the Huffman codes.
+    """
