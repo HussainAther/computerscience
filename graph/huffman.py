@@ -175,3 +175,13 @@ class HuffmanCoding:
         """
         Decompress from input path.
         """
+        filename, fileextension = os.path.splitext(self.path)
+        outputpath = filename + "_decompressed.txt"
+        with open(inputpath, "rb") as file, open(outputpath, "w") as output:
+            bitstring = ""
+            byte = file.read(1)
+            while byte != "":
+                byte = ord(byte)
+                bits = bin(byte)[2:].rjust(8, "0")
+                bitstring += bits
+                byte = file.read(1)
