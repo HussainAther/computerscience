@@ -156,3 +156,17 @@ class HuffmanCoding:
         paddedencodedtext = paddedencodedtext[8:]
         encodedtext = paddedencodedtext[:-1*extrapadding]
         return encodedtext
+ 
+    def decodetext(self, encodedtext):
+        """
+        Decode text for decompression.
+        """
+        currentcode = ""
+        decodedtext = ""
+        for bit in encodedtext:
+            currentcode += bit
+            if currentcode in self.reversemapping:
+                c = self.reversemapping[currentcode]
+                decodedtext += c
+                currentcode = ""
+        return decodedtext
