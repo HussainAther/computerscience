@@ -53,3 +53,11 @@ class HuffmanCoding:
                 freq[c] = 0
             freq[c] += 1
         return freq
+    
+    def heap(self, freq):
+        """
+        For frequency dict freq, make heap.
+        """
+        for key in freq:
+            node = HeapNode(key, freq[key])
+            heapq.heappush(self.heap, node)
