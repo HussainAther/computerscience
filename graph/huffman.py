@@ -74,28 +74,29 @@ class HuffmanCoding:
             merged.right = node2
             heapq.heappush(self.heap, merged)
 
-    def codehelper(self, root, current_code):
+    def codehelper(self, root, currentcode):
         """
         Helper functions for creating the code.
         """
         if root == None:
             return
         elif root.char != None:
-            self.codes[root.char] = current_code
-            self.reverse_mapping[current_code] = root.char
+            self.codes[root.char] = currentcode
+            self.reverse_mapping[currentcode] = root.char
             return
-        self.codehelper(root.left, current_code + "0")
-        self.codehelper(root.right, current_code + "1")
+        self.codehelper(root.left, currentcode + "0")
+        self.codehelper(root.right, currentcode + "1")
   
     def makecode(self):
         """
         Make the Huffman code.
         """
         root = heapq.heappop(self.heap)
-        current_code = ""
-        self.codehelper(root, current_code)
+        currentcode = ""
+        self.codehelper(root, currentcode)
 
     def encodetext(self, text):
         """
         Get the encoded text.
         """
+        encodedtext 
