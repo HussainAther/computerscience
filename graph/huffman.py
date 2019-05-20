@@ -34,3 +34,11 @@ class HuffmanCoding:
     """
     Derive the Huffman codes.
     """
+    def __init__(self, path):
+        """
+        Initialize the path and associated variables.
+        """
+        self.path = path
+        self.heap = []
+        self.codes = {}
+        self.reverse_mapping = {}
