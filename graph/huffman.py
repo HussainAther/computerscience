@@ -109,3 +109,8 @@ class HuffmanCoding:
         Pad the encoded text.
         """ 
         extrapadding = 8 - len(encodedtext) % 8
+        for i in range(extrapadding):
+            encodedtext += "0"
+        paddedinfo = "{0:08b}".format(extrapadding)
+        encodedtext = paddedinfo + encodedtext
+        return encodedtext
