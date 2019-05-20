@@ -151,3 +151,8 @@ class HuffmanCoding:
         """
         Remove padding for decompressing.
         """
+        paddedinfo = paddedencodedtext[:8]
+        extrapadding = int(paddedinfo, 2)
+        paddedencodedtext = paddedencodedtext[8:]
+        encodedtext = paddedencodedtext[:-1*extrapadding]
+        return encodedtext
