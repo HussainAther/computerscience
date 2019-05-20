@@ -127,3 +127,8 @@ class HuffmanCoding:
             byte = paddedencodedtext[i: i+8]
             b.append(int(byte, 2))
         return b
+
+    def compress(self):
+        """
+        Compress a file.
+        """
