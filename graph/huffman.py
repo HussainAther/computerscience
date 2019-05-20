@@ -143,3 +143,5 @@ class HuffmanCoding:
             self.makecode()
             encodedtext = self.encodetext(text)
             paddedencodedtext = self.adencodedtext(text)
+            b = self.bytearraY(paddedencodedtext)
+            output.write(bytes(b))
