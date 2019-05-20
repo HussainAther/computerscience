@@ -145,3 +145,9 @@ class HuffmanCoding:
             paddedencodedtext = self.adencodedtext(text)
             b = self.bytearraY(paddedencodedtext)
             output.write(bytes(b))
+        return outputpath
+
+    def removepadding(self, paddedencodedtext):
+        """
+        Remove padding for decompressing.
+        """
