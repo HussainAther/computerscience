@@ -24,3 +24,8 @@ class HeapNode:
         """
         Compression function for outputting the compressed file.
         """
+        if other == None:
+            return -1
+        elif not isinstance(other, HeapNode)):
+            return -1
+        return self.freq > other.freq
