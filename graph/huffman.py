@@ -86,3 +86,11 @@ class HuffmanCoding:
             return
         self.codehelper(root.left, current_code + "0")
         self.codehelper(root.right, current_code + "1")
+  
+    def makecode(self):
+        """
+        Make the Huffman code.
+        """
+        root = heapq.heappop(self.heap)
+        current_code = ""
+        self.codehelper(root, current_code)
