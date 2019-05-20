@@ -42,3 +42,8 @@ class HuffmanCoding:
         self.heap = []
         self.codes = {}
         self.reverse_mapping = {}
+    
+    def freqdict(self, text):
+        """
+        Initialize a frequency dictionary for text containing the characters.
+        """
