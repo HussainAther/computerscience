@@ -99,4 +99,7 @@ class HuffmanCoding:
         """
         Get the encoded text.
         """
-        encodedtext 
+        encodedtext = ""
+        for c in text:
+            encodedtext += self.codes[c]
+        return encodedtext 
