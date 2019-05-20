@@ -66,3 +66,6 @@ class HuffmanCoding:
         """
         Merge nodes using the heap.
         """
+        while(len(self.heap)>1):
+            node1 = heapq.heappop(self.heap)
+            node2 = heapq.heappop(self.heap)
