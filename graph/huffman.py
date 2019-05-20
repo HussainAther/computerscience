@@ -19,3 +19,8 @@ class HeapNode:
         self.freq = freq
         self.left = None
         self.right = None
+    
+    def __cmp__(self, other):
+        """
+        Compression function for outputting the compressed file.
+        """
