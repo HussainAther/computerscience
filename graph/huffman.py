@@ -94,3 +94,8 @@ class HuffmanCoding:
         root = heapq.heappop(self.heap)
         current_code = ""
         self.codehelper(root, current_code)
+
+    def encodetext(self, text):
+        """
+        Get the encoded text.
+        """
