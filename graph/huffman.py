@@ -170,3 +170,8 @@ class HuffmanCoding:
                 decodedtext += c
                 currentcode = ""
         return decodedtext
+ 
+    def decompress(self, inputpath):
+        """
+        Decompress from input path.
+        """
