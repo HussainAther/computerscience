@@ -102,4 +102,10 @@ class HuffmanCoding:
         encodedtext = ""
         for c in text:
             encodedtext += self.codes[c]
-        return encodedtext 
+        return encodedtext
+
+    def padencodedtext(self, encodedtext):
+        """
+        Pad the encoded text.
+        """ 
+        extrapadding = 8 - len(encodedtext) % 8
