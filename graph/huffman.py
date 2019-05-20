@@ -61,3 +61,8 @@ class HuffmanCoding:
         for key in freq:
             node = HeapNode(key, freq[key])
             heapq.heappush(self.heap, node)
+    
+    def mergenodes(self):
+        """
+        Merge nodes using the heap.
+        """
