@@ -11,3 +11,11 @@ class HeapNode:
     """
     Heap node class for constructing the graph.
     """
+    def __init__(self, char, freq):
+        """
+        Initialize the character frequencies in the graph.
+        """
+        self.char = char
+        self.freq = freq
+        self.left = None
+        self.right = None
