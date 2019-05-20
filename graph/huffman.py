@@ -122,3 +122,8 @@ class HuffmanCoding:
         if len(paddedencodedtext) % 8 != 0:
             print("Not padded properly.")
             exit(0)
+        b = bytearray()
+        for i in range(0, len(paddedencodedtext), 8):
+            byte = paddedencodedtext[i: i+8]
+            b.append(int(byte, 2))
+        return b
