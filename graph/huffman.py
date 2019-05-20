@@ -141,3 +141,5 @@ class HuffmanCoding:
             self.heap(freq)
             self.mergenodes()
             self.makecode()
+            encodedtext = self.encodetext(text)
+            paddedencodedtext = self.adencodedtext(text)
