@@ -114,3 +114,8 @@ class HuffmanCoding:
         paddedinfo = "{0:08b}".format(extrapadding)
         encodedtext = paddedinfo + encodedtext
         return encodedtext
+  
+    def bytearray(self, paddedencodedtext):
+        """
+        Create a byte array for the padded encoded text.
+        """
