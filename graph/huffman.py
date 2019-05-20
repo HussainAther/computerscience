@@ -132,3 +132,12 @@ class HuffmanCoding:
         """
         Compress a file.
         """
+        filename, fileextension = os.path.splitext(self.path)
+        outputpath = filename + ".bin"
+        with open(self.path, "r+") as file, open(outputpath, "wb") as output:
+            text = file.read()
+            text = text.rstrip()
+            freq = self.freqdict(text)
+            self.heap(freq)
+            self.mergenodes()
+            self.makecode()
