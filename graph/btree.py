@@ -43,3 +43,36 @@ class BTreeSet(object):
 		return False
 	    else:  # Internal node
 		node = node.children[index]
+
+    def add(self, obj):
+        """
+        Special preprocessing to split root node
+        """
+	root = self.root
+	if len(root.keys) == self.maxkeys:
+	    child = root
+	    self.root = root = BTreeSet.Node(self.maxkeys, False)  # Increment tree height
+	    root.children.append(child)
+	    root.split_child(self.minkeys, self.maxkeys, 0)
+	# Walk down the tree
+	node = root
+	while True:
+	    # Search for index in current node
+	    assert len(node.keys) < self.maxkeys
+	    assert node is root or len(node.keys) >= self.minkeys
+	    found, index = node.search(obj)
+	    if found:
+	        return  # Key already exists in tree
+	    if node.is_leaf():  # Simple insertion into leaf
+                node.keys.insert(index, obj)
+		self.size += 1
+		return  # Successfully added
+	    else:  # Handle internal node
+		child = node.children[index]
+		if len(child.keys) == self.maxkeys:  # Split child node
+	            node.split_child(self.minkeys, self.maxkeys, index)
+		    if obj == node.keys[index]:
+	                return  # Key already exists in tree
+		    elif obj > node.keys[index]:
+		        child = node.children[index + 1]
+		node = child
