@@ -8,3 +8,7 @@ def lcslength(x, y)
     entries in row-major order. Maintain the table to construct an optimal 
     solution.
     """
+    m = len(x)
+    n = len(y)
+    b, c = {}, {} # output tables
+
