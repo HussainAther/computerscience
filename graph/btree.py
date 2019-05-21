@@ -23,3 +23,23 @@ class BTreeSet(object):
 	if coll is not None:
 		for obj in coll:
 			self.add(obj)
+
+    def __len__(self):
+	return self.size
+	
+	
+    def clear(self):
+	self.root = BTreeSet.Node(self.maxkeys, True)
+	self.size = 0
+	
+    def __contains__(self, obj):
+	# Walk down the tree
+	node = self.root
+	while True:
+	    found, index = node.search(obj)
+	    if found:
+		return True
+    	    elif node.is_leaf():
+		return False
+	    else:  # Internal node
+		node = node.children[index]
