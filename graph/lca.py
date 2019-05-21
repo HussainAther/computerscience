@@ -11,7 +11,7 @@ Lowest common ancestor (lca) for a given pair of nodes.
 
 def tarjan(G, root=None, pairs=None):
     """
-    LCA for graph G with Tarjan's algorithm.
+    LCA for graph G with Tarjan's algorithm tarjan.
     """
     if len(G) == 0:
         raise nx.NetworkXPointlessConcept("LCA meaningless on null graphs.")
