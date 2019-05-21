@@ -89,4 +89,12 @@ class BTreeSet(object):
 	root = self.root
 	found, index = root.search(obj)
 	node = root
-	while True:	
+	while True:
+            assert len(node.keys) <= self.maxkeys
+            assert node is root or len(node.keys) > self.minkeys
+            if node.is_leaf():
+       	        if found:  # Simple removal from leaf
+       		    node.remove_key(index)
+       		    assert self.size > 0
+       	       	    self.size -= 1
+           	return found	
