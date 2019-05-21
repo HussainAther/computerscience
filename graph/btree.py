@@ -97,4 +97,25 @@ class BTreeSet(object):
        		    node.remove_key(index)
        		    assert self.size > 0
        	       	    self.size -= 1
-           	return found	
+           	return found
+            else:  # Internal node
+		if found:  # Key is stored at current node
+		    left, right = node.children[index : index + 2]
+		    if len(left.keys) > self.minkeys:  # Replace key with predecessor
+		        node.keys[index] = left.remove_max(self.minkeys)
+			assert self.size > 0
+			self.size -= 1
+			return True
+		    elif len(right.keys) > self.minkeys:
+			node.keys[index] = right.remove_min(self.minkeys)
+			assert self.size > 0
+		        self.size -= 1
+			return True
+		    else:  # Merge key and right node into left node, then recurse
+			node.merge_children(self.minkeys, index)
+			if node is root and len(root.keys) == 0:
+			    assert len(root.children) == 1
+			    self.root = root = left  # Decrement tree height
+			node = left
+			index = self.minkeys  # Index known due to merging; no need to search
+				
