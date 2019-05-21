@@ -13,6 +13,17 @@ def allpairslca(G, pairs=None):
         raise nx.NetworkXPointlessConcept("LCA meaningless on null graphs.")
     elif None in G:
         raise nx.NetworkXError("None is not a valid node.")
+    if (not isinstance(pairs, (Mapping, Set)) and pairs is not None):
+        pairs = set(pairs)
+    sources = [n for n, deg in G.in_degree if deg == 0]
+    if len(sources) == 1:
+        root = sources[0]
+        super_root = None
+    else:
+        G = G.copy()
+        super_root = root = generate_unique_node()
+        for source in sources:
+            G.add_edge(root, source)
 
 
 def lca(G, node1, node2, default=None):
