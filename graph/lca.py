@@ -68,6 +68,28 @@ def allpairslca(G, pairs=None):
         for (node1, node2) in pairs if pairs is not None else tree_lca:
             best_root_distance = None
             best = None
+            indices = [0, 0]
+            ancestors_by_index = [ancestors[node1], ancestors[node2]]
+            def getnext(indices):
+                """
+                Returns index of the list containing the next item
+                Next order refers to the merged order.
+                Index can be 0 or 1 (or None if exhausted).
+                """
+                index1, index2 = indices
+                if (index1 >= len(ancestors[node1]) and
+                        index2 >= len(ancestors[node2])):
+                    return None
+                elif index1 >= len(ancestors[node1]):
+                    return 1
+                elif index2 >= len(ancestors[node2]):
+                    return 0
+                elif (euler_tour_pos[ancestors[node1][index1]] <
+                      euler_tour_pos[ancestors[node2][index2]]):
+                    return 0
+                else:
+                    return 1
+
 
 def lca(G, node1, node2, default=None):
     """
