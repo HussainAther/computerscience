@@ -43,3 +43,23 @@ def tarjan(G, root=None, pairs=None):
                 raise nx.NetworkXError(msg)
     if root is None:
         raise nx.NetworkXError("Graph contains a cycle.")
+    uf = UnionFind()
+    ancestors = {}
+    for node in G:
+        ancestors[node] = uf[node]
+    colors = defaultdict(bool)
+    for node in nx.dfs_postorder_nodes(G, root):
+        colors[node] = True
+        for v in (pair_dict[node] if pairs is not None else G):
+            if colors[v]:
+                # If the user requested both directions of a pair, give it.
+                # Otherwise, just give one.
+                if pairs is not None and (node, v) in pairs:
+                    yield (node, v), ancestors[uf[v]]
+                if pairs is None or (v, node) in pairs:
+                    yield (v, node), ancestors[uf[v]]
+        if node != root:
+            parent = arbitrary_element(G.pred[node])
+            uf.union(parent, node)
+            ancestors[uf[parent]] = parent
+
