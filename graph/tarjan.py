@@ -1,8 +1,8 @@
+import networkx as nx
+
 from collections import defaultdict
 from collections.abc import Mapping, Set
 from itertools import chain, count
-
-import networkx as nx
 from networkx.utils import arbitrary_element, not_implemented_for, UnionFind, generate_unique_node
 
 """
