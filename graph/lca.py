@@ -24,6 +24,9 @@ def allpairslca(G, pairs=None):
         super_root = root = generate_unique_node()
         for source in sources:
             G.add_edge(root, source)
+    spanning_tree = nx.dfs_tree(G, root)
+    dag = nx.DiGraph((u, v) for u, v in G.edges
+                     if u not in spanning_tree or v not in spanning_tree[u])
 
 
 def lca(G, node1, node2, default=None):
