@@ -76,3 +76,9 @@ class BTreeSet(object):
 		    elif obj > node.keys[index]:
 		        child = node.children[index + 1]
 		node = child
+    def remove(self, obj):
+	if not self._remove(obj):
+	    raise KeyError(str(obj))
+    def discard(self, obj):
+	self._remove(obj)
+	
