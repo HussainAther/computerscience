@@ -124,4 +124,28 @@ class BTreeSet(object):
 		            assert len(root.children) == 1
 			    self.root = root = root.children[0]  # Decrement tree height
 			node = child
-			found, index = node.search(obj)	
+			found, index = node.search(obj)
+    def __iter__(self):
+        # Initialization
+        stack = []
+	def push_left_path(node):
+	    while True:
+	        stack.append((node, 0))
+		if node.is_leaf():
+		    break
+		node = node.children[0]
+	push_left_path(self.root)
+	# Generate elements
+	while len(stack) > 0:
+	    node, index = stack.pop()
+	    if node.is_leaf():
+	        assert index == 0
+		for obj in node.keys:
+		    yield obj
+	    else:
+	        yield node.keys[index]
+	        index += 1
+		if index < len(node.keys):
+		    stack.append((node, index))
+		push_left_path(node.children[index])
+		
