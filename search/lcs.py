@@ -1,5 +1,3 @@
 """
-Longest common subsequence.
-
-
+Longest common subsequence between two sequences.
 """
