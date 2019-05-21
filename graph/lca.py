@@ -9,6 +9,57 @@ from networkx.utils import arbitrary_element, not_implemented_for, UnionFind, ge
 Lowest common ancestor (lca) for a given pair of nodes.
 """
 
+def tarjan(G, root=None, pairs=None):
+    """
+    LCA for graph G with Tarjan's algorithm.
+    """
+    if len(G) == 0:
+        raise nx.NetworkXPointlessConcept("LCA meaningless on null graphs.")
+    elif None in G:
+        raise nx.NetworkXError("None is not a valid node.")
+
+    # Index pairs of interest for efficient lookup from either side.
+    if pairs is not None:
+        pair_dict = defaultdict(set)
+        # See note on all_pairs_lowest_common_ancestor.
+        if not isinstance(pairs, (Mapping, Set)):
+            pairs = set(pairs)
+        for u, v in pairs:
+            for n in (u, v):
+                if n not in G:
+                    msg = "The node %s is not in the digraph." % str(n)
+                    raise nx.NodeNotFound(msg)
+            pair_dict[u].add(v)
+            pair_dict[v].add(u)
+    if root is None:
+        for n, deg in G.in_degree:
+            if deg == 0:
+                if root is not None:
+                    msg = "No root specified and tree has multiple sources."
+                    raise nx.NetworkXError(msg)
+                root = n
+            elif deg > 1:
+                msg = "Tree LCA only defined on trees; use DAG routine."
+                raise nx.NetworkXError(msg)
+    if root is None:
+        raise nx.NetworkXError("Graph contains a cycle.")
+    uf = UnionFind()
+    ancestors = {}
+    for node in G:
+        ancestors[node] = uf[node]
+    colors = defaultdict(bool)
+    for node in nx.dfs_postorder_nodes(G, root):
+        colors[node] = True
+        for v in (pair_dict[node] if pairs is not None else G):
+            if colors[v]:
+                # If the user requested both directions of a pair, give it.
+                # Otherwise, just give one.
+                if pairs is not None and (node, v) in pairs:
+                    yield (node, v), ancestors[uf[v]]
+                if pairs is None or (v, node) in pairs:
+                    yield (v, node), ancestors[uf[v]]
+        if node != root:
+
 def allpairslca(G, pairs=None):
     """
     Compute the lowest common ancestor for pairs of nodes.
@@ -89,7 +140,42 @@ def allpairslca(G, pairs=None):
                     return 0
                 else:
                     return 1
-
+            i = get_next_in_merged_lists(indices)
+            cur = ancestors_by_index[i][indices[i]], i
+            while i is not None:
+                prev = cur
+                indices[i] += 1
+                i = get_next_in_merged_lists(indices)
+                if i is not None:
+                    cur = ancestors_by_index[i][indices[i]], i
+                    # Two adjacent entries must not be from the same list
+                    # in order for their tree LCA to be considered.
+                    if cur[1] != prev[1]:
+                        tree_node1, tree_node2 = prev[0], cur[0]
+                        if (tree_node1, tree_node2) in tree_lca:
+                            ans = tree_lca[tree_node1, tree_node2]
+                        else:
+                            ans = tree_lca[tree_node2, tree_node1]
+                        if not dry_run and (best is None or
+                                            root_distance[ans] > best_root_distance):
+                            best_root_distance = root_distance[ans]
+                            best = ans
+            # If the LCA is super_root, there is no LCA in the user's graph.
+            if not dry_run and (super_root is None or best != super_root):
+                yield (node1, node2), best
+    if pairs is None:
+        # We want all pairs so we'll need the entire tree.
+        tree_lca = dict(tarjan(spanning_tree, root))
+    else:
+        # We only need the merged adjacent pairs by seeing which queries the
+        # algorithm needs then generating them in a single pass.
+        tree_lca = defaultdict(int)
+        for _ in computedag(tree_lca, True):
+            pass
+        # Replace the bogus default tree values with the real ones.
+        for (pair, lca) in tarjan(spanning_tree, root, tree_lca):
+            tree_lca[pair] = lca
+    return computedag(tree_lca, False)
 
 def lca(G, node1, node2, default=None):
     """
