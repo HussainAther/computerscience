@@ -1,3 +1,9 @@
+import networkx as nx
+
+from collections import defaultdict
+from collections.abc import Mapping, Set
+from itertools import chain, count
+from networkx.utils import arbitrary_element, not_implemented_for, UnionFind, generate_unique_node
 
 """
 Lowest common ancestor (lca) for a given pair of nodes.
@@ -27,7 +33,41 @@ def allpairslca(G, pairs=None):
     spanning_tree = nx.dfs_tree(G, root)
     dag = nx.DiGraph((u, v) for u, v in G.edges
                      if u not in spanning_tree or v not in spanning_tree[u])
-
+    spanning_tree.add_nodes_from(G)
+    dag.add_nodes_from(G)
+    counter = count()
+    root_distance = {root: next(counter)}
+    for edge in nx.bfs_edges(spanning_tree, root):
+        for node in edge:
+            if node not in root_distance:
+                root_distance[node] = next(counter)
+    euler_tour_pos = {}
+    for node in nx.depth_first_search.dfs_preorder_nodes(G, root):
+        if node not in euler_tour_pos:
+            euler_tour_pos[node] = next(counter)
+    pairset = set()
+    if pairs is not None:
+        pairset = set(chain.from_iterable(pairs))
+    for n in pairset:
+        if n not in G:
+            msg = "The node %s is not in the digraph." % str(n)
+            raise nx.NodeNotFound(msg)
+    ancestors = {}
+    for v in dag:
+        if pairs is None or v in pairset:
+            my_ancestors = nx.dag.ancestors(dag, v)
+            my_ancestors.add(v)
+            ancestors[v] = sorted(my_ancestors, key=euler_tour_pos.get)
+    def computedag(tree_lca, dry_run):
+        """
+        Iterate through the in-order merge for each pair of interest.
+        We do this to answer the user's query, but it is also used to
+        avoid generating unnecessary tree entries when the user only
+        needs some pairs.
+        """
+        for (node1, node2) in pairs if pairs is not None else tree_lca:
+            best_root_distance = None
+            best = None
 
 def lca(G, node1, node2, default=None):
     """
