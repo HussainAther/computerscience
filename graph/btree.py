@@ -81,4 +81,12 @@ class BTreeSet(object):
 	    raise KeyError(str(obj))
     def discard(self, obj):
 	self._remove(obj)
-	
+    def _remove(self, obj):
+        """
+        Return whether an object was removed.
+        """
+	# Walk down the tree
+	root = self.root
+	found, index = root.search(obj)
+	node = root
+	while True:	
