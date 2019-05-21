@@ -31,3 +31,15 @@ def tarjan(G, root=None, pairs=None):
                     raise nx.NodeNotFound(msg)
             pair_dict[u].add(v)
             pair_dict[v].add(u)
+    if root is None:
+        for n, deg in G.in_degree:
+            if deg == 0:
+                if root is not None:
+                    msg = "No root specified and tree has multiple sources."
+                    raise nx.NetworkXError(msg)
+                root = n
+            elif deg > 1:
+                msg = "Tree LCA only defined on trees; use DAG routine."
+                raise nx.NetworkXError(msg)
+    if root is None:
+        raise nx.NetworkXError("Graph contains a cycle.")
