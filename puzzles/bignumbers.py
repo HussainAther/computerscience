@@ -14,7 +14,6 @@ if sys.version_info >= (3,):
 class Byte(object):
     """
     An 8-bit digit. (base 256)
-    """
   
     @staticmethod
     def zero():
