@@ -1,5 +1,5 @@
 """
-Longest common subsequence between two sequences.
+Longest common subsequence between two sequences (lcs).
 """
 
 def lcslength(x, y)
