@@ -3,7 +3,7 @@ import networkx as nx
 from collections import defaultdict
 from collections.abc import Mapping, Set
 from itertools import chain, count
-from networkx.utils import arbitrary_element, not_implemented_for, UnionFind, generate_unique_node
+from networkx.utils import arbitrary_element, UnionFind, generate_unique_node
 
 """
 Lowest common ancestor (lca) for a given pair of nodes.
@@ -17,7 +17,6 @@ def tarjan(G, root=None, pairs=None):
         raise nx.NetworkXPointlessConcept("LCA meaningless on null graphs.")
     elif None in G:
         raise nx.NetworkXError("None is not a valid node.")
-
     # Index pairs of interest for efficient lookup from either side.
     if pairs is not None:
         pair_dict = defaultdict(set)
@@ -156,8 +155,7 @@ def allpairslca(G, pairs=None):
                             ans = tree_lca[tree_node1, tree_node2]
                         else:
                             ans = tree_lca[tree_node2, tree_node1]
-                        if not dry_run and (best is None or
-                                            root_distance[ans] > best_root_distance):
+                        if not dry_run and (best is None or root_distance[ans] > best_root_distance):
                             best_root_distance = root_distance[ans]
                             best = ans
             # If the LCA is super_root, there is no LCA in the user's graph.
