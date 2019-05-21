@@ -90,14 +90,12 @@ def howHardIsTheCrystal(n, d):
     while (r**d <= n):
         r = r + 1
     print("Radix chosen is", r)
-
     newd = d
     while (r**(newd-1) > n):
         newd -= 1
     if newd < d:
         print("Using only", newd, "balls")
     d = newd
-
     numDrops = 0
     floorNoBreak = [0] * d
     for i in range(d):
@@ -114,7 +112,6 @@ def howHardIsTheCrystal(n, d):
             if yes == "yes":
                 floorNoBreak[i] -= 1
                 break
-
     hardness = convertToDecimal(r, d, floorNoBreak)
     print("Hardness coefficient is", hardness)
     print("Total number of drops is", numDrops)
@@ -124,5 +121,4 @@ def convertToDecimal(r, d, rep):
     for i in range(d-1):
         number = (number + rep[i]) * r
     number += rep[d-1]
-
     return number
