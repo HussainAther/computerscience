@@ -118,4 +118,10 @@ class BTreeSet(object):
 			    self.root = root = left  # Decrement tree height
 			node = left
 			index = self.minkeys  # Index known due to merging; no need to search
-				
+		    else:  # Key might be found in some child
+			child = node.ensure_child_remove(self.minkeys, index)
+		        if node is root and len(root.keys) == 0:
+		            assert len(root.children) == 1
+			    self.root = root = root.children[0]  # Decrement tree height
+			node = child
+			found, index = node.search(obj)	
