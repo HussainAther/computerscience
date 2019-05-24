@@ -17,5 +17,8 @@ class Node:
 
 def distmat(points):
     """
-    Conert array of points points to distance matrix using distance measure.
+    Convert array of points points to distance matrix using distance measure.
     """
+    n = len(points)
+    dim = len(points[0])
+    dist = [[0 for x in xrange(n)] for y in xrange(n)]
