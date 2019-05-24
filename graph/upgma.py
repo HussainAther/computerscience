@@ -15,3 +15,7 @@ class Node:
         self.right = None
         self.left = None
 
+def distmat(points):
+    """
+    Conert array of points points to distance matrix using distance measure.
+    """
