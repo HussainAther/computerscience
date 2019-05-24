@@ -63,3 +63,8 @@ def upgma(points, k):
     for i in xrange(n):
         node = Node([points[i]])
         nodes = nodes + [node]
+    # Iterate until the number of clusters is k
+    nc = n
+    while nc > k:
+        # Calculate the pairwise distance of each cluster, while searching for pair with least distance
+        c1 = 0; c2 = 0; i1 = 0; i2 = 0;
