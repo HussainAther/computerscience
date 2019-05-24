@@ -68,3 +68,14 @@ def upgma(points, k):
     while nc > k:
         # Calculate the pairwise distance of each cluster, while searching for pair with least distance
         c1 = 0; c2 = 0; i1 = 0; i2 = 0;
+        sdis = 9999999999 # big number to minimize distance measure
+        for i in xrange(nc):
+            for j in xrange(i+1, nc):
+                dis = euclidistance(nodes[i], nodes[j])
+                if dis < sdis:
+                    sdis = dis
+                    c1 = nodes[i]; c2 = nodes[j];
+                    i1 = i; i2 = j;
+        # Merge these two nodes into one new node
+        node = Node(c1.points + c2.points)
+        node.left = c1; node.right = c2;
