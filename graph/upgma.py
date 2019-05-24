@@ -31,3 +31,24 @@ def distmat(points):
                 d = d + (p1[k]-p2[k])**2
             dist[i][j] = math.sqrt(d)
     return dist
+
+def euclidistance(c1, c2):
+    """ 
+    Calculate the distance between two clusters c1 and c2. 
+    """
+    dist = .0
+    n1 = len(c1.points)
+    n2 = len(c2.points)
+    for i in xrange(n1):
+        for j in xrange(n2):
+            p1 = c1.points[i]
+            p2 = c2.points[j]
+            dim = len(p1)
+            d = 0
+            for k in xrange(dim):
+                d = d + (p1[k]-p2[k])**2
+            d = math.sqrt(d)
+            dist = dist + d
+    dist = dist / (n1*n2)
+    return dist:s
+
