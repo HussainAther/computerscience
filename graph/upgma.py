@@ -50,5 +50,16 @@ def euclidistance(c1, c2):
             d = math.sqrt(d)
             dist = dist + d
     dist = dist / (n1*n2)
-    return dist:s
+    return dist
 
+def upgma(points, k):
+    """ 
+    Cluster based on distance matrix dist using Unweighted Pair Group 
+    Method with Arithmetic Mean algorithm up to k cluster.
+    """
+    # Initialize each cluster with one point
+    nodes = []
+    n = len(points)
+    for i in xrange(n):
+        node = Node([points[i]])
+        nodes = nodes + [node]
