@@ -79,3 +79,12 @@ def upgma(points, k):
         # Merge these two nodes into one new node
         node = Node(c1.points + c2.points)
         node.left = c1; node.right = c2;
+        #Remove the previous nodes, and add the new node
+        new_nodes = []
+        for i in xrange(nc):
+            if i != i1 and i != i2:
+                new_nodes = new_nodes + [nodes[i]]
+        new_nodes = new_nodes + [node]
+        nodes = new_nodes[:]
+        nc = nc - 1
+    return nodes
