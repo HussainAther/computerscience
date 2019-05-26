@@ -96,4 +96,13 @@ def qLearning(env, num_episodes, discount_factor = 1.0, alpha = 0.6, epsilon = 0
    
             # done is True if episode terminated    
             if done: 
-                break 
+                break
+           state = next_state 
+       
+    return Q, stats 
+
+# Train the model
+Q, stats = qLearning(env, 1000) 
+
+# Plot
+plotting.plot_episode_stats(stats)  
