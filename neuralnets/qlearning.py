@@ -56,4 +56,12 @@ def qLearning(env, num_episodes, discount_factor = 1.0, alpha = 0.6, epsilon = 0
     # Action value function 
     # A nested dictionary that maps 
     # state -> (action -> action-value). 
-    Q = defaultdict(lambda: np.zeros(env.action_space.n)) 
+    Q = defaultdict(lambda: np.zeros(env.action_space.n))
+    # Keeps track of useful statistics 
+    stats = plotting.EpisodeStats( 
+        episode_lengths = np.zeros(num_episodes), 
+        episode_rewards = np.zeros(num_episodes))     
+       
+    # Create an epsilon greedy policy function 
+    # appropriately for environment action space 
+    policy = createEpsilonGreedyPolicy(Q, epsilon, env.action_space.n)  
