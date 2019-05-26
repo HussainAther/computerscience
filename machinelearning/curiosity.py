@@ -99,3 +99,10 @@ class CuriosityNet:
         train_op = tf.train.RMSPropOptimizer(self.lr, name="dqn_opt").minimize(
             loss, var_list=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "eval_net"))
         return q, loss, train_op
+
+    def store_transition(self, s, a, r, s_):            
+        transition = np.hstack((s, [a, r], s_))
+        # replace the old memory with new memory
+        index = self.memory_counter % self.memory_size
+        self.memory[index, :] = transition
+        self.memory_counter += 1
