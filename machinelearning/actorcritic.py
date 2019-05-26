@@ -103,14 +103,23 @@ class ACNet(object):
             v = tf.layers.dense(l_c, 1, kernel_initializer=w_init, name="v")  # state value
         return mu, sigma, v
 
-    def update_global(self, feed_dict):  # run by a local
+    def update_global(self, feed_dict): # run by a local
+        """
+        Update the global network using our feed dictionary at a local level.
+        """
         _, _, t = SESS.run([self.update_a_op, self.update_c_op, self.test], feed_dict)  # local grads applies to global net
         return t
 
     def pull_global(self):  # run by a local
+        """
+        Get actor and critic parameters.
+        """
         SESS.run([self.pull_a_params_op, self.pull_c_params_op])
 
-    def choose_action(self, s):  # run by a local
+    def choose_action(self, s): # run by a local
+        """
+        Run SESS and choose an action from actor.
+        """
         s = s[np.newaxis, :]
         return SESS.run(self.A, {self.s: s})
 
