@@ -28,3 +28,25 @@ class CuriosityNet:
         self.replace_target_iter = replace_target_iter
         self.memory_size = memory_size
         self.batch_size = batch_size
+        # total learning step
+        self.learn_step_counter = 0
+        self.memory_counter = 0
+
+        # initialize zero memory [s, a, r, s_]
+        self.memory = np.zeros((self.memory_size, n_s * 2 + 2))
+        self.tfs, self.tfa, self.tfr, self.tfs_, self.dyn_train, self.dqn_train, self.q, self.int_r = \
+            self._build_nets()
+
+        t_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='target_net')
+        e_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='eval_net')
+
+        with tf.variable_scope('hard_replacement'):
+            self.target_replace_op = [tf.assign(t, e) for t, e in zip(t_params, e_params)]
+
+        self.sess = tf.Session()
+
+        if output_graph:
+            tf.summary.FileWriter("logs/", self.sess.graph)
+
+        self.sess.run(tf.global_variables_initializer())
+
