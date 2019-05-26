@@ -124,6 +124,9 @@ class ACNet(object):
         return SESS.run(self.A, {self.s: s})
 
 class Worker(object):
+    """
+    Worker object for actor-critic model AC with a certain name and our gym environment.
+    """
     def __init__(self, name, globalAC):
         self.env = gym.make(GAME)
         self.name = name
