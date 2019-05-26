@@ -8,16 +8,19 @@ Curiosity-driven learning (curiosity) implementation.
 """
 
 class CuriosityNet:
+    """
+    Curiosity network for learning.
+    """
     def __init__(
             self,
             n_a,
             n_s,
-            lr=0.01,
-            gamma=0.98,
-            epsilon=0.95,
-            replace_target_iter=300,
-            memory_size=10000,
-            batch_size=128,
+            lr=0.01, # learning rate
+            gamma=0.98, # reduction parameter
+            epsilon=0.95, # threshold for determining forwards or backwards
+            replace_target_iter=300, # iterations for replacing the target
+            memory_size=10000, # memory limit
+            batch_size=128, # batch size limit
             output_graph=False,
     ):
         self.n_a = n_a
@@ -37,10 +40,10 @@ class CuriosityNet:
         self.tfs, self.tfa, self.tfr, self.tfs_, self.dyn_train, self.dqn_train, self.q, self.int_r = \
             self._build_nets()
 
-        t_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='target_net')
-        e_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='eval_net')
+        t_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope="target_net")
+        e_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope="eval_net")
 
-        with tf.variable_scope('hard_replacement'):
+        with tf.variable_scope("hard_replacement"):
             self.target_replace_op = [tf.assign(t, e) for t, e in zip(t_params, e_params)]
 
         self.sess = tf.Session()
@@ -81,17 +84,17 @@ class CuriosityNet:
 
 
     def _build_dqn(self, s, a, r, s_):
-        with tf.variable_scope('eval_net'):
+        with tf.variable_scope("eval_net"):
             e1 = tf.layers.dense(s, 128, tf.nn.relu)
             q = tf.layers.dense(e1, self.n_a, name="q")
-        with tf.variable_scope('target_net'):
+        with tf.variable_scope("target_net"):
             t1 = tf.layers.dense(s_, 128, tf.nn.relu)
             q_ = tf.layers.dense(t1, self.n_a, name="q_")
 
-        with tf.variable_scope('q_target'):
+        with tf.variable_scope("q_target"):
             q_target = r + self.gamma * tf.reduce_max(q_, axis=1, name="Qmax_s_")
 
-        with tf.variable_scope('q_wrt_a'):
+        with tf.variable_scope("q_wrt_a"):
             a_indices = tf.stack([tf.range(tf.shape(a)[0], dtype=tf.int32), a], axis=1)
             q_wrt_a = tf.gather_nd(params=q, indices=a_indices)
 
@@ -136,7 +139,7 @@ class CuriosityNet:
             self.sess.run(self.dyn_train, feed_dict={self.tfs: bs, self.tfa: ba, self.tfs_: bs_})
         self.learn_step_counter += 1
 
-env = gym.make('MountainCar-v0')
+env = gym.make("MountainCar-v0")
 env = env.unwrapped
 
 dqn = CuriosityNet(n_a=3, n_s=2, lr=0.01, output_graph=False)
@@ -151,7 +154,7 @@ for epi in range(200):
         dqn.store_transition(s, a, r, s_)
         dqn.learn()
         if done:
-            print('Epi: ', epi, "| steps: ", steps)
+            print("Epi: ", epi, "| steps: ", steps)
             ep_steps.append(steps)
             break
         s = s_
