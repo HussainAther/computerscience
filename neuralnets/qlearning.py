@@ -10,5 +10,7 @@ import plotting
 from collections import defaultdict
 from windy_gridworld import WindyGridworldEnv
 
+matplotlib.style.use("ggplot") 
+
 """
 """
