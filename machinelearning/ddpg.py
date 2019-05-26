@@ -7,6 +7,7 @@ import time
 Deep deterministic policy gradient (DDPG) reinforcement learning. Actor-critic (actor critic)
 pendulum.
 """
+
 np.random.seed(1)
 tf.set_random_seed(1)
 
