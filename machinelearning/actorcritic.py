@@ -86,3 +86,19 @@ class ACNet(object):
                 with tf.name_scope("push"):
                     self.update_a_op = OPT_A.apply_gradients(zip(self.a_grads, globalAC.a_params))
                     self.update_c_op = OPT_C.apply_gradients(zip(self.c_grads, globalAC.c_params))
+
+    def _build_net(self):
+        """
+        Build a network.
+        """
+        w_init = tf.contrib.layers.xavier_initializer()
+        with tf.variable_scope("actor"):
+            l_a = tf.layers.dense(self.s, 500, tf.nn.relu6, kernel_initializer=w_init, name="la")
+            l_a = tf.layers.dense(l_a, 300, tf.nn.relu6, kernel_initializer=w_init, name="la2")
+            mu = tf.layers.dense(l_a, N_A, tf.nn.tanh, kernel_initializer=w_init, name="mu")
+            sigma = tf.layers.dense(l_a, N_A, tf.nn.softplus, kernel_initializer=w_init, name="sigma")
+        with tf.variable_scope("critic"):
+            l_c = tf.layers.dense(self.s, 500, tf.nn.relu6, kernel_initializer=w_init, name="lc")
+            l_c = tf.layers.dense(l_c, 300, tf.nn.relu6, kernel_initializer=w_init, name="lc2")
+            v = tf.layers.dense(l_c, 1, kernel_initializer=w_init, name="v")  # state value
+        return mu, sigma, v
