@@ -38,3 +38,24 @@ N_S = env.observation_space.shape[0]
 N_A = env.action_space.shape[0]
 A_BOUND = [env.action_space.low, env.action_space.high]
 del env
+
+class ACNet(object):
+    """
+    Create a network from which the actor and critic can use.
+    """
+    def __init__(self, scope, globalAC=None):
+        """
+        Initialize the network and its scope.
+        """
+        if scope == GLOBAL_NET_SCOPE: # get global network
+            with tf.variable_scope(scope):
+                self.s = tf.placeholder(tf.float32, [None, N_S], "S")
+                self._build_net()
+                self.a_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + "/actor")
+                self.c_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + "/critic")
+        else:   # local net, calculate losses
+            with tf.variable_scope(scope):
+                self.s = tf.placeholder(tf.float32, [None, N_S], "S")
+                self.a_his = tf.placeholder(tf.float32, [None, N_A], "A")
+                self.v_target = tf.placeholder(tf.float32, [None, 1], "Vtarget")
+
