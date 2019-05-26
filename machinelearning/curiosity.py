@@ -79,3 +79,23 @@ class CuriosityNet:
         train_op = tf.train.RMSPropOptimizer(self.lr, name="dyn_opt").minimize(tf.reduce_mean(squared_diff))
         return dyn_s_, squared_diff, train_op
 
+
+    def _build_dqn(self, s, a, r, s_):
+        with tf.variable_scope('eval_net'):
+            e1 = tf.layers.dense(s, 128, tf.nn.relu)
+            q = tf.layers.dense(e1, self.n_a, name="q")
+        with tf.variable_scope('target_net'):
+            t1 = tf.layers.dense(s_, 128, tf.nn.relu)
+            q_ = tf.layers.dense(t1, self.n_a, name="q_")
+
+        with tf.variable_scope('q_target'):
+            q_target = r + self.gamma * tf.reduce_max(q_, axis=1, name="Qmax_s_")
+
+        with tf.variable_scope('q_wrt_a'):
+            a_indices = tf.stack([tf.range(tf.shape(a)[0], dtype=tf.int32), a], axis=1)
+            q_wrt_a = tf.gather_nd(params=q, indices=a_indices)
+
+        loss = tf.losses.mean_squared_error(labels=q_target, predictions=q_wrt_a)   # TD error
+        train_op = tf.train.RMSPropOptimizer(self.lr, name="dqn_opt").minimize(
+            loss, var_list=tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, "eval_net"))
+        return q, loss, train_op
