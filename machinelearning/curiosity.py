@@ -106,3 +106,15 @@ class CuriosityNet:
         index = self.memory_counter % self.memory_size
         self.memory[index, :] = transition
         self.memory_counter += 1
+
+    def choose_action(self, observation):
+        # to have batch dimension when feed into tf placeholder
+        s = observation[np.newaxis, :]
+
+        if np.random.uniform() < self.epsilon:
+            # forward feed the observation and get q value for every actions
+            actions_value = self.sess.run(self.q, feed_dict={self.tfs: s})
+            action = np.argmax(actions_value)
+        else:
+            action = np.random.randint(0, self.n_a)
+        return action
