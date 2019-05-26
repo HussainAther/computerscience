@@ -156,3 +156,8 @@ for epi in range(200):
             break
         s = s_
         steps += 1
+
+plt.plot(ep_steps)
+plt.ylabel("steps")
+plt.xlabel("episode")
+plt.show()
