@@ -8,7 +8,7 @@ Environment is a Robot Arm. The arm tries to get to the blue point.
 The environment will return a geographic (distance) information for the arm to learn.
 The far away from blue point the less reward; touch blue r+=1; stop at blue for a while then get r=+10.
 Uses simple version of OpenAI"s Proximal Policy Optimization (PPO). (http://adsabs.harvard.edu/abs/2017arXiv170706347S)
-(DPPO deep ppo), actor-critic, and ddpg. Distributing workers in parallel to collect data, then stop worker"s 
+(DPPO deep ppo), actor-critic, and ddpg. Distributing workers in parallel to collect data, then stop worker"s
 roll-out and train PPO on collected data. Restart workers once PPO is updated.
 """
 
@@ -296,7 +296,6 @@ class Critic(object):
         if self.t_replace_counter % self.t_replace_iter == 0:
             self.sess.run([tf.assign(t, e) for t, e in zip(self.t_params, self.e_params)])
         self.t_replace_counter += 1
-
 
 class Memory(object):
     def __init__(self, capacity, dims):
