@@ -63,3 +63,19 @@ class CuriosityNet:
         total_reward = tf.add(curiosity, tfr, name="total_r")
         q, dqn_loss, dqn_train = self._build_dqn(tfs, tfa, total_reward, tfs_)
         return tfs, tfa, tfr, tfs_, dyn_train, dqn_train, q, curiosity
+
+    def _build_dynamics_net(self, s, a, s_):
+        with tf.variable_scope("dyn_net"):
+            float_a = tf.expand_dims(tf.cast(a, dtype=tf.float32, name="float_a"), axis=1, name="2d_a")
+            sa = tf.concat((s, float_a), axis=1, name="sa")
+            encoded_s_ = s_                # here we use s_ as the encoded s_
+
+            dyn_l = tf.layers.dense(sa, 32, activation=tf.nn.relu)
+            dyn_s_ = tf.layers.dense(dyn_l, self.n_s)  # predicted s_
+        with tf.name_scope("int_r"):
+            squared_diff = tf.reduce_sum(tf.square(encoded_s_ - dyn_s_), axis=1)  # intrinsic reward
+
+        # It is better to reduce the learning rate in order to stay curious
+        train_op = tf.train.RMSPropOptimizer(self.lr, name="dyn_opt").minimize(tf.reduce_mean(squared_diff))
+        return dyn_s_, squared_diff, train_op
+
