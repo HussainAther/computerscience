@@ -28,6 +28,9 @@ def terminate():
     sys.exit()
 
 def waitForPlayerToPressKey():
+    """
+    Standard Pygame waiting.
+    """
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -38,12 +41,18 @@ def waitForPlayerToPressKey():
                 return
 
 def playerHasHitBaddie(playerRect, baddies):
+    """
+    Did we hit someone?
+    """
     for b in baddies:
         if playerRect.colliderect(b["rect"]):
             return True
     return False
 
 def drawText(text, font, surface, x, y):
+    """
+    Pygame's draw.
+    """
     textobj = font.render(text, 1, TEXTCOLOR)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -214,5 +223,3 @@ while True:
     waitForPlayerToPressKey()
 
     gameOverSound.stop()
-
-
