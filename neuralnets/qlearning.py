@@ -10,7 +10,11 @@ import plotting
 from collections import defaultdict
 from windy_gridworld import WindyGridworldEnv
 
-matplotlib.style.use("ggplot") 
+# Set matplotlib style
+matplotlib.style.use("ggplot")
+
+# Create gym environment
+env = WindyGridworldEnv()  
 
 """
 """
