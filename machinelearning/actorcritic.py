@@ -102,3 +102,14 @@ class ACNet(object):
             l_c = tf.layers.dense(l_c, 300, tf.nn.relu6, kernel_initializer=w_init, name="lc2")
             v = tf.layers.dense(l_c, 1, kernel_initializer=w_init, name="v")  # state value
         return mu, sigma, v
+
+    def update_global(self, feed_dict):  # run by a local
+        _, _, t = SESS.run([self.update_a_op, self.update_c_op, self.test], feed_dict)  # local grads applies to global net
+        return t
+
+    def pull_global(self):  # run by a local
+        SESS.run([self.pull_a_params_op, self.pull_c_params_op])
+
+    def choose_action(self, s):  # run by a local
+        s = s[np.newaxis, :]
+        return SESS.run(self.A, {self.s: s})
