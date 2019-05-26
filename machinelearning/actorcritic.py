@@ -31,3 +31,10 @@ LR_A = 0.00005 # learning rate for actor
 LR_C = 0.0001  # learning rate for critic
 GLOBAL_RUNNING_R = []
 GLOBAL_EP = 0
+
+env = gym.make(GAME)
+
+N_S = env.observation_space.shape[0]
+N_A = env.action_space.shape[0]
+A_BOUND = [env.action_space.low, env.action_space.high]
+del env
