@@ -113,3 +113,49 @@ class ACNet(object):
     def choose_action(self, s):  # run by a local
         s = s[np.newaxis, :]
         return SESS.run(self.A, {self.s: s})
+
+class Worker(object):
+    def __init__(self, name, globalAC):
+        self.env = gym.make(GAME)
+        self.name = name
+        self.AC = ACNet(name, globalAC)
+
+    def work(self):
+        global GLOBAL_RUNNING_R, GLOBAL_EP
+        total_step = 1
+        buffer_s, buffer_a, buffer_r = [], [], []
+        while not COORD.should_stop() and GLOBAL_EP < MAX_GLOBAL_EP:
+            s = self.env.reset()
+            ep_r = 0
+            while True:
+                if self.name == 'W_0' and total_step % 30 == 0:
+                    self.env.render()
+                a = self.AC.choose_action(s)
+                s_, r, done, info = self.env.step(a)
+                if r == -100: r = -2
+
+                ep_r += r
+                buffer_s.append(s)
+                buffer_a.append(a)
+                buffer_r.append(r)
+
+                if total_step % UPDATE_GLOBAL_ITER == 0 or done:   # update global and assign to local net
+                    if done:
+                        v_s_ = 0   # terminal
+                    else:
+                        v_s_ = SESS.run(self.AC.v, {self.AC.s: s_[np.newaxis, :]})[0, 0]
+                    buffer_v_target = []
+                    for r in buffer_r[::-1]:    # reverse buffer r
+                        v_s_ = r + GAMMA * v_s_
+                        buffer_v_target.append(v_s_)
+                    buffer_v_target.reverse()
+
+                    buffer_s, buffer_a, buffer_v_target = np.vstack(buffer_s), np.vstack(buffer_a), np.vstack(buffer_v_target)
+                    feed_dict = {
+                        self.AC.s: buffer_s,
+                        self.AC.a_his: buffer_a,
+                        self.AC.v_target: buffer_v_target,
+                    }
+                    test = self.AC.update_global(feed_dict)
+                    buffer_s, buffer_a, buffer_r = [], [], []
+                    self.AC.pull_global()
