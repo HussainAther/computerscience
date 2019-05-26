@@ -4,7 +4,7 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 
 """
-DQN (Deep learning Q-network q network) 
+DQN (Deep learning Q-network q network). Dueling. Reinforcement learning (RL) 
 """
 
 np.random.seed(1)
