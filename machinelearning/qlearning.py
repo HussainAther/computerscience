@@ -112,12 +112,14 @@ Q-learning brain
 """
 
 class RL(object):
+    """
+    Reinforcement learning (RL) model class.
+    """
     def __init__(self, action_space, learning_rate=0.01, reward_decay=0.9, e_greedy=0.9):
         self.actions = action_space  # a list
         self.lr = learning_rate
         self.gamma = reward_decay
         self.epsilon = e_greedy
-
         self.q_table = pd.DataFrame(columns=self.actions, dtype=np.float64)
 
     def check_state_exist(self, state):
@@ -129,4 +131,58 @@ class RL(object):
                     index=self.q_table.columns,
                     name=state,
                 )
-            ) 
+            )
+
+    def choose_action(self, observation):
+        self.check_state_exist(observation)
+        # action selection
+        if np.random.rand() < self.epsilon:
+            # choose best action
+            state_action = self.q_table.loc[observation, :]
+            # some actions may have the same value, randomly choose on in these actions
+            action = np.random.choice(state_action[state_action == np.max(state_action)].index)
+        else:
+            # choose random action
+            action = np.random.choice(self.actions)
+        return action
+
+    def learn(self, *args):
+        pass
+
+ class QLearningTable(RL):
+    """
+    Fill out a q_table with the target and prediction values.
+    """
+    def __init__(self, actions, learning_rate=0.01, reward_decay=0.9, e_greedy=0.9):
+        super(QLearningTable, self).__init__(actions, learning_rate, reward_decay, e_greedy)
+
+    def learn(self, s, a, r, s_):
+        self.check_state_exist(s_)
+        q_predict = self.q_table.loc[s, a]
+        if s_ != "terminal":
+            q_target = r + self.gamma * self.q_table.loc[s_, :].max()  # next state is not terminal
+        else:
+            q_target = r  # next state is terminal
+        self.q_table.loc[s, a] += self.lr * (q_target - q_predict)  # update
+
+"""
+SARSA is an on-policy algorithm where, in the current state, S an action, A is taken and the 
+agent gets a reward, R and ends up in next state, S1 and takes action, A1 in S1. Therefore, 
+the tuple (S, A, R, S1, A1) stands for the acronym SARSA.
+"""
+
+class SarsaTable(RL):
+    """
+    Fill out the SARSA table for our RL model.
+    """
+    def __init__(self, actions, learning_rate=0.01, reward_decay=0.9, e_greedy=0.9):
+        super(SarsaTable, self).__init__(actions, learning_rate, reward_decay, e_greedy)
+
+    def learn(self, s, a, r, s_, a_):
+        self.check_state_exist(s_)
+        q_predict = self.q_table.loc[s, a]
+        if s_ != "terminal":
+            q_target = r + self.gamma * self.q_table.loc[s_, a_]  # next state is not terminal
+        else:
+            q_target = r  # next state is terminal
+        self.q_table.loc[s, a] += self.lr * (q_target - q_predict)  # update
