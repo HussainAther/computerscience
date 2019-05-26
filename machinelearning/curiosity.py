@@ -17,7 +17,7 @@ class CuriosityNet:
             n_s,
             lr=0.01, # learning rate
             gamma=0.98, # reduction parameter
-            epsilon=0.95, # threshold for determining forwards or backwards
+            epsilon=0.95, # threshold for determining forwards or backwards, reward discount
             replace_target_iter=300, # iterations for replacing the target
             memory_size=10000, # memory limit
             batch_size=128, # batch size limit
