@@ -14,4 +14,20 @@ the possible actions. The second component, the "Actor," is used for action
 selection and learns stimulus-response weightings for each state- action pair 
 as a function of the critic’s evaluation. PEs are generated at the Critic level 
 to update both the state value of the critic and the stimulus-response weights of the Actor.
+
+Asynchronous advantage actor critic (A3C a3c) reinforcement learning.
 """
+
+GAME = "BipedalWalker-v2'
+OUTPUT_GRAPH = False
+LOG_DIR = "./log"
+N_WORKERS = multiprocessing.cpu_count()
+MAX_GLOBAL_EP = 8000
+GLOBAL_NET_SCOPE = "Global_Net"
+UPDATE_GLOBAL_ITER = 10
+GAMMA = 0.99
+ENTROPY_BETA = 0.005
+LR_A = 0.00005 # learning rate for actor
+LR_C = 0.0001  # learning rate for critic
+GLOBAL_RUNNING_R = []
+GLOBAL_EP = 0
