@@ -64,4 +64,11 @@ def qLearning(env, num_episodes, discount_factor = 1.0, alpha = 0.6, epsilon = 0
        
     # Create an epsilon greedy policy function 
     # appropriately for environment action space 
-    policy = createEpsilonGreedyPolicy(Q, epsilon, env.action_space.n)  
+    policy = createEpsilonGreedyPolicy(Q, epsilon, env.action_space.n) 
+    # For every episode 
+    for ith_episode in range(num_episodes): 
+           
+        # Reset the environment and pick the first action 
+        state = env.reset() 
+           
+        for t in itertools.count():  
