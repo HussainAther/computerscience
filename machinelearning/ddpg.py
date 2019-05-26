@@ -159,26 +159,34 @@ class Critic(object):
                 self.sess.run(self.hard_replacement)
             self.t_replace_counter += 1
 
-
-#####################  Memory  ####################
-
 class Memory(object):
+    """
+    Memory class for storing information.
+    """
     def __init__(self, capacity, dims):
+        """
+        Initialize with capacity and dimensions dims.
+        """
         self.capacity = capacity
         self.data = np.zeros((capacity, dims))
         self.pointer = 0
 
     def store_transition(self, s, a, r, s_):
+        """
+        Store transitions for SARSA.
+        """
         transition = np.hstack((s, a, [r], s_))
         index = self.pointer % self.capacity  # replace the old memory with new memory
         self.data[index, :] = transition
         self.pointer += 1
 
     def sample(self, n):
+        """
+        Check our sample to make sure memory usage is ok.
+        """
         assert self.pointer >= self.capacity, "Memory has not been fulfilled"
         indices = np.random.choice(self.capacity, size=n)
         return self.data[indices, :]
-
 
 env = gym.make(ENV_NAME)
 env = env.unwrapped
@@ -195,7 +203,6 @@ with tf.name_scope("R"):
     R = tf.placeholder(tf.float32, [None, 1], name="r")
 with tf.name_scope("S_"):
     S_ = tf.placeholder(tf.float32, shape=[None, state_dim], name="s_")
-
 
 sess = tf.Session()
 
@@ -226,13 +233,13 @@ for i in range(MAX_EPISODES):
 
         # Add exploration noise
         a = actor.choose_action(s)
-        a = np.clip(np.random.normal(a, var), -2, 2)    # add randomness to action selection for exploration
+        a = np.clip(np.random.normal(a, var), -2, 2) # add randomness to action selection for exploration
         s_, r, done, info = env.step(a)
 
         M.store_transition(s, a, r / 10, s_)
 
         if M.pointer > MEMORY_CAPACITY:
-            var *= .9995    # decay the action randomness
+            var *= .9995  # decay the action randomness
             b_M = M.sample(BATCH_SIZE)
             b_s = b_M[:, :state_dim]
             b_a = b_M[:, state_dim: state_dim + action_dim]
