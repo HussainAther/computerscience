@@ -44,4 +44,16 @@ def createEpsilonGreedyPolicy(Q, epsilon, num_actions):
         Action_probabilities[best_action] += (1.0 - epsilon) 
         return Action_probabilities 
    
-    return policyFunction  
+    return policyFunction 
+
+# Build model
+def qLearning(env, num_episodes, discount_factor = 1.0, alpha = 0.6, epsilon = 0.1): 
+    """ 
+    Q-Learning algorithm: Off-policy TD control. 
+    Finds the optimal greedy policy while improving 
+    following an epsilon-greedy policy.
+    """
+    # Action value function 
+    # A nested dictionary that maps 
+    # state -> (action -> action-value). 
+    Q = defaultdict(lambda: np.zeros(env.action_space.n)) 
