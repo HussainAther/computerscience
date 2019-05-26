@@ -128,7 +128,7 @@ class Worker(object):
             s = self.env.reset()
             ep_r = 0
             while True:
-                if self.name == 'W_0' and total_step % 30 == 0:
+                if self.name == "W_0" and total_step % 30 == 0:
                     self.env.render()
                 a = self.AC.choose_action(s)
                 s_, r, done, info = self.env.step(a)
@@ -159,3 +159,51 @@ class Worker(object):
                     test = self.AC.update_global(feed_dict)
                     buffer_s, buffer_a, buffer_r = [], [], []
                     self.AC.pull_global()
+
+                s = s_
+                total_step += 1
+                if done:
+                    achieve = "| Achieve" if self.env.unwrapped.hull.position[0] >= 88 else "| -------"
+                    if len(GLOBAL_RUNNING_R) == 0:  # record running episode reward
+                        GLOBAL_RUNNING_R.append(ep_r)
+                    else:
+                        GLOBAL_RUNNING_R.append(0.95 * GLOBAL_RUNNING_R[-1] + 0.05 * ep_r)
+                    print(
+                        self.name,
+                        "Ep:", GLOBAL_EP,
+                        achieve,
+                        "| Pos: %i" % self.env.unwrapped.hull.position[0],
+                        "| RR: %.1f" % GLOBAL_RUNNING_R[-1],
+                        "| EpR: %.1f" % ep_r,
+                        "| var:", test,
+                    )
+                    GLOBAL_EP += 1
+                    break
+
+SESS = tf.Session()
+
+with tf.device("/cpu:0"):
+    OPT_A = tf.train.RMSPropOptimizer(LR_A, name="RMSPropA")
+    OPT_C = tf.train.RMSPropOptimizer(LR_C, name="RMSPropC")
+    GLOBAL_AC = ACNet(GLOBAL_NET_SCOPE)  # we only need its params
+    workers = []
+    # Create worker
+    for i in range(N_WORKERS):
+        i_name = "W_%i" % i   # worker name
+        workers.append(Worker(i_name, GLOBAL_AC))
+
+COORD = tf.train.Coordinator()
+SESS.run(tf.global_variables_initializer())
+
+worker_threads = []
+for worker in workers:
+    job = lambda: worker.work()
+    t = threading.Thread(target=job)
+    t.start()
+    worker_threads.append(t)
+COORD.join(worker_threads)
+import matplotlib.pyplot as plt
+plt.plot(GLOBAL_RUNNING_R)
+plt.xlabel("episode")
+plt.ylabel("global running reward")
+plt.show()
