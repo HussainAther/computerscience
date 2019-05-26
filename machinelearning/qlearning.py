@@ -19,7 +19,8 @@ env = WindyGridworldEnv()
 """
 The Q in Q-learning represents the expected utility (Quality) of a state-action 
 pairing. Q-learning models learn about state-action pairs, such that for 
-any given state, multiple possible actions may be entertained. (q learning qlearning Qlearning). Q-learning is a type of reinforcement algorithm for learning. 
+any given state, multiple possible actions may be entertained. (q learning qlearning Qlearning). Q-learning 
+is a type of reinforcement algorithm for learning. 
 """
 
 def createEpsilonGreedyPolicy(Q, epsilon, num_actions): 
