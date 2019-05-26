@@ -8,7 +8,7 @@ import shutil
 
 """
 The actor-critic model is a two-part model with many of the same features as 
-the Q-learning model. One component, the "Critic" is an evaluator of the state's 
+the Q-learning model. One component, the "Critic" is an evaluator of the state"s
 value. The Critic learns the value of the stimulus without taking into account 
 the possible actions. The second component, the "Actor," is used for action 
 selection and learns stimulus-response weightings for each state- action pair 
@@ -18,7 +18,7 @@ to update both the state value of the critic and the stimulus-response weights o
 Asynchronous advantage actor critic (A3C a3c) reinforcement learning.
 """
 
-GAME = "BipedalWalker-v2'
+GAME = "BipedalWalker-v2"
 OUTPUT_GRAPH = False
 LOG_DIR = "./log"
 N_WORKERS = multiprocessing.cpu_count()
@@ -58,4 +58,31 @@ class ACNet(object):
                 self.s = tf.placeholder(tf.float32, [None, N_S], "S")
                 self.a_his = tf.placeholder(tf.float32, [None, N_A], "A")
                 self.v_target = tf.placeholder(tf.float32, [None, 1], "Vtarget")
-
+                mu, sigma, self.v = self._build_net()
+                td = tf.subtract(self.v_target, self.v, name="TD_error")
+                with tf.name_scope("c_loss"):
+                    self.c_loss = tf.reduce_mean(tf.square(td))
+                with tf.name_scope("wrap_a_out"):
+                    self.test = sigma[0]
+                    mu, sigma = mu * A_BOUND[1], sigma + 1e-5
+                normal_dist = tf.contrib.distributions.Normal(mu, sigma)
+                with tf.name_scope("a_loss"):
+                    log_prob = normal_dist.log_prob(self.a_his)
+                    exp_v = log_prob * td
+                    entropy = normal_dist.entropy()  # encourage exploration
+                    self.exp_v = ENTROPY_BETA * entropy + exp_v
+                    self.a_loss = tf.reduce_mean(-self.exp_v)
+             with tf.name_scope("choose_a"):  # use local params to choose action
+                    self.A = tf.clip_by_value(tf.squeeze(normal_dist.sample(1)), *A_BOUND)
+                with tf.name_scope("local_grad"):
+                    self.a_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + "/actor")
+                    self.c_params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope=scope + "/critic")
+                    self.a_grads = tf.gradients(self.a_loss, self.a_params)
+                    self.c_grads = tf.gradients(self.c_loss, self.c_params)
+            with tf.name_scope("sync"):
+                with tf.name_scope("pull"):
+                    self.pull_a_params_op = [l_p.assign(g_p) for l_p, g_p in zip(self.a_params, globalAC.a_params)]
+                    self.pull_c_params_op = [l_p.assign(g_p) for l_p, g_p in zip(self.c_params, globalAC.c_params)]
+                with tf.name_scope("push"):
+                    self.update_a_op = OPT_A.apply_gradients(zip(self.a_grads, globalAC.a_params))
+                    self.update_c_op = OPT_C.apply_gradients(zip(self.c_grads, globalAC.c_params))
