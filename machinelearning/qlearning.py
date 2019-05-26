@@ -105,4 +105,28 @@ def qLearning(env, num_episodes, discount_factor = 1.0, alpha = 0.6, epsilon = 0
 Q, stats = qLearning(env, 1000) 
 
 # Plot
-plotting.plot_episode_stats(stats)  
+plotting.plot_episode_stats(stats) 
+
+"""
+Q-learning brain 
+"""
+
+class RL(object):
+    def __init__(self, action_space, learning_rate=0.01, reward_decay=0.9, e_greedy=0.9):
+        self.actions = action_space  # a list
+        self.lr = learning_rate
+        self.gamma = reward_decay
+        self.epsilon = e_greedy
+
+        self.q_table = pd.DataFrame(columns=self.actions, dtype=np.float64)
+
+    def check_state_exist(self, state):
+        if state not in self.q_table.index:
+            # append new state to q table
+            self.q_table = self.q_table.append(
+                pd.Series(
+                    [0]*len(self.actions),
+                    index=self.q_table.columns,
+                    name=state,
+                )
+            ) 
