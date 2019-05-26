@@ -118,3 +118,20 @@ class CuriosityNet:
         else:
             action = np.random.randint(0, self.n_a)
         return action
+
+    def learn(self):
+        # check to replace target parameters
+        if self.learn_step_counter % self.replace_target_iter == 0:
+            self.sess.run(self.target_replace_op)
+
+        # sample batch memory from all memory
+        top = self.memory_size if self.memory_counter > self.memory_size else self.memory_counter
+        sample_index = np.random.choice(top, size=self.batch_size)
+        batch_memory = self.memory[sample_index, :]
+
+        bs, ba, br, bs_ = batch_memory[:, :self.n_s], batch_memory[:, self.n_s], \
+            batch_memory[:, self.n_s + 1], batch_memory[:, -self.n_s:]
+        self.sess.run(self.dqn_train, feed_dict={self.tfs: bs, self.tfa: ba, self.tfr: br, self.tfs_: bs_})
+        if self.learn_step_counter % 1000 == 0:     # delay training in order to stay curious
+            self.sess.run(self.dyn_train, feed_dict={self.tfs: bs, self.tfa: ba, self.tfs_: bs_})
+        self.learn_step_counter += 1
