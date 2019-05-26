@@ -50,3 +50,16 @@ class CuriosityNet:
 
         self.sess.run(tf.global_variables_initializer())
 
+    def _build_nets(self):
+        tfs = tf.placeholder(tf.float32, [None, self.n_s], name="s") # input State
+        tfa = tf.placeholder(tf.int32, [None, ], name="a") # input Action
+        tfr = tf.placeholder(tf.float32, [None, ], name="ext_r") # extrinsic reward
+        tfs_ = tf.placeholder(tf.float32, [None, self.n_s], name="s_")  # input Next State
+
+        # dynamics net
+        dyn_s_, curiosity, dyn_train = self._build_dynamics_net(tfs, tfa, tfs_)
+
+        # normal RL model
+        total_reward = tf.add(curiosity, tfr, name="total_r")
+        q, dqn_loss, dqn_train = self._build_dqn(tfs, tfa, total_reward, tfs_)
+        return tfs, tfa, tfr, tfs_, dyn_train, dqn_train, q, curiosity
