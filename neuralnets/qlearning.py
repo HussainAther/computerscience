@@ -18,3 +18,15 @@ env = WindyGridworldEnv()
 
 """
 """
+
+def createEpsilonGreedyPolicy(Q, epsilon, num_actions): 
+    """ 
+    Creates an epsilon-greedy policy based 
+    on a given Q-function and epsilon. 
+       
+    Returns a function that takes the state 
+    as an input and returns the probabilities 
+    for each action in the form of a numpy array  
+    of length of the action space(set of possible actions). 
+    """
+    def policyFunction(state): 
