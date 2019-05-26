@@ -135,3 +135,24 @@ class CuriosityNet:
         if self.learn_step_counter % 1000 == 0:     # delay training in order to stay curious
             self.sess.run(self.dyn_train, feed_dict={self.tfs: bs, self.tfa: ba, self.tfs_: bs_})
         self.learn_step_counter += 1
+
+env = gym.make('MountainCar-v0')
+env = env.unwrapped
+
+dqn = CuriosityNet(n_a=3, n_s=2, lr=0.01, output_graph=False)
+ep_steps = []
+for epi in range(200):
+    s = env.reset()
+    steps = 0
+    while True:
+        env.render()
+        a = dqn.choose_action(s)
+        s_, r, done, info = env.step(a)
+        dqn.store_transition(s, a, r, s_)
+        dqn.learn()
+        if done:
+            print('Epi: ', epi, "| steps: ", steps)
+            ep_steps.append(steps)
+            break
+        s = s_
+        steps += 1
