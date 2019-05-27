@@ -1,0 +1,3 @@
+"""
+Simplified neural network (NN).
+"""
