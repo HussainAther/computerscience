@@ -1,3 +1,10 @@
+import sys
+import logging
+import pprint
+import cStringIO as StringIO
+
+from collections import deque
+
 """
 Malhotra, Pramodh Kumar, and Maheshwari (MPM) algorithm.
 The algorithm has time complexity of (n^3). The algorithm operates in stages.
