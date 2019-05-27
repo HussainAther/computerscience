@@ -145,4 +145,26 @@ def build_level_graph(source, sink, network):
     """
     nr = build_residual_graph(source, sink, network)
     na = build_auxiliary(source, sink, nr)
-    return na 
+    return na
+
+def calc_throughput(source, sink, auxiliary):
+    """
+    Calculate throughput for the graph. 
+    """
+    throughput = {}
+    for n, neibors in auxiliary.iteritems():
+        if n == source:
+            in_cap = sys.maxint
+        else:
+            in_cap = sum([v[n]["cap"] for u, v in auxiliary.iteritems() 
+                      if n in v])
+        if n == sink:
+            out_cap = sys.maxint
+        else:
+            out_cap = sum([v["cap"] for _, v in neibors.iteritems()])
+        
+        throughput[n] = [in_cap, out_cap]
+        logging.debug("Throughput[%d]=min(%d, %d)=%d", n, in_cap, out_cap,
+                     min(in_cap, out_cap))
+        
+    return throughput 
