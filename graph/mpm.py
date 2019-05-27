@@ -92,4 +92,57 @@ def build_residual_graph(source, sink, network):
             visited.add(e)
     logging.info("Residual network:\n%s", _to_str(nr))
     return nr
- 
+
+def build_auxiliary(source, sink, network):
+    """
+    Build an auxiliary component to the network for the residual graph.
+    """
+    logging.info("Building auxiliary")
+    na = {}
+    que = deque()
+    que.append(source)
+    vl = {source: 0} # vertex level
+    visited = set()
+    visited.add(source)
+    while len(que) > 0:
+        now = que.popleft()
+        logging.debug("Processing neigbors of node %d %s", now, 
+                      network[now].keys())
+        na[now] = {}
+        for e in network[now]:
+            if e in vl and e != sink:
+                continue
+            logging.debug("edge(%d, %d)", now, e)
+            logging.debug("adding (%d, %d) to aux", now, e)
+            na[now][e] = {"cap": network[now][e]["cap"], 
+                          "direction": network[now][e]["direction"]}
+            vl[e] = vl[now] + 1
+            if e not in visited:
+                que.append(e)
+            visited.add(e)
+            
+    logging.debug("before: %s", repr(na))
+    logging.debug("node layers: %s", repr(vl))
+    if sink not in na:
+        logging.debug("Sink not in na")
+        return None
+    sink_level = vl[sink]
+    logging.debug("removing nodes with level >= %d (except sink node = %d)", 
+                  sink_level, sink)
+    complete = False
+    for node in [k for k in vl if vl[k] >= sink_level]:
+        if node == sink:
+            complete = True
+            continue
+        logging.debug("We should delete node: %d", node)
+        delete_node(node, na)
+    logging.info("Auxiliary network:\n%s", _to_str(na))
+    return na if complete else None
+
+def build_level_graph(source, sink, network):
+    """
+    Carry out the functions.
+    """
+    nr = build_residual_graph(source, sink, network)
+    na = build_auxiliary(source, sink, nr)
+    return na 
