@@ -11,3 +11,10 @@ colors. Player has to identify the color and enter the correct color name to win
 colors = ["Red","Blue","Green","Pink","Black", 
           "Yellow","Orange","White","Purple","Brown"] 
 score = 0
+
+timeleft = 30
+
+def startGame(event):
+    """
+    Start the game with a given event.
+    """
