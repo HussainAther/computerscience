@@ -23,3 +23,8 @@ class NeuralNetwork():
         Forward propagation.
         """
         return np.tanh(np.dot(inputs, self.weight_matrix))
+
+    def train(self, train_inputs, train_outputs, iter):
+        """
+        Train the neural network with inputs and outputs and the iterations.
+        """
