@@ -26,5 +26,10 @@ class NeuralNetwork():
 
     def train(self, train_inputs, train_outputs, iter):
         """
-        Train the neural network with inputs and outputs and the iterations.
+        Train the neural network with inputs and outputs and the number of iterations iter.
         """
+        for i in range(iter):
+            output = self.forprop(train_inputs)
+            error = train_outputs - output
+            adj = np.dot(train_inputs.T, error * self.tanh_der(output)) # adjustment
+            self.weight_matrix += adj 
