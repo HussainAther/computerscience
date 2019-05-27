@@ -12,3 +12,6 @@ We construct the network N(f) [residual network] and from it we find the
 auxiliary[layered] network AN(f). Then we find a maximal flow g in AN(f) and 
 update flows in the main network
 """
+
+FORMAT = "%(asctime)-15s %(levelname)s - %(message)s"
+
