@@ -57,3 +57,22 @@ def nextColor():
         # update the score. 
         scoreLabel.config(text = "Score: " + str(score)) 
 
+def countdown(): 
+    """
+    It's the final countdown.
+    """
+    global timeleft 
+  
+    # if a game is in play 
+    if timeleft > 0: 
+  
+        # decrement the timer. 
+        timeleft -= 1
+          
+        # update the time left label 
+        timeLabel.config(text = "Time left: "
+                               + str(timeleft)) 
+                                 
+        # run the function again after 1 second. 
+        timeLabel.after(1000, countdown) 
+
