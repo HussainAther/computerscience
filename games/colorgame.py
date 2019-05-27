@@ -18,3 +18,15 @@ def startGame(event):
     """
     Start the game with a given event.
     """
+   if timeleft == 30: 
+        # start the countdown timer. 
+        countdown() 
+          
+    # run the function to 
+    # choose the next color. 
+    nextColor() 
+  
+def nextColor(): 
+    """
+    Display the next color.
+    """
