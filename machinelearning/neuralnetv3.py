@@ -17,3 +17,9 @@ class NeuralNetwork():
         Derivative of tanh used as activation function.
         """ 
         return 1 - np.tanh(x) ** 2
+    
+    def forprop(self, inputs):
+        """
+        Forward propagation.
+        """
+        return np.tanh(np.dot(inputs, self.weight_matrix))
