@@ -29,7 +29,7 @@ class RBM(object):
             self._visible_cdstates = self.callculate_state(_visible_probabilities)
             self._hidden_cdstates = self.callculate_state(tf.sigmoid(tf.multiply(self._visible_cdstates, self._weights) + self._hidden_biases))
 
-            # State matrix
+            # State matrix for contrast divergence
             positive_gradient_matrix = tf.multiply(input_matrix, self._hidden_states)
             negative_gradient_matrix = tf.multiply(self._visible_cdstates, self._hidden_cdstates)
             new_weights = self._weights
