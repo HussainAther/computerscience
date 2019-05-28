@@ -74,14 +74,21 @@ from sklearn.neural_network import BernoulliRBM
 from sklearn.grid_search import GridSearchCV
 from sklearn.pipeline import Pipeline
 
-def load_digits(datasetPath):
+def load_digits(path):
     """
     Read the dataset from the user's arguments.
     """
     # build the dataset and then split it into data
     # and labels
-    X = np.genfromtxt(datasetPath, delimiter = ",", dtype = "uint8")
+    X = np.genfromtxt(path, delimiter = ",", dtype = "uint8")
     y  = X[:, 0]
     X = X[:, 1:]
     # return a tuple of the data and targets
     return (X, y)
+
+def scale(X, eps = 0.001):
+    """
+    Scale the data opints such that the columns of the feature space
+    are within range [0, 1] with a certain error eps (epsilon).
+    """
+    return (X - np.min(X, axis = 0)) / (np.max(X, axis = 0) + eps)
