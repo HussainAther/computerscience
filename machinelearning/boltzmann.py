@@ -43,3 +43,12 @@ class RBM(object):
             self._sess = tf.Session()
             initialization = tf.global_variables_initializer()
             self._sess.run(initialization)
+
+    def train(self, v):
+        """
+        Train on input vectors v.
+        """
+        for iter_no in range(self._num_iter):
+            for i in v:
+                self._sess.run(self._training,
+                               feed_dict={self._input_sample: i})
