@@ -97,15 +97,6 @@ def nudge(X, y):
 	    target.append(label)
 	return (np.array(data), np.array(target)) # return a tuple of the data matrix and targets
 
-# Grid search
-params = {"C": [1.0, 10.0, 100.0]}
-start = time.time()
-gs = GridSearchCV(LogisticRegression(), params, n_jobs = -1, verbose = 1)
-gs.fit(trainX, trainY)
-
-# Get best model
-bestParams = gs.best_estimator_.get_paras()
-
 # Initialize RBM and logistic regression
 rbm = BernoulliRBM()
 logistic = LogisticRegression()
@@ -117,7 +108,12 @@ params = {
 	"rbm__n_components": [50, 100, 200],
 	"logistic__C": [1.0, 10.0, 100.0]}
 
-# Perform a grid search over the parameter
+# Grid search
+params = {"C": [1.0, 10.0, 100.0]}
 start = time.time()
-gs = GridSearchCV(classifier, params, n_jobs = -1, verbose = 1)
+gs = GridSearchCV(LogisticRegression(), params, n_jobs = -1, verbose = 1)
 gs.fit(trainX, trainY)
+
+# Get best model
+bestParams = gs.best_estimator_.get_params()
+
