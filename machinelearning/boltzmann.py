@@ -1,0 +1,3 @@
+"""
+Restricted Boltzmann machine (RBM).
+"""
