@@ -21,4 +21,10 @@ class RBM(object):
             self._leraning_rate =  tf.Variable(tf.fill([visible_dim, hidden_dim], learning_rate), name = "learning_rate")
             self._input_sample = tf.placeholder(tf.float32, [visible_dim], name = "input_sample")
 
-
+            # Gibbs Sampling
+            input_matrix = tf.transpose(tf.stack([self._input_sample for i in range(hidden_dim)]))
+            _hidden_probabilities = tf.sigmoid(tf.add(tf.multiply(input_matrix, self._weights), tf.stack([self._hidden_biases[0] for i in range(visible_dim)])))
+            self._hidden_states = self.callculate_state(_hidden_probabilities)
+            _visible_probabilities = tf.sigmoid(tf.add(tf.multiply(self._hidden_states, self._weights), tf.transpose(tf.stack([self._visible_biases[0] for i in range(hidden_dim)]))))
+            self._visible_cdstates = self.callculate_state(_visible_probabilities)
+            self._hidden_cdstates = self.callculate_state(tf.sigmoid(tf.multiply(self._visible_cdstates, self._weights) + self._hidden_biases))
