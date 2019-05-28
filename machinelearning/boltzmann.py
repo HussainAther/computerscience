@@ -19,3 +19,6 @@ class RBM(object):
             self._hidden_cdstates = tf.Variable(tf.zeros([1, hidden_dim], tf.float32, name = "hidden_biases"))
             self._weights = tf.Variable(tf.random_normal([visible_dim, hidden_dim], 0.01), name="weights")
             self._leraning_rate =  tf.Variable(tf.fill([visible_dim, hidden_dim], learning_rate), name = "learning_rate")
+            self._input_sample = tf.placeholder(tf.float32, [visible_dim], name = "input_sample")
+
+
