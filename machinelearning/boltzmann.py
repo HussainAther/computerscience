@@ -52,3 +52,9 @@ class RBM(object):
             for i in v:
                 self._sess.run(self._training,
                                feed_dict={self._input_sample: i})
+
+    def calculate_state(self, probability):
+        """
+        Calculate state using probability.
+        """
+        return tf.floor(probability + tf.random_uniform(tf.shape(probability), 0, 1))
