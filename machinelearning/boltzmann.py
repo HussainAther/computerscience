@@ -8,3 +8,6 @@ class RBM(object):
     def __init__(self, visible_dim, hidden_dim, learning_rate, number_of_iterations):
         
         self._graph = tf.Graph()
+        
+        # Initialize graph
+        with self._graph.as_default():
