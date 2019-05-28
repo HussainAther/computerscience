@@ -100,7 +100,9 @@ def nudge(X, y):
 # Initialize RBM and logistic regression
 rbm = BernoulliRBM()
 logistic = LogisticRegression()
+logistic.fit(trainX, trainY)
 classifier = Pipeline([("rbm", rbm), ("logistic", logistic)])
+classifier.fit(trainX, trainY)
 
 params = {
 	"rbm__learning_rate": [0.1, 0.01, 0.001],
@@ -111,9 +113,8 @@ params = {
 # Grid search
 params = {"C": [1.0, 10.0, 100.0]}
 start = time.time()
-gs = GridSearchCV(LogisticRegression(), params, n_jobs = -1, verbose = 1)
+gs = GridSearchCV(classifier, params, n_jobs = -1, verbose = 1)
 gs.fit(trainX, trainY)
 
 # Get best model
 bestParams = gs.best_estimator_.get_params()
-
