@@ -63,7 +63,6 @@ class RBM(object):
 Deep Boltzmann machine (dbm) using scikit-learn.
 """
 
-import numpy as np
 import argparse
 import time
 import cv2
@@ -74,3 +73,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import BernoulliRBM
 from sklearn.grid_search import GridSearchCV
 from sklearn.pipeline import Pipeline
+
+def load_digits(datasetPath):
+    """
+    Read the dataset from the user's arguments.
+    """
+    # build the dataset and then split it into data
+    # and labels
+    X = np.genfromtxt(datasetPath, delimiter = ",", dtype = "uint8")
+    y  = X[:, 0]
+    X = X[:, 1:]
+    # return a tuple of the data and targets
+    return (X, y)
