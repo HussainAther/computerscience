@@ -39,3 +39,7 @@ class RBM(object):
             # Training
             self._training = tf.assign(self._weights, new_weights) 
 
+            # Initilize session and run it
+            self._sess = tf.Session()
+            initialization = tf.global_variables_initializer()
+            self._sess.run(initialization)
