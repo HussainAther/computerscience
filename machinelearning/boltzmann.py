@@ -29,6 +29,13 @@ class RBM(object):
             self._visible_cdstates = self.callculate_state(_visible_probabilities)
             self._hidden_cdstates = self.callculate_state(tf.sigmoid(tf.multiply(self._visible_cdstates, self._weights) + self._hidden_biases))
 
-            # state matrix
+            # State matrix
             positive_gradient_matrix = tf.multiply(input_matrix, self._hidden_states)
             negative_gradient_matrix = tf.multiply(self._visible_cdstates, self._hidden_cdstates)
+            new_weights = self._weights
+            new_weights.assign_add(tf.multiply(positive_gradient_matrix, self._leraning_rate))
+            new_weights.assign_sub(tf.multiply(negative_gradient_matrix, self._leraning_rate))
+
+            # Training
+            self._training = tf.assign(self._weights, new_weights) 
+
