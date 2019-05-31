@@ -5,7 +5,6 @@ except:
 
 import math
 import random
-from data_reader import *
 
 """
 Classify people into groups and evaluate them based on the comparisons between them.
@@ -30,6 +29,9 @@ def random_split_groups(people):
     return (group1, group2)
     
 def evaluate(factory, group1, group2, verbose=0):
+    """
+    Evaluate our predictions.
+    """
     score = 0
     for (test, train) in ((group1, group2), (group2, group1)):
         classifier = factory(train)
@@ -39,27 +41,23 @@ def evaluate(factory, group1, group2, verbose=0):
             if gold_standard == predicted:
                 score += 1
                 if verbose >= 2:
-                    print "%s: %s (correct)" % (legislator_info(legislator),
+                    print("%s: %s (correct)" % (legislator_info(legislator)),
                     predicted)
             else:
                 if verbose >= 1:
-                    print "* %s: got %s, actually %s" %\
-                    (legislator_info(legislator), predicted, gold_standard)
+                    print("* %s: got %s, actually %s" %\
+                    (legislator_info(legislator), predicted, gold_standard))
     if verbose >= 1:
-        print "Accuracy: %d/%d" % (score, len(group1) + len(group2))
+        print("Accuracy: %d/%d" % (score, len(group1) + len(group2)))
     return score
 
 def hamming_distance(list1, list2):
-    """ Calculate the Hamming distance between two lists """
-    # Make sure we"re working with lists
-    # Sorry, no other iterables are permitted
+    """
+    Calculate the Hamming distance between two lists.
+    """
     assert isinstance(list1, list)
     assert isinstance(list2, list)
-
     dist = 0
-
-    # "zip" is a Python builtin, documented at
-    # <http://www.python.org/doc/lib/built-in-funcs.html>
     for item1, item2 in zip(list1, list2):
         if item1 != item2: dist += 1
     return dist
@@ -67,8 +65,17 @@ def hamming_distance(list1, list2):
 edit_distance = hamming_distance
 
 def nearest_neighbors(distance, k=1):
+    """
+    Nearest neighbors classification method.
+    """
     def nearest_neighbors_classifier(train):
+        """
+        Nearest neighbors classifier on training data.
+        """
         def classify_value(query):
+            """
+            Classify a query on our model.
+            """
             best_distance = INFINITY
             ordered = sorted(train, key=lambda x: distance(query["votes"],
             x["votes"]))
@@ -85,14 +92,19 @@ def nearest_neighbors(distance, k=1):
     return nearest_neighbors_classifier
 
 def homogeneous_disorder(yes, no):
+    """
+    Adjust result for homogeneous disorder.
+    """
     result = 0
     if homogeneous_value(yes): result -= len(yes)
     if homogeneous_value(no): result -= len(no)
     return result
 
 def partition(legislators, vote_index, vote_value):
-    # Find the people who voted a particular way, and the people who didn"t.
-    # Yes, No, and Abstain/Absent count as three different options here.
+    """
+    Find the people who voted a particular way, and the people who didn"t.
+    Yes, No, and Abstain/Absent count as three different options here.
+    """
     matched = []
     unmatched = []
     for leg in legislators:
@@ -112,6 +124,9 @@ def homogeneous_value(lst):
     return lst[0]
 
 class CongressIDTree(object):
+    """
+    Congress identification tree.
+    """
     def __init__(self, legislators, vote_meanings, disorder_func=None):
         if disorder_func is None: disorder_func = homogeneous_disorder
         self.vote_meanings = vote_meanings
@@ -148,6 +163,9 @@ class CongressIDTree(object):
             disorder_func)
     
     def classify(self, legislator):
+        """
+        Classify a legislator.
+        """
         if self.leaf_value: return self.leaf_value
         vote_index, vote_value = self.criterion
         if legislator["votes"][vote_index] == vote_value:
@@ -156,9 +174,15 @@ class CongressIDTree(object):
             return self.no_branch.classify(legislator)
 
     def __str__(self):
+        """
+        Convert to string.
+        """
         return "\n"+self._str(0)
 
     def _str(self, indent):
+        """
+        Return string leaf value.
+        """
         if self.leaf_value:
             return str(self.leaf_value)
         
@@ -174,11 +198,16 @@ class CongressIDTree(object):
         return ("%(disord_string)s\n%(indentation)s%(value_name)s on %(vote_name)s:"
                 "\n%(yes_string)s\n%(no_string)s") % locals()
 
-
 def idtree_maker(vote_meanings, disorder_func):
+    """
+    Create the tree with votes and a disorder function.
+    """
     def train_classifier(train):
         idtree = CongressIDTree(train, vote_meanings, disorder_func)
         def classify_value(query):
+            """
+            Classify using our ID tree.
+            """
             return idtree.classify(query)
         return classify_value
     return train_classifier
