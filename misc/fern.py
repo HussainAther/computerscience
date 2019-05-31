@@ -1,5 +1,6 @@
-from vpython import *
-import random
+import vpython as vp
+
+from random import random
 
 """
 Simulate the growth of ferns (fractial) in 3-dimensions. Simply beautiful.
@@ -12,7 +13,7 @@ z = -2
 xn = 0
 yn = 0
 
-graph1 = display(width=500, height=500, forward=(-1,1),\
+graph1 = vp.display(width=500, height=500, forward=(-1,1),\
                 title="3D Fractal Fern (rotate via right mosue button)", range=10)
 graph1.show_rendertime = True
 
@@ -21,7 +22,7 @@ graph1.show_rendertime = True
 
 pts = points(color=color.green, size=0.01)
 for i in range(1, imax):
-    r = random.random()
+    r = random()
     if r <= .1: # 10% probability
         xn = 0
         yn = .18*y
