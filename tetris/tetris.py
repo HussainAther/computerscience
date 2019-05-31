@@ -11,18 +11,15 @@ class Block(Rectangle):
     specify the position on the tetris board
     in terms of the square grid
     """
-
     BLOCK_SIZE = 30
     OUTLINE_WIDTH = 3
 
     def __init__(self, pos, color):
         self.x = pos.x
         self.y = pos.y
-        
         p1 = Point(pos.x*Block.BLOCK_SIZE + Block.OUTLINE_WIDTH,
                    pos.y*Block.BLOCK_SIZE + Block.OUTLINE_WIDTH)
         p2 = Point(p1.x + Block.BLOCK_SIZE, p1.y + Block.BLOCK_SIZE)
-
         Rectangle.__init__(self, p1, p2)
         self.setWidth(Block.OUTLINE_WIDTH)
         self.setFill(color)
@@ -33,20 +30,16 @@ class Block(Rectangle):
         Return value: type: bool, checks if the block can move dx squares in the x direction
         and dy squares in the y direction. Returns True if it can, and False otherwise
         """
-
         return board.can_move(self.x + dx, self.y + dy)
 
     def move(self, dx, dy):
-        """ Parameters: dx - type: int
-                        dy - type: int
-                        
-            moves the block dx squares in the x direction
-            and dy squares in the y direction
         """
-
+        Parameters: dx - type: int, dy - type: int
+        moves the block dx squares in the x direction
+        and dy squares in the y direction
+        """
         self.x += dx
         self.y += dy
-
         Rectangle.move(self, dx*Block.BLOCK_SIZE, dy*Block.BLOCK_SIZE)
 
 
@@ -57,74 +50,68 @@ class Shape():
     rotation_dir - type: int - the current rotation direction of the shape
     shift_rotation_dir - type: Boolean - whether or not the shape rotates
     """
-
     def __init__(self, coords, color):
         self.blocks = []
         self.rotation_dir = 1
-        ### A boolean to indicate if a shape shifts rotation direction or not.
-        ### Defaults to false since only 3 shapes shift rotation directions (I, S and Z)
+        # A boolean to indicate if a shape shifts rotation direction or not.
+        # Defaults to false since only 3 shapes shift rotation directions (I, S and Z)
         self.shift_rotation_dir = False
         
         for pos in coords:
             self.blocks.append(Block(pos, color))
 
     def get_blocks(self):
-        """returns the list of blocks
         """
-
+        Return the list of blocks
+        """
         return self.blocks
 
     def draw(self, win):
-        """ Parameter: win - type: CanvasFrame
-
-            Draws the shape (draws four blocks in form of shape)
+        """
+        Parameter: win - type: CanvasFrame
+        Draw the shape (draws four blocks in form of shape)
         """
 
         for block in self.blocks:
             block.draw(win)
 
     def move(self, dx, dy):
-        """ Parameters: dx - type: int
-                        dy - type: int
-
-            moves the shape dx squares in the x direction
-            and dy squares in the y direction, i.e.
-            moves each of the blocks
+        """
+        Parameters: dx - type: int, dy - type: int
+        Move the shape dx squares in the x direction
+        and dy squares in the y direction, i.e.
+        moves each of the blocks
         """
 
         for block in self.blocks:
             block.move(dx, dy)
 
     def can_move(self, board, dx, dy):
-        """ Parameters: dx - type: int
-                        dy - type: int
-
-            Return value: type: bool
-            
-            checks if the shape can move dx squares in the x direction
-            and dy squares in the y direction, i.e.
-            check if each of the blocks can move
-            Returns True if all of them can, and False otherwise
         """
-        
+        Parameters: dx - type: int, dy - type: int
+        Return value: type: bool
+        Checks if the shape can move dx squares in the x direction
+        and dy squares in the y direction, i.e.
+        check if each of the blocks can move
+        Return True if all of them can, and False otherwise
+        """
         for block in self.blocks:
             if not block.can_move(board, dx, dy):
                 return False
         return True
 
     def get_rotation_dir(self):
-        """ Return value: type: int
-            returns the current rotation direction
         """
-
+        Return value: type: int
+        Return the current rotation direction
+        """
         return self.rotation_dir
 
     def get_rotate_positions(self, board):
         """
-        parameters: board
-        finds the position that a shape would be in if it were rotated and returns a list that includes the points
+        Parameters: board
+        Find the position that a shape would be in if it were rotated and returns a list that includes the points
         """
-
         direction = self.get_rotation_dir()
         new_blocks = []
         temp_blocks = list(self.blocks)
@@ -161,20 +148,14 @@ class Shape():
         return new_blocks
 
     def can_rotate(self, board):
-        """ Parameters: board - type: Board object
-            Return value: type : bool
-            
-            Checks if the shape can be rotated.
-            
-            1. Get the rotation direction using the get_rotation_dir method
-            2. Compute the position of each block after rotation and check if
-            the new position is valid
-            3. If any of the blocks cannot be moved to their new position,
-            return False
-            
-            otherwise all is good, return True
         """
-        
+        Check if the shape can be rotated. Parameters: board - type: Board object
+        Return value: type : bool. Checks if the shape can be rotated.
+        Get the rotation direction using the get_rotation_dir method,
+        Compute the position of each block after rotation and check if
+        the new position is valid. If any of the blocks cannot be moved to their new position,
+        return False. Otherwise all is good, return True
+        """
         new_blocks = self.get_rotate_positions(board)
         for block in new_blocks:
             if block.getY() > 0: # if block is past first row
@@ -192,9 +173,8 @@ class Shape():
     def rotate(self, board):
         """
         Parameters: board - type: Board object
-            rotates the shape
+        rotates the shape
         """
-
         rotated_blocks = self.get_rotate_positions(board)
         for index in xrange(0, len(rotated_blocks)):
             x = self.blocks[index].x
@@ -204,7 +184,7 @@ class Shape():
 
             self.blocks[index].move(xnew - x, ynew - y)
         
-        ###  This ensures that  pieces which switch rotations definitely remain within their accepted rotation positions.
+        # This ensures that pieces which switch rotations definitely remain within their accepted rotation positions.
         if self.shift_rotation_dir:
             self.rotation_dir *= -1
 
@@ -219,23 +199,22 @@ class I_shape(Shape):
         self.center_block = self.blocks[2]
 
     def get_rotate_positions(self, board):
-        #Overriding get_rotate positions because the I_shape doesn"t work with the 9-grid scheme
-
+        """
+        Overriding get_rotate positions because the I_shape
+        doesn't work with the 9-grid scheme.
+        """
         direction = self.get_rotation_dir() # -1 is counterclockwise, 1 is clockwise
-        new_blocks = [] #will hold new blocks
-        temp_blocks = list(self.blocks) #a temporary copy of self.blocks, excluding the center piece at index 1
-
+        new_blocks = [] # will hold new blocks
+        temp_blocks = list(self.blocks) # a temporary copy of self.blocks, excluding the center piece at index 1
         center_point = temp_blocks.pop(1)
-
-        #(x,y) is the center of revolution
+        # (x,y) is the center of revolution
         x = center_point.x
         y = center_point.y
-
         for point in temp_blocks:
-            if point.y == y: #y is equal to the center
+            if point.y == y: # y is equal to the center
                 dx = (point.x - x)*direction
                 new_blocks.append(Point(x, y + dx))
-            elif point.x == x: #x is equal to center
+            elif point.x == x: # x is equal to center
                 dy = (point.y - y)*direction #accounts for clockwise or counterclockwise
                 new_blocks.append(Point(x + dy, y))
 
@@ -459,46 +438,38 @@ class Tetris():
         self.win = win
         self.win.bind_all("<Key>", self.key_pressed)
         self.current_shape = self.create_new_shape()
-
-        ####  MY CODE HERE ####
         self.animate_shape()
         self.board.draw_shape(self.current_shape)
 
     def create_new_shape(self):
-        """ Return value: type: Shape
-            
-            Create a random new shape
-            return the shape
         """
-        
-        
-
+        Return value: type: Shape
+        Create a random new shape
+        return the shape
+        """
         randomshape = random.randint(0, len(self.SHAPES) - 1)
         return self.SHAPES[randomshape](Point(int(self.BOARD_WIDTH/2), 0))
     
     def animate_shape(self):
-        """ animate the shape - move down at equal intervals
-            specified by the delay attribute
+        """
+        Animate the shape - move down at equal intervals
+        specified by the delay attribute
         """
         
         self.do_move("Down")
         self.win.after(DELAY, self.animate_shape)
     
     def do_move(self, direction):
-        """ Parameters: direction - type: string
-            Return value: type: bool
-
-            Move the current shape in the direction specified by the parameter:
-            First check if the shape can move. If it can, move it and return True
-            Otherwise if the direction we tried to move was "Down",
-            1. add the current shape to the board
-            2. remove the completed rows if any
-            3. create a new random shape and set current_shape attribute
-            4. If the shape cannot be drawn on the board, display a
-               game over message
         """
-        
-        
+        Parameters: direction - type: string
+        Return value: type: bool
+        Move the current shape in the direction specified by the parameter:
+        First check if the shape can move. If it can, move it and return True
+        Otherwise if the direction we tried to move was "Down",
+        1. add the current shape to the board, 2. remove the completed rows if any
+        3. create a new random shape and set current_shape attribute, 4. If the shape cannot be
+        drawn on the board, display a game over message.
+        """
         dx = self.DIRECTION[direction][0]
         dy = self.DIRECTION[direction][1]
 
@@ -514,24 +485,21 @@ class Tetris():
             return False
 
     def do_rotate(self):
-        """ Checks if the current_shape can be rotated and
-            rotates if it can
+        """
+        Check if the current_shape can be rotated and
+        rotate if it can.
         """
         
         if self.current_shape.can_move(self.board, 0, 1) and self.current_shape.can_rotate(self.board):
                 self.current_shape.rotate(self.board)
     
     def key_pressed(self, event):
-        """ this function is called when a key is pressed on the keyboard
-
-            if users presses keys: "Left", "Right" or "Down", the current_shape will move in the appropriate direction
-
-            if user presses the space bar "space", the shape will move down until it can no longer move and is added to the board
-
-            if the user presses the "Up" arrow key ,
-                the shape rotates
         """
-        
+        When a key is pressed,
+        if users presses keys: "Left", "Right" or "Down", the current_shape will move in the appropriate direction
+        if user presses the space bar "space", the shape will move down until it can no longer move and is added to the board
+        if the user presses the "Up" arrow key, the shape rotates.
+        """
         key = event.keysym
         if key == "Down" or key == "Right" or key == "Left":
             self.do_move(key)
