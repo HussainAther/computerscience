@@ -10,7 +10,9 @@ tk = Tkinter
 import exceptions
 
 class GraphicsError(exceptions.Exception):
-    """Generic error class for graphics module exceptions."""
+    """
+    Generic error class for graphics module exceptions.
+    """
     #def __init__(self, *args):
         #self.args=args
 
@@ -21,9 +23,9 @@ UNSUPPORTED_METHOD = "Object doesn't support operation"
 BAD_OPTION = "Illegal option value"
 
 class CanvasFrame(tk.Frame):
-
-    """A CanvasFrame is a frame for displaying graphics."""
-
+    """
+    A CanvasFrame is a frame for displaying graphics.
+    """
     def __init__(self, parent, width=200, height=200):
 
         tk.Frame.__init__(self, parent)
@@ -50,13 +52,17 @@ class CanvasFrame(tk.Frame):
             raise GraphicsError, "window is closed"
 
     def setBackground(self, color):
-        """Set background color of the window"""
+        """
+        Set background color of the window.
+        """
         self.__checkOpen()
         self.canvas.config(bg=color)
 
     def setCoords(self, x1, y1, x2, y2):
-        """Set coordinates of window to run from (x1,y1) in the
-        lower-left corner to (x2,y2) in the upper-right corner."""
+        """
+        Set coordinates of window to run from (x1,y1) in the
+        lower-left corner to (x2,y2) in the upper-right corner.
+        """
         self.trans = Transform(self.width, self.height, x1, y1, x2, y2)
 
     def close(self):
@@ -64,7 +70,9 @@ class CanvasFrame(tk.Frame):
         self.__close_help()
 
     def __close_help(self):
-        """Close the window"""
+        """
+        Close the window.
+        """
         self.closed = True
         self.parent.destroy()
 
@@ -72,25 +80,33 @@ class CanvasFrame(tk.Frame):
         return self.closed
 
     def plot(self, x, y, color="black"):
-        """Set pixel (x,y) to the given color"""
+        """
+        Set pixel (x,y) to the given color.
+        """
         self.__checkOpen()
         xs,ys = self.toScreen(x,y)
         self.create_line(xs,ys,xs+1,ys, fill=color)
 
     def plotPixel(self, x, y, color="black"):
-        """Set pixel raw (independent of window coordinates) pixel
-        (x,y) to color"""
+        """
+        Set pixel raw (independent of window coordinates) pixel
+        (x,y) to color.
+        """
         self.__checkOpen()
         self.create_line(x,y,x+1,y, fill=color)
 
     def flush(self):
-        """Update drawing to the window"""
+        """
+        Update drawing to the window.
+        """
         self.__checkOpen()
         self.update_idletasks()
 
     def getMouse(self):
-        """Wait for mouse click and return Point object representing
-        the click"""
+        """
+        Wait for mouse click and return Point object representing
+        the click.
+        """
         self.mouseX = None
         self.mouseY = None
         while self.mouseX == None or self.mouseY == None:
@@ -103,8 +119,10 @@ class CanvasFrame(tk.Frame):
         return Point(x,y)
 
     def checkMouse(self):
-        """Return last mouse click or None if mouse has
-        not been clicked since last call"""
+        """
+        Return last mouse click or None if mouse has
+        not been clicked since last call.
+        """
         if self.isClosed():
             raise GraphicsError, "checkMouse in closed window"
         self.update()
@@ -117,11 +135,15 @@ class CanvasFrame(tk.Frame):
             return None
 
     def getHeight(self):
-        """Return the height of the window"""
+        """
+        Return the height of the window.
+        """
         return self.height
 
     def getWidth(self):
-        """Return the width of the window"""
+        """
+        Return the width of the window.
+        """
         return self.width
 
     def toScreen(self, x, y):
@@ -210,34 +232,40 @@ class GraphicsObject:
         self.config = config
 
     def setFill(self, color):
-        """Set interior color to color"""
+        """
+        Set interior color to color.
+        """
         self._reconfig("fill", color)
 
     def setOutline(self, color):
-        """Set outline color to color"""
+        """
+        Set outline color to color.
+        """
         self._reconfig("outline", color)
 
     def setWidth(self, width):
-        """Set line weight to width"""
+        """
+        Set line weight to width.
+        """
         self._reconfig("width", width)
 
     def draw(self, canvas_frame):
-
-        """Draw the object in CanvasFrame, which should be a CanvasFrame
+        """
+        Draw the object in CanvasFrame, which should be a CanvasFrame
         object.  A GraphicsObject may only be drawn into one
         window. Raises an error if attempt made to draw an object that
-        is already visible."""
-
+        is already visible.
+        """
         if self.canvas_frame and not self.canvas_frame.isClosed(): raise GraphicsError, OBJ_ALREADY_DRAWN
         if canvas_frame.isClosed(): raise GraphicsError, "Can't draw to closed window"
         self.canvas_frame = canvas_frame
         self.id = self._draw(canvas_frame, self.config)
 
     def undraw(self):
-
-        """Undraw the object (i.e. hide it). Returns silently if the
-        object is not currently drawn."""
-
+        """
+        Undraw the object (i.e. hide it). Returns silently if the
+        object is not currently drawn.
+        """
         if not self.canvas_frame: return
         if not self.canvas_frame.isClosed():
             self.canvas_frame.canvas.delete(self.id)
@@ -275,12 +303,16 @@ class GraphicsObject:
             self.canvas_frame.canvas.itemconfig(self.id, options)
 
     def _draw(self, canvas_frame, options):
-        """draws appropriate figure on canvas with options provided
-        Returns Tk id of item drawn"""
+        """
+        Draw appropriate figure on canvas with options provided
+        Returns Tk id of item drawn.
+        """
         pass # must override in subclass
 
     def _move(self, dx, dy):
-        """updates internal state of object to move it dx,dy units"""
+        """
+        Update internal state of object to move it dx,dy units.
+        """
         pass # must override in subclass
 
 class Point(GraphicsObject):
@@ -310,9 +342,10 @@ class Point(GraphicsObject):
         return self.y
 
 class _BBox(GraphicsObject):
-    # Internal base class for objects represented by bounding box
-    # (opposite corners) Line segment is a degenerate case.
-
+    """
+    Internal base class for objects represented by bounding box
+    (opposite corners) Line segment is a degenerate case.
+    """
     def __init__(self, p1, p2, options=["outline","width","fill"]):
         GraphicsObject.__init__(self, options)
         self.p1 = p1.clone()
