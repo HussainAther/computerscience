@@ -1,7 +1,5 @@
 import re
 
-from utils import *
-
 try:
     set()
 except NameError:
