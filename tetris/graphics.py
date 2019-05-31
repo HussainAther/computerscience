@@ -367,7 +367,6 @@ class _BBox(GraphicsObject):
         return Point((p1.x+p2.x)/2.0, (p1.y+p2.y)/2.0)
 
 class Rectangle(_BBox):
-
     def __init__(self, p1, p2):
         _BBox.__init__(self, p1, p2)
 
@@ -384,7 +383,6 @@ class Rectangle(_BBox):
         return other
 
 class Oval(_BBox):
-
     def __init__(self, p1, p2):
         _BBox.__init__(self, p1, p2)
 
@@ -401,7 +399,6 @@ class Oval(_BBox):
         return canvas_frame.canvas.create_oval(x1,y1,x2,y2,options)
 
 class Circle(Oval):
-
     def __init__(self, center, radius):
         p1 = Point(center.x-radius, center.y-radius)
         p2 = Point(center.x+radius, center.y+radius)
@@ -417,7 +414,6 @@ class Circle(Oval):
         return self.radius
 
 class Line(_BBox):
-
     def __init__(self, p1, p2):
         _BBox.__init__(self, p1, p2, ["arrow","fill","width"])
         self.setFill(DEFAULT_CONFIG['outline'])
@@ -472,7 +468,6 @@ class Polygon(GraphicsObject):
         return apply(tk.Canvas.create_polygon, args)
 
 class Text(GraphicsObject):
-
         def __init__(self, p, text):
             GraphicsObject.__init__(self, ["justify","fill","text","font"])
             self.setText(text)
@@ -532,7 +527,6 @@ class Text(GraphicsObject):
 
 
 class Entry(GraphicsObject):
-
     def __init__(self, canvas_frame, p, width):
         GraphicsObject.__init__(self, [])
         self.anchor = p.clone()
@@ -619,10 +613,8 @@ class Entry(GraphicsObject):
 
 
 class Image(GraphicsObject):
-
     idCount = 0
     imageCache = {} # tk photoimages go here to avoid GC while drawn
-
     def __init__(self, p, pixmap):
         GraphicsObject.__init__(self, [])
         self.anchor = p.clone()
@@ -657,18 +649,12 @@ class Image(GraphicsObject):
 
 
 class Pixmap:
-    """Pixmap represents an image as a 2D array of color values.
-    A Pixmap can be made from a file (gif or ppm):
-
-       pic = Pixmap("myPicture.gif")
-
-    or initialized to a given size (initially transparent):
-
-       pic = Pixmap(512, 512)
-
-
     """
-
+    Pixmap represents an image as a 2D array of color values.
+    A Pixmap can be made from a file (gif or ppm):
+    pic = Pixmap("myPicture.gif") or initialized to a given
+    size (initially transparent): pic = Pixmap(512, 512)
+    """
     def __init__(self, *args):
         if len(args) == 1: # a file name or pixmap
             if type(args[0]) == type(""):
@@ -681,17 +667,21 @@ class Pixmap:
                                 width=width, height=height)
 
     def getWidth(self):
-        """Returns the width of the image in pixels"""
+        """
+        Return the width of the image in pixels.
+        """
         return self.image.width()
 
     def getHeight(self):
-        """Returns the height of the image in pixels"""
+        """
+        Return the height of the image in pixels.
+        """
         return self.image.height()
 
     def getPixel(self, x, y):
-        """Returns a list [r,g,b] with the RGB color values for pixel (x,y)
+        """
+        Return a list [r,g,b] with the RGB color values for pixel (x,y)
         r,g,b are in range(256)
-
         """
 
         value = self.image.get( x,y)
@@ -701,31 +691,34 @@ class Pixmap:
             return map(int, value.split())
 
     def setPixel(self, x, y, (r,g,b)):
-        """Sets pixel (x,y) to the color given by RGB values r, g, and b.
+        """
+        Set pixel (x,y) to the color given by RGB values r, g, and b.
         r,g,b should be in range(256)
-
         """
 
         self.image.put( "{%s}"%color_rgb(r,g,b), (x, y))
 
     def clone(self):
-        """Returns a copy of this Pixmap"""
+        """
+        Return a copy of this Pixmap.
+        """
         return Pixmap(self.image.copy())
 
     def save(self, filename):
-        """Saves the pixmap image to filename.
-        The format for the save image is determined from the filname extension.
-
         """
-
+        Save the pixmap image to filename.
+        The format for the save image is determined from the filname extension.
+        """
         path, name = os.path.split(filename)
         ext = name.split(".")[-1]
         self.image.write( filename, format=ext)
 
 
 def color_rgb(r,g,b):
-    """r,g,b are intensities of red, green, and blue in range(256)
-    Returns color specifier string for the resulting color"""
+    """
+    r,g,b are intensities of red, green, and blue in range(256)
+    Returns color specifier string for the resulting color.
+    """
     return "#%02x%02x%02x" % (r,g,b)
 
 class GraphWin(CanvasFrame):
@@ -754,10 +747,8 @@ class Window(tk.Tk):
         """Close the window"""
         self.destroy()
 
-
 def test():
-
-    #win = CanvasFrame(_root)
+    # win = CanvasFrame(_root)
     win = GraphWin("Test")
     win.setCoords(0,0,10,10)
     t = Text(Point(5,5), "Centered Text")
