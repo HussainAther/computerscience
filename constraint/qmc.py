@@ -39,3 +39,18 @@ def check(binary):
         if len(temp) == 0:
             return pi
         binary = list(set(temp))
+
+def decimal_to_binary(no_of_variable, minterms):
+    """
+    Convert from decimal to binary with number of variables and minimum
+    terms.
+    """
+    temp = []
+    s = ""
+    for m in minterms:
+        for i in range(no_of_variable):
+            s = str(m%2) + s
+            m //= 2
+        temp.append(s)
+	s = ""
+    return temp
