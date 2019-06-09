@@ -43,3 +43,24 @@ void mergeFiles(char *output_file, int n, int k)
 	// Open output files in read mode.
 	in[i] = openFile(fileName, "r");
 	}
+	// FINAL OUTPUT FILE
+	FILE *out = openFile(output_file, "w");
+
+	// Create a min heap with k heap nodes.  Every heap node has first
+	// element of scratch output file
+	MinHeapNode harr[k];
+	priority_queue<MinHeapNode, std::vector<MinHeapNode>, comp> pq;
+
+	int i;
+	for (i = 0; i < k; i++)
+	{
+	    // break if no output file is empty and
+	    // index i will be no. of input files
+	    if (fscanf(in[i], "%d ", &harr[i].element) != 1)
+	        break;
+
+	    // Index of scratch output file
+	    harr[i].i = i;
+	    pq.push(harr[i]);
+	}
+
