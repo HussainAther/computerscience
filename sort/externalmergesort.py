@@ -28,4 +28,18 @@ FILE* openFile(char* fileName, char* mode)
     }
     return fp;
 }
+ 
+// Merges k sorted files. Names of files are assumed to be 1, 2, ... k
+void mergeFiles(char *output_file, int n, int k)
+{
+    FILE* in[k];
+    for (int i = 0; i < k; i++)
+    {
+        char fileName[2];
 
+        // convert i to string
+	snprintf(fileName, sizeof(fileName), "%d", i);
+
+	// Open output files in read mode.
+	in[i] = openFile(fileName, "r");
+	}
