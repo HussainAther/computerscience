@@ -9,3 +9,11 @@ struct MinHeapNode
 	int i;
 };
 
+// Comparison object to be used to order the heap
+struct comp
+{
+	bool operator()(const MinHeapNode lhs, const MinHeapNode rhs) const
+	{
+		return lhs.element > rhs.element;
+	}
+};
