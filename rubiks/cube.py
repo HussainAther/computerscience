@@ -216,3 +216,18 @@ class Cube:
         Returns the n dimension of the cube
 	"""
    	return self.__size__
+
+    def __printer__(self, top, left, front, right, back, bottom):
+        """
+        Print the faces with the orientation of 
+
+           T
+        L  F  R  Ba
+           Bo   
+        """
+        for row in top:
+            print("          " + str(row))
+        for idx in range(self.__size__):
+            print(str(left[idx]) + " " + str(front[idx]) + " " + str(right[idx]) + " " + str(back[idx]))
+        for row in bottom:
+            print("          " + str(row)) 
