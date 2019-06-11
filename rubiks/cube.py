@@ -159,3 +159,26 @@ class Cube:
              self.__front__[idx][0] = new_right[idx]
              # Bottom to back
              self.__back__[idx][-1] = new_left[idx]
+
+     def rotate_right(self):
+         """
+         Rotate right side clockwise
+         """
+         # Rotate the face itself clockwise  
+         self.__right__ = self.rotate_face(self.__right__)
+         # Grab the actual data being moved
+         new_top = [self.__front__[row][-1] for row in range(self.__size__)]
+         new_bottom = [self.__back__[row][0] for row in reversed(range(self.__size__))]
+         new_right = [self.__top__[idx][-1] for idx in reversed(range(self.__size__))]
+         new_left = [self.__bottom__[idx][-1] for idx in range(self.__size__)]
+         # Transfer top and bottom to the sides
+         # Top to right face in this orientation
+         for idx in range(self.__size__):
+             # Back to top
+             self.__top__[idx][-1] = new_top[idx]
+             # Front to bottom
+             self.__bottom__[idx][-1] = new_bottom[idx]
+             # Top to front
+             self.__front__[idx][-1] = new_left[idx]
+             # Bottom to back
+             self.__back__[idx][0] = new_right[idx]
