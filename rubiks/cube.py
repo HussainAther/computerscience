@@ -238,3 +238,22 @@ class Cube:
          """
          if orientation == "front":
              self.__printer__(self.__top__, self.__left__, self.__front__, self.__right__, self.__back__, self.__bottom__)
+
+     def is_solved(self):
+         """
+         Checks that the rubik's cube is solved. This can mean that each face has the same numeral in the 3x3 matrix
+         Uses the center pieces which shouldn't move to determine what goes where
+         """
+         if self.__front__ != [[self.__front__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         elif self.__back__ != [[self.__back__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         elif self.__left__ != [[self.__left__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         elif self.__right__ != [[self.__right__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         elif self.__top__ != [[self.__top__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         elif self.__bottom__ != [[self.__bottom__[1][1] for x in range(self.__size__)] for x in range(self.__size__)]:
+             return False
+         return True
