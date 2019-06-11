@@ -231,3 +231,10 @@ class Cube:
             print(str(left[idx]) + " " + str(front[idx]) + " " + str(right[idx]) + " " + str(back[idx]))
         for row in bottom:
             print("          " + str(row)) 
+
+     def print_cube(self, orientation="front"):
+         """
+         Switch the print case depending on the given orientation
+         """
+         if orientation == "front":
+             self.__printer__(self.__top__, self.__left__, self.__front__, self.__right__, self.__back__, self.__bottom__)
