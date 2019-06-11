@@ -85,3 +85,15 @@ class Cube:
         Get the back face of the cube
         """
         return self.__bottom__
+
+    def rotate_face(self, matrix):
+         """
+         Takes in the 2 dimensional face representation and performs the matrix operation of clockwise rotation
+         The new matrix is returned
+         """
+         temp = [[],[],[]] # Generate the new matrix
+         for x in reversed(range(self.__size__)):
+             for y in range(self.__size__):
+             temp[y].append(matrix[x][y])
+         return temp
+
