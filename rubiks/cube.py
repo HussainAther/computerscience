@@ -97,3 +97,23 @@ class Cube:
              temp[y].append(matrix[x][y])
          return temp
 
+     def rotate_front(self):
+         """
+         Rotate front face of the cube
+         """
+         # Rotate the face itself clockwise
+         self.__front__ = self.rotate_face(self.__front__)
+         # Perform the rotations on the edges
+         # The top and bottom edges can save values before transfer
+         new_top = [self.__left__[row][-1] for row in reversed(range(self.__size__))]
+         new_bottom = [self.__right__[row][0] for row in reversed(range(self.__size__))]
+         # Transfer top and bottom to the sides
+         # Top to right
+         for idx in range(self.__size__):
+             self.__right__[idx][0] = self.__top__[-1][idx]
+         # Bottom to left
+         for idx in range(self.__size__):
+             self.__left__[idx][-1] = self.__bottom__[0][idx] 
+         # Replace the top and bottom
+         self.__top__[-1] = new_top
+         self.__bottom__[0] = new_bottom
