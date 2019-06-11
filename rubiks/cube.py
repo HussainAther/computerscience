@@ -197,3 +197,16 @@ class Cube:
         # Rotate the face itself clockwise
         self.__top__ = self.rotate_face(self.__top__)
 
+    def rotate_bottom(self):
+        """
+        Rotate bottom face clockwise
+        """
+        # Grab bottom row of front, left, right, back
+        temp = []
+        temp = self.__front__[2]
+        self.__front__[2] = self.__left__[2]
+        self.__left__[2] = self.__back__[2]
+        self.__back__[2] = self.__right__[2]
+        self.__right__[2] = temp
+        # Rotate the face itself clockwise
+        self.__bottom__ = self.rotate_face(self.__bottom__)
