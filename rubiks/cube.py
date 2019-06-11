@@ -97,88 +97,103 @@ class Cube:
              temp[y].append(matrix[x][y])
          return temp
 
-     def rotate_front(self):
-         """
-         Rotate front face of the cube
-         """
-         # Rotate the face itself clockwise
-         self.__front__ = self.rotate_face(self.__front__)
-         # Perform the rotations on the edges
-         # The top and bottom edges can save values before transfer
-         new_top = [self.__left__[row][-1] for row in reversed(range(self.__size__))]
-         new_bottom = [self.__right__[row][0] for row in reversed(range(self.__size__))]
-         # Transfer top and bottom to the sides
-         # Top to right
-         for idx in range(self.__size__):
-             self.__right__[idx][0] = self.__top__[-1][idx]
-         # Bottom to left
-         for idx in range(self.__size__):
-             self.__left__[idx][-1] = self.__bottom__[0][idx] 
-         # Replace the top and bottom
-         self.__top__[-1] = new_top
-         self.__bottom__[0] = new_bottom
+    def rotate_front(self):
+        """
+        Rotate front face of the cube
+        """
+        # Rotate the face itself clockwise
+        self.__front__ = self.rotate_face(self.__front__)
+        # Perform the rotations on the edges
+        # The top and bottom edges can save values before transfer
+        new_top = [self.__left__[row][-1] for row in reversed(range(self.__size__))]
+        new_bottom = [self.__right__[row][0] for row in reversed(range(self.__size__))]
+        # Transfer top and bottom to the sides
+        # Top to right
+        for idx in range(self.__size__):
+            self.__right__[idx][0] = self.__top__[-1][idx]
+        # Bottom to left
+        for idx in range(self.__size__):
+            self.__left__[idx][-1] = self.__bottom__[0][idx] 
+        # Replace the top and bottom
+        self.__top__[-1] = new_top
+        self.__bottom__[0] = new_bottom
 
-     def rotate_back(self):
-         """
-         Rotate back face of the cube
-         """
-         # Rotate the face itself clockwise
-         self.__back__ = self.rotate_face(self.__back__)
-         new_top = [self.__right__[row][-1] for row in range(self.__size__)]
-         new_bottom = [self.__left__[row][0] for row in range(self.__size__)]
-         # Transfer top and bottom to the sides
-         # Top to right face in this orientation
-         for idx in range(self.__size__):
-             self.__left__[idx][0] = self.__top__[0][-1 - idx]
-         # Bottom to left
-         for idx in range(self.__size__):
-             self.__right__[idx][-1] = self.__bottom__[-1][-1 - idx] 
-         # Replace the top and bottom
-         self.__top__[0] = new_top
-         self.__bottom__[-1] = new_bottom
+    def rotate_back(self):
+        """
+        Rotate back face of the cube
+        """
+        # Rotate the face itself clockwise
+        self.__back__ = self.rotate_face(self.__back__)
+        new_top = [self.__right__[row][-1] for row in range(self.__size__)]
+        new_bottom = [self.__left__[row][0] for row in range(self.__size__)]
+        # Transfer top and bottom to the sides
+        # Top to right face in this orientation
+        for idx in range(self.__size__):
+            self.__left__[idx][0] = self.__top__[0][-1 - idx]
+        # Bottom to left
+        for idx in range(self.__size__):
+            self.__right__[idx][-1] = self.__bottom__[-1][-1 - idx] 
+        # Replace the top and bottom
+        self.__top__[0] = new_top
+        self.__bottom__[-1] = new_bottom
 
-     def rotate_left(self):
-         """
-         Rotate left face of the cube
-         """
-         # Rotate the face itself clockwise
-         self.__left__ = self.rotate_face(self.__left__)
-         # Grab the actual data being moved
-         new_top = [self.__back__[row][-1] for row in reversed(range(self.__size__))]
-         new_bottom = [self.__front__[row][0] for row in reversed(range(self.__size__))] 
-         new_right = [self.__top__[idx][0] for idx in range(self.__size__)]
-         new_left = [self.__bottom__[idx][0] for idx in reversed(range(self.__size__))]
-         # Transfer top and bottom to the sides
-         # Top to right face in this orientation
-         for idx in range(self.__size__):
-             # Back to top
-             self.__top__[idx][0] = new_top[idx]
-             # Front to bottom
-             self.__bottom__[idx][0] = new_bottom[::-1][idx]
-             # Top to front
-             self.__front__[idx][0] = new_right[idx]
-             # Bottom to back
-             self.__back__[idx][-1] = new_left[idx]
+    def rotate_left(self):
+        """
+        Rotate left face of the cube
+        """
+        # Rotate the face itself clockwise
+        self.__left__ = self.rotate_face(self.__left__)
+        # Grab the actual data being moved
+        new_top = [self.__back__[row][-1] for row in reversed(range(self.__size__))]
+        new_bottom = [self.__front__[row][0] for row in reversed(range(self.__size__))] 
+        new_right = [self.__top__[idx][0] for idx in range(self.__size__)]
+        new_left = [self.__bottom__[idx][0] for idx in reversed(range(self.__size__))]
+        # Transfer top and bottom to the sides
+        # Top to right face in this orientation
+        for idx in range(self.__size__):
+            # Back to top
+            self.__top__[idx][0] = new_top[idx]
+            # Front to bottom
+            self.__bottom__[idx][0] = new_bottom[::-1][idx]
+            # Top to front
+            self.__front__[idx][0] = new_right[idx]
+            # Bottom to back
+            self.__back__[idx][-1] = new_left[idx]
 
-     def rotate_right(self):
-         """
-         Rotate right side clockwise
-         """
-         # Rotate the face itself clockwise  
-         self.__right__ = self.rotate_face(self.__right__)
-         # Grab the actual data being moved
-         new_top = [self.__front__[row][-1] for row in range(self.__size__)]
-         new_bottom = [self.__back__[row][0] for row in reversed(range(self.__size__))]
-         new_right = [self.__top__[idx][-1] for idx in reversed(range(self.__size__))]
-         new_left = [self.__bottom__[idx][-1] for idx in range(self.__size__)]
-         # Transfer top and bottom to the sides
-         # Top to right face in this orientation
-         for idx in range(self.__size__):
-             # Back to top
-             self.__top__[idx][-1] = new_top[idx]
-             # Front to bottom
-             self.__bottom__[idx][-1] = new_bottom[idx]
-             # Top to front
-             self.__front__[idx][-1] = new_left[idx]
-             # Bottom to back
-             self.__back__[idx][0] = new_right[idx]
+    def rotate_right(self):
+        """
+        Rotate right side clockwise
+        """
+        # Rotate the face itself clockwise  
+        self.__right__ = self.rotate_face(self.__right__)
+        # Grab the actual data being moved
+        new_top = [self.__front__[row][-1] for row in range(self.__size__)]
+        new_bottom = [self.__back__[row][0] for row in reversed(range(self.__size__))]
+        new_right = [self.__top__[idx][-1] for idx in reversed(range(self.__size__))]
+        new_left = [self.__bottom__[idx][-1] for idx in range(self.__size__)]
+        # Transfer top and bottom to the sides
+        # Top to right face in this orientation
+        for idx in range(self.__size__):
+            # Back to top
+            self.__top__[idx][-1] = new_top[idx]
+            # Front to bottom
+            self.__bottom__[idx][-1] = new_bottom[idx]
+            # Top to front
+            self.__front__[idx][-1] = new_left[idx]
+            # Bottom to back
+            self.__back__[idx][0] = new_right[idx]
+
+    def rotate_top(self):
+        """
+        Rotate top clockwise
+        """
+        # Grab bottom row of front, left, right, back
+        temp = []
+        temp = self.__front__[0]
+        self.__front__[0] = self.__right__[0]
+        self.__right__[0] = self.__back__[0]
+        self.__back__[0] = self.__left__[0]
+        self.__left__[0] = temp
+        # Rotate the face itself clockwise
+        self.__top__ = self.rotate_face(self.__top__)
+
