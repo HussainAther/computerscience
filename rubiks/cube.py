@@ -44,8 +44,44 @@ class Cube:
         else:
             raise Exception("Input lists incorrect length")
 
-   def set_bottom(self, l):
-       if len(l) == 3 & len(l[0]) == 3 & len(l[1]) == 3 & len(l[2]) == 3:
-          self.__bottom__ = l
-       else:
-           raise Exception("Input lists incorrect length") 
+    def set_bottom(self, l):
+        if len(l) == 3 & len(l[0]) == 3 & len(l[1]) == 3 & len(l[2]) == 3:
+            self.__bottom__ = l
+        else:
+            raise Exception("Input lists incorrect length") 
+
+    def get_front(self):
+        """
+        Get the front face of the cube
+        """
+        return self.__front__
+   
+    def get_back(self):
+        """
+        Get the back face of the cube
+        """
+        return self.__back__
+   
+    def get_left(self):
+        """
+        Get the back face of the cube
+        """
+        return self.__left__
+
+    def get_right(self):
+        """
+        Get the back face of the cube
+        """
+        return self.__right__
+
+    def get_top(self):
+        """
+        Get the back face of the cube
+        """
+        return self.__top__
+
+    def get_bottom(self):
+        """
+        Get the back face of the cube
+        """
+        return self.__bottom__
