@@ -117,3 +117,22 @@ class Cube:
          # Replace the top and bottom
          self.__top__[-1] = new_top
          self.__bottom__[0] = new_bottom
+
+     def rotate_back(self):
+         """
+         Rotate back face of the cube
+         """
+         # Rotate the face itself clockwise
+         self.__back__ = self.rotate_face(self.__back__)
+         new_top = [self.__right__[row][-1] for row in range(self.__size__)]
+         new_bottom = [self.__left__[row][0] for row in range(self.__size__)]
+         # Transfer top and bottom to the sides
+         # Top to right face in this orientation
+         for idx in range(self.__size__):
+             self.__left__[idx][0] = self.__top__[0][-1 - idx]
+         # Bottom to left
+         for idx in range(self.__size__):
+             self.__right__[idx][-1] = self.__bottom__[-1][-1 - idx] 
+         # Replace the top and bottom
+         self.__top__[0] = new_top
+         self.__bottom__[-1] = new_bottom
