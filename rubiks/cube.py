@@ -210,3 +210,9 @@ class Cube:
         self.__right__[2] = temp
         # Rotate the face itself clockwise
         self.__bottom__ = self.rotate_face(self.__bottom__)
+
+    def get_size(self):
+   	"""
+        Returns the n dimension of the cube
+	"""
+   	return self.__size__
