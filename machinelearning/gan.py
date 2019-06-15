@@ -21,6 +21,18 @@ def get_generator_input_sampler():
     """
     return lambda m, n: torch.rand(m, n)
 
+def extract(v):
+    """
+    Extract values to a list.
+    """
+    return v.data.storage().tolist()
+
+def stats(d):
+    """
+    Mean and standard deviation.
+    """
+    return [np.mean(d), np.std(d)]
+
 class Generator(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, f):
         super(Generator, self).__init__()
