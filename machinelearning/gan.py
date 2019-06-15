@@ -77,8 +77,15 @@ class Discriminator(nn.Module):
         return self.f(self.map3(x))
 
 # Data params
-data_mean = 4
-data_stddev = 1.25
+data_mean = 4 # Mean
+data_stddev = 1.25 # Standard deviation
+g_input_size = 1 # Random noise dimension coming into generator, per output vector
+g_hidden_size = 5 # Generator complexity
+g_output_size = 1 # Size of generated output vector
+d_input_size = 500 # Minibatch size - cardinality of distributions
+d_hidden_size = 10 # Discriminator complexity
+d_output_size = 1 # Single dimension for 'real' vs. 'fake' classification
+minibatch_size = d_input_size
 
 # send four moments to the generator.
 (name, preprocess, d_input_func) = ("Only 4 moments", lambda data: get_moments(data), lambda x: 4)
