@@ -105,6 +105,19 @@ d_real_data, d_fake_data, g_fake_data = None, None, None
 discriminator_activation_function = torch.sigmoid
 generator_activation_function = torch.tanh
 
+d_sampler = get_distribution_sampler(data_mean, data_stddev)
+gi_sampler = get_generator_input_sampler()
+G = Generator(input_size=g_input_size,
+              hidden_size=g_hidden_size,
+              output_size=g_output_size,
+              f=generator_activation_function)
+D = Discriminator(input_size=d_input_func(d_input_size),
+                  hidden_size=d_hidden_size,
+                  output_size=d_output_size,
+                  f=discriminator_activation_function)
+criterion = nn.BCELoss()  # Binary cross entropy: http://pytorch.org/docs/nn.html#bceloss
+d_optimizer = optim.SGD(D.parameters(), lr=d_learning_rate, momentum=sgd_momentum)
+g_optimizer = optim.SGD(G.parameters(), lr=g_learning_rate, momentum=sgd_momentum)
 
 
 
