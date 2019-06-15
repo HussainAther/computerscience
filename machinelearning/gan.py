@@ -76,6 +76,9 @@ class Discriminator(nn.Module):
         x = self.f(self.map2(x))
         return self.f(self.map3(x))
 
+# send four moments to the generator.
+(name, preprocess, d_input_func) = ("Only 4 moments", lambda data: get_moments(data), lambda x: 4)
+
 # Data params
 data_mean = 4 # Mean
 data_stddev = 1.25 # Standard deviation
@@ -87,8 +90,22 @@ d_hidden_size = 10 # Discriminator complexity
 d_output_size = 1 # Single dimension for 'real' vs. 'fake' classification
 minibatch_size = d_input_size
 
-# send four moments to the generator.
-(name, preprocess, d_input_func) = ("Only 4 moments", lambda data: get_moments(data), lambda x: 4)
+d_learning_rate = 1e-3
+g_learning_rate = 1e-3
+sgd_momentum = 0.9
+
+num_epochs = 5000
+print_interval = 100
+d_steps = 20
+g_steps = 20
+
+dfe, dre, ge = 0, 0, 0
+d_real_data, d_fake_data, g_fake_data = None, None, None
+
+discriminator_activation_function = torch.sigmoid
+generator_activation_function = torch.tanh
+
+
 
 
 print("Plotting the generated distribution...")
