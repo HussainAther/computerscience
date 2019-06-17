@@ -19,3 +19,8 @@ def tensorcollapse(T, x):
     """
     Collapse the tensor.
     """
+    n = len(x)
+    y = np.zeros([n, n])
+    for k in range(n):
+        y += T[::k] * x[k]
+    return y
