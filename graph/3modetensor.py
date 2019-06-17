@@ -11,7 +11,7 @@ def tensorapply(T, x):
     """
     n = len(x)
     y = np.zeros(n)
-    for k in range(n):
+    for k in range(n): 
         y += T[::k] * x * x[k]
     return y
 
@@ -25,7 +25,15 @@ def tensorcollapse(T, x):
         y += T[::k] * x[k]
     return y
 
+def dxdt(u):
+    """
+    Find the derivative of some function u.
+    """
+    f = np.linalg.eigen(tensorcollapse(T, u))
+    ind = [abs(np.real(i)) for i in permutations(F)]
+
 def foreul(T, h, niter):
     """
     Forward Euler method to pick the largest real eigenvalue and numerical integration. 
     """
+    
