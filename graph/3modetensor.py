@@ -38,6 +38,12 @@ def dxdt(u):
 
 def foreul(T, h, niter):
     """
-    Forward Euler method to pick the largest real eigenvalue and numerical integration. 
+    Forward Euler method to pick the largest real eigenvalue and numerical integration
+    with step size h and number of iterations niter.
     """
-    x =  
+    x = normalize(np.ones((T,1).size),1) # Starting point 
+    evalhist = [x*tensorapply(T,x)]
+    for i in range(niter):
+        x += h * dxdt(x) # Forward Euler
+        evalhist.append(x*tensorapply(T, x)) # Rayleigh quotient
+    return x, evalhist # Guess at eigenvector and history of evaluations
