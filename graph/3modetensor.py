@@ -14,3 +14,8 @@ def tensorapply(T, x):
     for k in range(n):
         y += T[::k] * x * x[k]
     return y
+
+def tensorcollapse(T, x):
+    """
+    Collapse the tensor.
+    """
