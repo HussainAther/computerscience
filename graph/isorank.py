@@ -15,3 +15,5 @@ def isorank(a1, a2, h, alpha, maxiter, tol):
     n2 = a2.size
     d1 = 1/sum(a1, 2) # Sum the matrix with 2 to normalize.
     d2 = 1/sum(a2)
+    w1 = d1*a1[:, None] # Multiply the normalized matrices with the original matrices.
+    w2 = d1*a1[:, None]
