@@ -24,3 +24,8 @@ def tensorcollapse(T, x):
     for k in range(n):
         y += T[::k] * x[k]
     return y
+
+def foreul(T, h, niter):
+    """
+    Forward Euler method to pick the largest real eigenvalue and numerical integration. 
+    """
