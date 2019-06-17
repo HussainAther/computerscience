@@ -1,5 +1,7 @@
 import numpy as np
 
+from sklearn.preprocessing import normalize
+
 """
 3-mode tensor with a map that picks the largest magnitude real eigenvalue and numerical 
 integration with the forward Euler method.
@@ -31,9 +33,11 @@ def dxdt(u):
     """
     f = np.linalg.eigen(tensorcollapse(T, u))
     ind = [abs(np.real(i)) for i in permutations(F)]
+    v = F[:ind]
+    return np.sign(v[0])
 
 def foreul(T, h, niter):
     """
     Forward Euler method to pick the largest real eigenvalue and numerical integration. 
     """
-    
+    x =  
