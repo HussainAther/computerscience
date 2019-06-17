@@ -9,3 +9,5 @@ def isorank(a1, a2, h, alpha, maxiter, tol):
     decay factor, and maximum number of iterations maxiter. Output S, an alignment matrix
     that represents to what extent node x in a2 is aligned to node y in a1.
     """
+    n1 = a1.size
+    n2 = a2.size
