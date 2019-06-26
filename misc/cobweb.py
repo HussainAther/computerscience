@@ -2,7 +2,7 @@ import numpy as np
 import pylab as plt
 
 """
-Math follows nature
+Math follows nature. Show a spider's cobweb.
 """
 
 a=0.66667
