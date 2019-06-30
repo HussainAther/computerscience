@@ -31,3 +31,17 @@ class State:
             for i in np.nditer(self.data):
                 self.hash_val = self.hash_val * 3 + i + 1
         return self.hash_val
+
+    def is_end(self):
+        """
+        Check if a player has won.
+        """
+        if self.end is not None:
+            return self.end
+        results = []
+        # check row
+        for i in range(BOARD_ROWS):
+            results.append(np.sum(self.data[i, :]))
+        # check columns
+        for i in range(BOARD_COLS):
+            results.append(np.sum(self.data[:, i]))
