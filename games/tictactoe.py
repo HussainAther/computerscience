@@ -99,3 +99,14 @@ def get_all_states_impl(current_state, current_symbol, all_states):
                     all_states[new_hash] = (new_state, is_end)
                     if not is_end:
                         get_all_states_impl(new_state, -current_symbol, all_states)
+
+def get_all_states():
+    current_symbol = 1
+    current_state = State()
+    all_states = dict()
+    all_states[current_state.hash()] = (current_state, current_state.is_end())
+    get_all_states_impl(current_state, current_symbol, all_states)
+    return all_states
+
+all_states = get_all_states()
+
