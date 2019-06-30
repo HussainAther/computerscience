@@ -110,3 +110,25 @@ def get_all_states():
 
 all_states = get_all_states()
 
+class Judger:
+    # @player1: the player who will move first, its chessman will be 1
+    # @player2: another player with a chessman -1
+    def __init__(self, player1, player2):
+        self.p1 = player1
+        self.p2 = player2
+        self.current_player = None
+        self.p1_symbol = 1
+        self.p2_symbol = -1
+        self.p1.set_symbol(self.p1_symbol)
+        self.p2.set_symbol(self.p2_symbol)
+        self.current_state = State()
+
+    def reset(self):
+        self.p1.reset()
+        self.p2.reset()
+
+    def alternate(self):
+        while True:
+            yield self.p1
+            yield self.p2
+
