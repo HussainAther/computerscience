@@ -1,7 +1,7 @@
 import numpy as np
 
 """
-We use the Bellman equation (bellman) as a necessry condition for optimality
+We use the Bellman equation (bellman) as a necessary condition for optimality
 associated with the mathematical optimization method known as dynamic
 programming. Richard Bellman defined the principle of optimality as 
 
