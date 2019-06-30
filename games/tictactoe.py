@@ -39,9 +39,30 @@ class State:
         if self.end is not None:
             return self.end
         results = []
-        # check row
         for i in range(BOARD_ROWS):
             results.append(np.sum(self.data[i, :]))
-        # check columns
         for i in range(BOARD_COLS):
             results.append(np.sum(self.data[:, i]))
+        trace = 0
+        reverse_trace = 0
+        for i in range(BOARD_ROWS):
+            trace += self.data[i, i]
+            reverse_trace += self.data[i, BOARD_ROWS - 1 - i]
+        results.append(trace)
+        results.append(reverse_trace)
+        for result in results:
+            if result == 3:
+                self.winner = 1
+                self.end = True
+                return self.end
+            if result == -3:
+                self.winner = -1
+                self.end = True
+                return self.end
+        sum_values = np.sum(np.abs(self.data))
+        if sum_values == BOARD_SIZE:
+            self.winner = 0
+            self.end = True
+            return self.end
+        self.end = False
+        return self.end
