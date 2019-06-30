@@ -2,7 +2,7 @@ import numpy as np
 import pickle
 
 """
-Tic-Tac-Toe implementation using reinforcement learning.
+Tic-Tac-Toe implementation using reinforcement learning (RL).
 """
 
 BOARD_ROWS = 3
