@@ -16,3 +16,6 @@ re.split('; |, |\*|\n',text)
 # Find all adverbs and positions.
 for m in re.finditer(r"\w+ly", text):
     print('%d-%d: %s' % (m.start(), m.end(), m.group(0)))
+
+# Remove everything except alphanumeric characters from a string.
+re.compile('[\W_]+').sub("", str1)
