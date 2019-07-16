@@ -1,3 +1,5 @@
+from itertools import permutations
+
 """
 A lovely chess problem.
 
@@ -67,3 +69,15 @@ def EightQueens(numsol, n=8):
     return
     
 EightQueens(7)
+
+"""
+Altenrate solution.
+"""
+
+n = 8
+cols = range(n)
+for vec in permutations(cols):
+    if (n == len(set(vec[i]+i for i in cols))
+          == len(set(vec[i]-i for i in cols))):
+        print(vec)
+
