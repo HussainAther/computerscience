@@ -12,3 +12,7 @@ re.sub(r" ?\([^)]+\)", "", str1)
 
 # Split by delimiters.
 re.split('; |, |\*|\n',text)
+
+# Find all adverbs and positions.
+for m in re.finditer(r"\w+ly", text):
+    print('%d-%d: %s' % (m.start(), m.end(), m.group(0)))
