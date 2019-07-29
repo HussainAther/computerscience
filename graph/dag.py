@@ -27,4 +27,9 @@ edges_labels = dict([((u, v), d["weight"]) for u, v, d in G.edges(data=True)])
 
 # Set edge colors.
 red_edges = [("R", "T"), ("T", "K")]
-edge_colors = ["green" if not edge in red_edges else "red" for edge in G.edges()] 
+edge_colors = ["green" if not edge in red_edges else "red" for edge in G.edges()]
+
+pos = nx.spring_layout(G)
+
+nx.draw_networkx_edges(G, pos, width=2.0, alpha=.65)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels) 
