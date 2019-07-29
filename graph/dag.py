@@ -11,3 +11,8 @@ Directed acyclic graph.
 
 # Set graph display size as 10 x 10.
 rcParams["figure.figsize"] = 10, 10
+
+G = nx.DiGraph()
+
+# Add edges and weights.
+
