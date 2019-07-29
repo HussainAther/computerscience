@@ -15,4 +15,5 @@ rcParams["figure.figsize"] = 10, 10
 G = nx.DiGraph()
 
 # Add edges and weights.
-
+G.add_edges_from([("K", "I"), ("R", "T"), ("V", "T")], weight=3)
+G.add_edges_from([("T", "K"), ("T", "H"), ("T", "H")], weight=4)
