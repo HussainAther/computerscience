@@ -8,3 +8,6 @@ from pylab import rcParams
 """
 Directed acyclic graph.
 """
+
+# Set graph display size as 10 x 10.
+rcParams["figure.figsize"] = 10, 10
