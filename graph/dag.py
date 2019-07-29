@@ -32,4 +32,8 @@ edge_colors = ["green" if not edge in red_edges else "red" for edge in G.edges()
 pos = nx.spring_layout(G)
 
 nx.draw_networkx_edges(G, pos, width=2.0, alpha=.65)
-nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels) 
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
+
+nx.draw(G, pos, node_color = values, node_size=1500, edge_color=edge_colors, edge_cmap=plt.cm.Reds)
+
+pylab.show() 
