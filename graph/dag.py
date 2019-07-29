@@ -36,4 +36,6 @@ nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 
 nx.draw(G, pos, node_color = values, node_size=1500, edge_color=edge_colors, edge_cmap=plt.cm.Reds)
 
-pylab.show() 
+pylab.show()
+
+nx.is_directed_acyclic_graph(G)
