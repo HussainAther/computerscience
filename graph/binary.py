@@ -103,7 +103,24 @@ class TreeMap(LinkedBinaryTree, MapBase):
             self.rebalanceaccess(p)
             return p
 
-    def findmind(self):
+    def findmin(self):
         """
         Return (key, value) pair with minimum key.
         """
+        if self.isempty():
+            return None
+        else:
+            p = self.first()
+            return (p.key(), p.value())
+
+    def findge(self, k):
+        """
+        Return (key, value) pair with least key greater than or equal to k.
+        """
+        if self.isempty():
+            return None
+        else:
+            p = self.findposition(k)
+            if p.key() < k:
+                p = self.after(p)
+            return (p.key(), p.value()) if p is not None else None
