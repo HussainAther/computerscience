@@ -139,3 +139,10 @@ class TreeMap(LinkedBinaryTree, MapBase):
             while p is not None and (stop is None or p.key() < stop):
                 yield (p.key(), p.value())
                 p = self.after(p)
+    
+    def __getitem__(self, k):
+        """
+        Return value associtaed with key k.
+        """
+        if self.isempty():
+            raise KeyError("Key Error: " + repr(k))
