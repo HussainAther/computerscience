@@ -206,3 +206,9 @@ class TreeMap(LinkedBinaryTree, MapBase):
                 return
             self.rebalanceaccess(p)
         raise KeyError("Key Error: " + repr(k))
+    def rebalanceinsert(self, p):
+        pass
+    def rebalancedelete(self, p):
+        pass
+    def rebalanceaccess(self, p):
+        pass
