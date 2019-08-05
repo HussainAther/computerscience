@@ -182,4 +182,16 @@ class TreeMap(LinkedBinaryTree, MapBase):
             yield p.key()
             p = self.after(p)
 
+    def delete(self, p):
+        """
+        Remove the item at given position.
+        """
+        self.validate(p)
+        if self.left(p) and self.right(p):
+            replacement = self.subtreelastposition(self.left(p))
+            self.replace(p, replacement.element())
+            p = replacement
+        parent = self.parent(p)
+        self.delete(p)
+        self.rebalancedelete(parent)
 
