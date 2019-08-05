@@ -47,3 +47,9 @@ class AVLTreeMap(TreeMap):
                 p = None
             else:
                 p = self.parent(p)
+
+    def rebalanceinsert(self, p):
+        self.rebalance(p)
+
+    def rebalancedelete(self, p):
+        self.rebalance(p)
