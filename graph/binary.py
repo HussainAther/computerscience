@@ -152,3 +152,28 @@ class TreeMap(LinkedBinaryTree, MapBase):
             if k != p.key():
                 raise KeyError("Key Error: " + repr(k))
             return p.value()
+
+    def __setitem__(self, k, v):
+        """
+        Assign value v to key k, overwriting existing value if present.
+        """
+        if self.isempty():
+            leaf = self.addroot(self.item(k, v))
+        else:
+            p = self.subtreesearch(self.root(), k)
+            if p.key() == k:
+                p.element().value = v
+                self.rebalanceaccess(p)
+                return
+            else:
+                item = self.item(k, v)
+                if p.key() < k:
+                    leaf = self.addright(p, item)
+                else:
+                    leaf = self.addleft(p, item)
+        self.rebalanceinsert(leaf)
+
+    def __iter__(self):
+        """
+        Generate an iteration of all keys in the map in order.
+        """
