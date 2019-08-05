@@ -40,3 +40,10 @@ class AVLTreeMap(TreeMap):
             oldheight = p.node.height
             if not self.isbalanced(p):
                 p = self.restructure(self.tallgrandchild(p))
+                self.recomputeheight(self.left(p))
+                self.recomputeheight(self.right(p))
+            self.recomputeheight(p)
+            if p.node.height == oldheight:
+                p = None
+            else:
+                p = self.parent(p)
