@@ -177,3 +177,9 @@ class TreeMap(LinkedBinaryTree, MapBase):
         """
         Generate an iteration of all keys in the map in order.
         """
+        p = self.first()
+        while p is not None:
+            yield p.key()
+            p = self.after(p)
+
+
