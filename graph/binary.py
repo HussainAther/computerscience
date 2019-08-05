@@ -91,3 +91,19 @@ class TreeMap(LinkedBinaryTree, MapBase):
                 walk = above
                 above = self.parent(walk)
             return above
+
+    def findposition(self, k):
+        """
+        Return position with key k.
+        """
+        if self.isempty():
+            return None
+        else:
+            p = self.subtreesearch(self.root(), k)
+            self.rebalanceaccess(p)
+            return p
+
+    def findmind(self):
+        """
+        Return (key, value) pair with minimum key.
+        """
