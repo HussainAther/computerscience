@@ -12,3 +12,8 @@ class TreeMap(LinkedBinaryTree, MapBase):
             Return key of map's key-value pair.
             """
             return self.element()._key
+        def value(self):
+            """
+            Return value of map's key-value pair.
+            """
+            return self.element()._value
