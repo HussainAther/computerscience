@@ -245,3 +245,17 @@ class TreeMap(LinkedBinaryTree, MapBase):
         else:
             self.relink(y, x.left, False)
             self.relink(x, y, True)
+
+    def restructure(self, x):
+        """
+        Perform trinode restructure of position x with parent/grandparent.
+        """ 
+        y = self.parent(x)
+        z = self.parent(y)
+        if (x ==self.right(y)) == (y == self.right(z)):
+            self.rotate(y)
+            return y
+        else:
+            self.rotate(x)
+            self.rotate(x)
+            return x
