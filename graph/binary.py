@@ -124,3 +124,18 @@ class TreeMap(LinkedBinaryTree, MapBase):
             if p.key() < k:
                 p = self.after(p)
             return (p.key(), p.value()) if p is not None else None
+
+    def findrange(self, start, stop):
+        """
+        Iterate all (key, value) pairs such that start <= key < stop.
+        """
+        if not self.isempty():
+            if start is None:
+                p = self.first()
+            else:
+                p = self.findposition(start)
+                if p.key() < start:
+                    p = self.after(p)
+            while p is not None and (stop is None or p.key() < stop):
+                yield (p.key(), p.value())
+                p = self.after(p)
