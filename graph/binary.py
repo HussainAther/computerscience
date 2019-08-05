@@ -72,7 +72,22 @@ class TreeMap(LinkedBinaryTree, MapBase):
         else:
             walk = p
             above = self.parent(walk)
-            while aboe is not None and walk == self.left(above):
+            while above is not None and walk == self.left(above):
+                walk = above
+                above = self.parent(walk)
+            return above
+
+    def after(self, p):
+        """
+        Return the position just after p in the natural order.
+        """
+        self.validate(p)
+        if self.right(p):
+            return self.subterelastposition(self.right(p))
+        else:
+            walk = p
+            above = self.parent(walk)
+            while above is not None and walk == self.right(above):
                 walk = above
                 above = self.parent(walk)
             return above
