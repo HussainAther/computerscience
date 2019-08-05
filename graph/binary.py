@@ -49,3 +49,15 @@ class TreeMap(LinkedBinaryTree, MapBase):
         while self.right(walk) is not None:
             walk = self.right(walk)
         return walk
+    
+    def first(self):
+        """
+        Return the first position in the tree.
+        """
+        return self.subtreefirstposition(self.root()) if len(self) > 0 else None
+
+    def last(self):
+        """
+        Return the last position in the tree.
+        """
+        return self.subtreelastposition(self.root()) if len(self) > 0 else None
