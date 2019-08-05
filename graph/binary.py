@@ -146,3 +146,9 @@ class TreeMap(LinkedBinaryTree, MapBase):
         """
         if self.isempty():
             raise KeyError("Key Error: " + repr(k))
+        else:
+            p = self.subtreesearch(self.root(), k)
+            self.rebalanceaccess(p)
+            if k != p.key():
+                raise KeyError("Key Error: " + repr(k))
+            return p.value()
