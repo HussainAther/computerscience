@@ -195,3 +195,14 @@ class TreeMap(LinkedBinaryTree, MapBase):
         self.delete(p)
         self.rebalancedelete(parent)
 
+    def __delitem__(self, k):
+        """
+        Remove item associated with key k.
+        """
+        if not self.isempty():
+            p = self.subtreesearch(self.root(), k)
+            if k == p.key():
+                self.delete(p)
+                return
+            self.rebalanceaccess(p)
+        raise KeyError("Key Error: " + repr(k))
