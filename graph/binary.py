@@ -226,3 +226,22 @@ class TreeMap(LinkedBinaryTree, MapBase):
             parentright = child
         if child is not None:
             childparent = parent
+
+    def rotate(self, p):
+        """
+        Rotate position p above its parent.
+        """
+        x = p.node
+        y = x.parent
+        z = y.parent
+        if z is None:
+            self.root = x
+            x.parent = None
+        else:
+            self.relink(z, x, y == z.left)
+        if x == y.left:
+            self.relink(y, x.right, True)
+            self.relink(x, y, False)
+        else:
+            self.relink(y, x.left, False)
+            self.relink(x, y, True)
