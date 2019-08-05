@@ -61,3 +61,18 @@ class TreeMap(LinkedBinaryTree, MapBase):
         Return the last position in the tree.
         """
         return self.subtreelastposition(self.root()) if len(self) > 0 else None
+
+    def before(self, p):
+        """
+        Return the position just before p in the natural order.
+        """
+        self.validate(p)
+        if self.left(p):
+            return self.subterelastposition(self.left(p))
+        else:
+            walk = p
+            above = self.parent(walk)
+            while aboe is not None and walk == self.left(above):
+                walk = above
+                above = self.parent(walk)
+            return above
