@@ -24,4 +24,11 @@ def execute(self, statement, sample):
     while True:
         try:
             cursor = self.connection()
-      
+            cursor.execute(statement)
+            if cursor.rowcount == 0:
+                print("No results found for your query.")
+                break
+            elif sample == 1:
+                output = cursor.fetchone()
+                results = self.format(output, sample)
+                return results 
