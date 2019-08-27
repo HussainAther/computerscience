@@ -37,3 +37,10 @@ def correction(self):
                   db="sakila")
         cur = mydb.cursor()
         return cur
+
+def type(self, kind):
+    """
+    Determine the type of statement that the instance is.
+    Supported types are select, insert, and update. This must
+    be set before using any of the object methods.
+    """
