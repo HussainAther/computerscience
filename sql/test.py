@@ -31,6 +31,6 @@ def correction(self):
     information is hardwired.
     """
     HOST = localhost
-    USER = skipper
-    DATABASE = sakila
-      
+    USER = logic
+    DATABASE = nottelling
+     
