@@ -56,3 +56,14 @@ def format(self, output, sample):
             data = data + output[1]
             results = results + data + "\n"
             return results
+    else:
+        if self.type == "actor":
+            for record in output:
+                actor = record[0] + " " + record[1] + ": "
+                for item in range(2, len(record)):
+                    names = record[item].split(";")
+                    for i in range(0, len(naames)):
+                        if i == 0:
+                            titles = "\n" + names[i]
+                        else:
+                            titles = titles + "\n" + names[i] 
