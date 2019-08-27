@@ -20,3 +20,9 @@ except MySQLdb.OperationalError as e:
     raise e
 except mMySQLdb.ProgrammingError as e:
     raise e
+
+"""
+Create a cursor.
+"""
+
+
