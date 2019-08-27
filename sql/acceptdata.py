@@ -36,3 +36,8 @@ def execute(self, statement, sample):
                 output = cursor.fetchmany(1000)
                 results = self.format(output, sample)
                 return results
+
+def format(self, output, sample):
+    """
+    Format the results.
+    """
