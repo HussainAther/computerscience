@@ -84,3 +84,10 @@ def format(self, output, sample):
 
 while status == 0:
     request = MySQLQuery()
+    try:
+        if opt.actor:
+            request.type("actor")
+            value = opt.actor
+        elif opt.film:
+            request.type("film")
+            value = opt.film
