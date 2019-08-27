@@ -41,3 +41,18 @@ def format(self, output, sample):
     """
     Format the results.
     """
+    results = ""
+    if sample == 1:
+        if self.type == "actor":
+            data = output[0] + " " + output[1] + ": "
+            titles = output[2]
+            entry = titles.split(";")
+            data = data + entry[0].split(":")[1]
+            results = results + data + "\n"
+            return results
+        else:
+            data = output[0] + ": "
+            actors = output[1]
+            data = data + output[1]
+            results = results + data + "\n"
+            return results
