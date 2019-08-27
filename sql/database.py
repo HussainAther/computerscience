@@ -27,3 +27,9 @@ class Database:
                   "have submitted and try again. The " \
                   "error message that was received reads: %s " % (e)
         return header, results 
+  
+    def fetchquery(self, cursor, statement):
+        """
+        Internal method taht takes a statement and executes the query,
+        returning the results.
+        """
