@@ -21,3 +21,7 @@ def execute(self, statement, sample):
     """
     Execute the statement from MySQLQuery.form()
     """
+    while True:
+        try:
+            cursor = self.connection()
+      
