@@ -44,3 +44,5 @@ def type(self, kind):
     Supported types are select, insert, and update. This must
     be set before using any of the object methods.
     """
+    self.type = kind
+
