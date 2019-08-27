@@ -91,3 +91,4 @@ while status == 0:
         elif opt.film:
             request.type("film")
             value = opt.film
+        results = request.query(value, 1)
