@@ -30,7 +30,10 @@ def correction(self):
     Creates a database connection and returns the cursor. All login
     information is hardwired.
     """
-    HOST = localhost
-    USER = logic
-    DATABASE = nottelling
-     
+    try:
+        mydb = MySQLdb.connect(host="localhost",
+                  user="logic",
+                  passwd="nottelling",
+                  db="sakila")
+        cur = mydb.cursor()
+        return cur
