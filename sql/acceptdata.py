@@ -10,3 +10,9 @@ opt.add_option("-a", "--actor", action="store", help="denotes the last-na/esur-n
                "be used at a time", dest="actor")
 opt.add_option("-f", "--film", action="store", help="denotes film for search", dest="film")
 opt, args = opt.parse_args()
+badoptions = 0
+while opt.film and opt.actor:
+    print("Please indicate either an actor or a film for which you would like to search. This " \
+          "program does not support search for both in tandem.")
+    badoptions = 1
+    break
