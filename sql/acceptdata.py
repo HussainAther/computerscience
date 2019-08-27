@@ -32,3 +32,7 @@ def execute(self, statement, sample):
                 output = cursor.fetchone()
                 results = self.format(output, sample)
                 return results 
+            else:
+                output = cursor.fetchmany(1000)
+                results = self.format(output, sample)
+                return results
