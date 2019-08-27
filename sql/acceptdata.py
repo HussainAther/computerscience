@@ -91,4 +91,10 @@ while status == 0:
         elif opt.film:
             request.type("film")
             value = opt.film
-        results = request.query(value, 1)
+    results = request.query(value, 1)
+    if results:
+        print("Sample returns for the search you requested are as follows.")
+        print(results)
+        confirm = raw_input("Are these the kind of data that you are seeking? (Y/N)")
+        confirm = confirm.strip()
+ 
