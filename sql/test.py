@@ -46,3 +46,9 @@ def type(self, kind):
     """
     self.type = kind
 
+def __init__(self):
+    """
+    Create an instance to form and execute a MySQL statment. 
+    """
+    self.Statement = []
+
