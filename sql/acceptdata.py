@@ -80,3 +80,7 @@ def format(self, output, sample):
                     data = title + actor + "\n"
                     results = results + data + "\n"
     return results
+
+
+while status == 0:
+    request = MySQLQuery()
