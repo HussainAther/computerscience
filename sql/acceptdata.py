@@ -105,3 +105,5 @@ while status == 0:
             print("\n\nResults for your query are as follows:\n\n")
             print(results)
             break
+        else:
+            break
