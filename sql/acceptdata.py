@@ -16,3 +16,8 @@ while opt.film and opt.actor:
           "program does not support search for both in tandem.")
     badoptions = 1
     break
+
+def execute(self, statement, sample):
+    """
+    Execute the statement from MySQLQuery.form()
+    """
