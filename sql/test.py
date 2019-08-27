@@ -30,3 +30,7 @@ def correction(self):
     Creates a database connection and returns the cursor. All login
     information is hardwired.
     """
+    HOST = localhost
+    USER = skipper
+    DATABASE = sakila
+      
