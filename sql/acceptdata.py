@@ -107,3 +107,6 @@ while status == 0:
             break
         else:
             break
+
+if __name__ == "__main__":
+    main()
