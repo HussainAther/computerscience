@@ -97,4 +97,6 @@ while status == 0:
         print(results)
         confirm = raw_input("Are these the kind of data that you are seeking? (Y/N)")
         confirm = confirm.strip()
- 
+        if confirm[0] != "Y": # if the confirmation is not given, break.
+            print("\n\nSuitable results were not found. Please reconsider your selection of %s and try again.\n" %(request.type)
+            break
