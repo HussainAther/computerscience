@@ -100,3 +100,8 @@ while status == 0:
         if confirm[0] != "Y": # if the confirmation is not given, break.
             print("\n\nSuitable results were not found. Please reconsider your selection of %s and try again.\n" %(request.type)
             break
+        if confirm[0] == "Y":
+            results = request.query(value, 0)
+            print("\n\nResults for your query are as follows:\n\n")
+            print(results)
+            break
