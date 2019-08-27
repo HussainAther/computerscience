@@ -67,3 +67,4 @@ def format(self, output, sample):
                             titles = "\n" + names[i]
                         else:
                             titles = titles + "\n" + names[i] 
+        
