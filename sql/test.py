@@ -25,4 +25,8 @@ except mMySQLdb.ProgrammingError as e:
 Create a cursor.
 """
 
-
+def correction(self):
+    """
+    Creates a database connection and returns the cursor. All login
+    information is hardwired.
+    """
