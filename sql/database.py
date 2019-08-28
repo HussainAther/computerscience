@@ -79,3 +79,13 @@ class Database:
         statement = "SHOW CREATE %s %s" %(type, name)
         results = self.fetchquery(statement)
         return results
+ 
+    def dbcreate(self):
+        """
+        Returns the CREATE statement for the current db.
+        """
+        type = "DATABASE"
+        name = db
+        header = ("Database", "Create Database")
+        results = self.getcreate(type, name)
+        return header, results
