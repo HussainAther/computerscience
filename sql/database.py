@@ -5,6 +5,8 @@ host = "localhost"
 user = "logic"
 passwd = "nottelling"
 
+db = sys.argv[1]
+
 """
 Database class.
 """
