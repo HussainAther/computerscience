@@ -103,3 +103,5 @@ class Database:
         """
         Compiles the headers and results into a report.
         """
+        header = finput[0]
+        results = finput[1]
