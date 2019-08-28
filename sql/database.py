@@ -49,3 +49,8 @@ class Database:
         header = ("Tables")
         results = self.fetchquery(cursor, statement)
         return header, results
+ 
+    def tbstats(self):
+        """
+        Returns the results of TABLE STATUS for the current db.
+        """
