@@ -89,3 +89,12 @@ class Database:
         header = ("Database", "Create Database")
         results = self.getcreate(type, name)
         return header, results
+
+    def tbcreate(self, tbname):
+        """
+        Returns the CREATE statement for a specified table.
+        """
+        type = "TABLE"
+        header = ("Table, Create Table")
+        results = self.getcreate(type, tbname)
+        return header, results
