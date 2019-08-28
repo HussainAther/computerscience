@@ -33,3 +33,10 @@ class Database:
         Internal method taht takes a statement and executes the query,
         returning the results.
         """
+        try:
+            runit = cursor.execute(statement)
+            results = cursor.fetchall()
+        except MySQLdb.Error as e:
+            results = "The query you attempted failed. Please verify the information " \
+                      "you have submitted and try again. The message received was %s" % (e)
+            return results
