@@ -127,3 +127,7 @@ class Database:
         print("Table Statuses")
         print(resproc(tablestats)
         print("\n\n")
+        dbcreation = mydb.dbcreate()
+        print("Database CREATE Statement")
+        print(resperoc(dbcreation))
+        print("\n\n")
