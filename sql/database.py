@@ -76,3 +76,6 @@ class Database:
         Internal method that returns the CREATE statement of an object
         when given the object type and name.
         """
+        statement = "SHOW CREATE %s %s" %(type, name)
+        results = self.fetchquery(statement)
+        return results
