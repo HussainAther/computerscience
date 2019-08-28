@@ -1,4 +1,9 @@
+import sys
+import MySQLdb
 
+host = "localhost"
+user = "logic"
+passwd = "nottelling"
 
 """
 Database class.
