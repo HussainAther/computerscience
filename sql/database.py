@@ -138,3 +138,8 @@ class Database:
         print("Database CREATE Statement")
         print(resperoc(dbcreation))
         print("\n\n")
+        try:
+            mydb = MySQLdb.connect(host, user, passwd)
+            cursor = mydb.cursor()
+            statement = "USE %s" % (db)
+            cursor.execute(statement)
