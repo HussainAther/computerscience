@@ -148,3 +148,6 @@ class Database:
                   "credentials you provided. Please check the privileges of the user " \
                   "account and try. The error and other debugging information follow below. " \
                   "\n\n%s" % (db, e)
+
+if __name__ == "__main__":
+    main()
