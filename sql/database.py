@@ -40,3 +40,8 @@ class Database:
             results = "The query you attempted failed. Please verify the information " \
                       "you have submitted and try again. The message received was %s" % (e)
             return results
+
+    def tables(self, cursor):
+        """
+        Returns a list of the database tables.
+        """
