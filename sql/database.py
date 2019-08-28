@@ -105,3 +105,5 @@ class Database:
         """
         header = finput[0]
         results = finput[1]
+        output = {}
+        c = 0
