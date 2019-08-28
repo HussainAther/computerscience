@@ -110,4 +110,7 @@ class Database:
         for r in range(0, len(results)):
             record = results[r]
             outrecord = {}
- 
+            for column in range(0, len(header)):
+                outrecord[header[column]] = record[column]
+            output[str(c)] = outrecord
+            c += 1 
