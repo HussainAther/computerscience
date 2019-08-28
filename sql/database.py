@@ -70,3 +70,9 @@ class Database:
         statement = "SHOW COLUMNS FROM %s" %(tablename)
         results = self.fetchquery(statement)
         return header, results
+
+    def getcreate(self, type, name):
+        """
+        Internal method that returns the CREATE statement of an object
+        when given the object type and name.
+        """
