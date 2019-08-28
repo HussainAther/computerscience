@@ -113,4 +113,13 @@ class Database:
             for column in range(0, len(header)):
                 outrecord[header[column]] = record[column]
             output[str(c)] = outrecord
-            c += 1 
+            c += 1
+        orecord = ""
+        for record in range(0, len(results)):
+            record = str(record)
+            item = output[record]
+            for k in header:
+                outline = "%s:%s\n" % (k, item[k])
+                orecord += outline
+            orecord += "\n\n"
+        return orecord
