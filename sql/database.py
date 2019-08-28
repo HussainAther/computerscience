@@ -107,3 +107,5 @@ class Database:
         results = finput[1]
         output = {}
         c = 0
+        for r in range(0, len(results)):
+            
