@@ -45,3 +45,7 @@ class Database:
         """
         Returns a list of the database tables.
         """
+        statement = "SHOW TABLES"
+        header = ("Tables")
+        results = self.fetchquery(cursor, statement)
+        return header, results
