@@ -61,4 +61,12 @@ class Database:
         statement = "SHOW TABLE STATUS"
         results = self.fetchquery(statement)
         return header, results
-                  "
+                 
+    def describe(self, tablename):
+        """
+        Returns the column structure of a specified table.
+        """ 
+        header = ("Field", "Type", "Null", "Key", "Default", "Extra")
+        statement = "SHOW COLUMNS FROM %s" %(tablename)
+        results = self.fetchquery(statement)
+        return header, results
