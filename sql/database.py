@@ -98,3 +98,8 @@ class Database:
         header = ("Table, Create Table")
         results = self.getcreate(type, tbname)
         return header, results
+
+    def resproc(finput):
+        """
+        Compiles the headers and results into a report.
+        """
