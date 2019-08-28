@@ -143,3 +143,8 @@ class Database:
             cursor = mydb.cursor()
             statement = "USE %s" % (db)
             cursor.execute(statement)
+        except MySQLdb.Error as e:
+            print("There was a problem in accessing the database %s with the " \
+                  "credentials you provided. Please check the privileges of the user " \
+                  "account and try. The error and other debugging information follow below. " \
+                  "\n\n%s" % (db, e)
