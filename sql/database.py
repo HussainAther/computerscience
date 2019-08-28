@@ -123,3 +123,7 @@ class Database:
                 orecord += outline
             orecord += "\n\n"
         return orecord
+        tablestats = mydb.tbstats()
+        print("Table Statuses")
+        print(resproc(tablestats)
+        print("\n\n")
