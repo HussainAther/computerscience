@@ -6,7 +6,7 @@ import torch.optim as optim
 from torch.autograd import Variable
 
 """
-Generative adversarial neural network (GAN).
+Generalized adversarial neural network (GAN).
 """
 
 def get_distribution_sampler(mu, sigma):
