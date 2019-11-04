@@ -53,4 +53,7 @@ class GAN():
         model.add(BatchNormalization(momentum=0.8))
         model.add(Dense(np.prod(self.img_shape), activation='tanh'))
         model.add(Reshape(self.img_shape))
-
+        model.summary()
+        noise = Input(shape=(self.latent_dim,))
+        img = model(noise)
+        return Model(noise, img)
