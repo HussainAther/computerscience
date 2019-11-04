@@ -1,3 +1,7 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import sys
+
 from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
