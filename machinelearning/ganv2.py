@@ -29,3 +29,14 @@ class GAN():
             metrics=["accuracy"])
         # Build the generator
         self.generator = self.build_generator()
+        # The generator takes noise as input and generates imgs
+        z = Input(shape=(self.latent_dim,))
+        img = self.generator(z)
+        # For the combined model we will only train the generator
+        self.discriminator.trainable = False
+        # The discriminator takes generated images as input and determines validity
+        validity = self.discriminator(img)
+        # The combined model  (stacked generator and discriminator)
+        # Trains the generator to fool the discriminator
+        self.combined = Model(z, validity)
+        self.combined.compile(loss="binary_crossentropy", optimizer=optimizer)
