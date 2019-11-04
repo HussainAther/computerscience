@@ -1,0 +1,6 @@
+
+
+
+"""
+Generative adversarial network (GAN).
+"""
