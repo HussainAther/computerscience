@@ -26,4 +26,8 @@ class Monty(Pmf):
         for hypo in self.Values():
             like = self.likelihood(data, hypo)
             self.Mult(hypo, like)
-        self.Normalize() 
+        self.Normalize()
+
+    def Likelihood(self, data, hypo):
+        """
+        """ 
