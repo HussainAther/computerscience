@@ -37,4 +37,6 @@ class Monty(Pmf):
         elif hypo == "A":
             return .5
         else:
-            return 1 
+            return 1
+        for hypo, prob in pmf.Items():
+            print(hypo, prob)
