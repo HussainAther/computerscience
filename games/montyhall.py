@@ -30,4 +30,11 @@ class Monty(Pmf):
 
     def Likelihood(self, data, hypo):
         """
-        """ 
+        Return the likelihood of a person.
+        """
+        if hypo == data:
+            return 0
+        elif hypo == "A":
+            return .5
+        else:
+            return 1 
