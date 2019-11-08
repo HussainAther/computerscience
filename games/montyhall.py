@@ -21,5 +21,9 @@ class Monty(Pmf):
     
     def Update(self, data):
         """
-        Update hte hypotheses given data.
-        """ 
+        Update the hypotheses given data.
+        """
+        for hypo in self.Values():
+            like = self.likelihood(data, hypo)
+            self.Mult(hypo, like)
+        self.Normalize() 
