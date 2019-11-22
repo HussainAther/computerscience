@@ -20,6 +20,10 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
     t=0
     while t < maxiter:
         for i in range(positions[0]):
-            flag4ub = positions[i][:] > ub
-            flag4lb = posiitons[i][:] < lb
-            positions[i][:] = (positions[i][:]*(-(flag4ub+flag4lb))) + ub*flag4ub+lb*flag4lb
+            # Return he search agents beyond the boundaries 
+            flag4ub = positions[0][i] > ub
+            flag4lb = posiitons[0][i] < lb
+            positions[0][i] = (positions[0][i]*(-(flag4ub+flag4lb))) + ub*flag4ub+lb*flag4lb
+            # Calculate the objective function for each search agent
+            fitness = fobj(positions[0][i])
+            
