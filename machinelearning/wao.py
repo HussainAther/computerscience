@@ -17,3 +17,9 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
     lscore = np.inf
     positions = [sano, dim, ub, lb]
     conv = np.zeros(maxiter)
+    t=0
+    while t < maxiter:
+        for i in range(positions[0]):
+            flag4ub = positions[i][:] > ub
+            flag4lb = posiitons[i][:] < lb
+            positions[i][:] = (positions[i][:]*(-(flag4ub+flag4lb))) + ub*flag4ub+lb*flag4lb
