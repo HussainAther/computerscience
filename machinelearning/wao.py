@@ -3,6 +3,11 @@ import random
 
 """
 Whale optimization algorithm (WAO) based on how whales hunt for food.
+
+Based off: S. Mirjalili, A. Lewis                                    
+           The Whale Optimization Algorithm,                         
+           Advances in Engineering Software , in press,              
+           DOI: http://dx.doi.org/10.1016/j.advengsoft.2016.01.008  
 """
 
 def wao(sano, maxiter, lb, ub, dim, fobj)
@@ -30,3 +35,4 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
             if fitness < lscore: 
                 lscore = fitness
                 lpos = positions[0][i]
+        a=2-t*((2/maxiter)) # Decrease linearly frmo 2 to 0.
