@@ -56,3 +56,10 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
                         DLeader = abs(C*lpos[j] - positions[i][j]))
                         positions[i][j] = lpos[j] - A*DLeader
                 elif p >= .5:
+                    distance2leader = abs(lpos[j] - positions[i][j])
+                    positions[i][j] = distance2leader * np.exp(b*l) * np.cos(l*2*np.pi) + lpos[j]
+        t+=1
+        conv[t] = lscore
+        print(t) 
+        print(lscore)
+    return lscore, lpos, conv 
