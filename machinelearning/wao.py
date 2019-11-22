@@ -13,4 +13,5 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
    
     Return the lscore leader score, lpos leader position, and conv convergence curve.
     """
-
+    lpos = np.zeros(dim)
+    lscore = np.inf
