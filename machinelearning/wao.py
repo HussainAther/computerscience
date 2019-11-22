@@ -15,3 +15,5 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
     """
     lpos = np.zeros(dim)
     lscore = np.inf
+    positions = [sano, dim, ub, lb]
+    conv = np.zeros(maxiter)
