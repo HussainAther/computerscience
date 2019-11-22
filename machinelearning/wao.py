@@ -50,6 +50,9 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
                     if abs(A) >= 1:
                         randleaderindex = np.floor(sano + random.uniform(0, 1) + 1)
                         Xrand = positions[0][randleaderindex]
-                        DXrand = abs(C*Xrand[j] - positions[i, j])
+                        DXrand = abs(C*Xrand[j] - positions[i][j])
                         positions[i, j] = Xrand(j) - A*DXrand
                     elif abs(A) < 1: 
+                        DLeader = abs(C*lpos[j] - positions[i][j]))
+                        positions[i][j] = lpos[j] - A*DLeader
+                elif p >= .5:
