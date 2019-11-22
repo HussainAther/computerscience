@@ -36,3 +36,7 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
                 lscore = fitness
                 lpos = positions[0][i]
         a=2-t*((2/maxiter)) # Decrease linearly frmo 2 to 0.
+        a2 = -1+t*((-1/maxiter)) # a2 linearly decreases from -1 to -2 to calculate t.
+        for i in range(positions[0]):
+            r1 = random.uniform(0,1) # random numbers in [0,1]
+            r2 = random.uniform(0,1)
