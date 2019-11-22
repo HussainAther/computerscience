@@ -38,10 +38,18 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
         a=2-t*((2/maxiter)) # Decrease linearly frmo 2 to 0.
         a2 = -1+t*((-1/maxiter)) # a2 linearly decreases from -1 to -2 to calculate t.
         for i in range(positions[0]):
-            r1 = random.uniform(0,1) # random numbers in [0,1]
-            r2 = random.uniform(0,1)
+            r1 = random.uniform(0, 1) # random numbers in [0, 1]
+            r2 = random.uniform(0, 1)
             A = 2*aa*r1-a 
             C = 2*r2
             b = 1
             l = (a2-1)*np.random.uniform(0,1)
             p = random.uniform(0, 1)
+            for j in range(positions[1]):
+                if p <.5:
+                    if abs(A) >= 1:
+                        randleaderindex = np.floor(sano + random.uniform(0, 1) + 1)
+                        Xrand = positions[0][randleaderindex]
+                        DXrand = abs(C*Xrand[j] - positions[i, j])
+                        positions[i, j] = Xrand(j) - A*DXrand
+                    elif abs(A) < 1: 
