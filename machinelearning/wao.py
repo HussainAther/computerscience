@@ -40,3 +40,8 @@ def wao(sano, maxiter, lb, ub, dim, fobj)
         for i in range(positions[0]):
             r1 = random.uniform(0,1) # random numbers in [0,1]
             r2 = random.uniform(0,1)
+            A = 2*aa*r1-a 
+            C = 2*r2
+            b = 1
+            l = (a2-1)*np.random.uniform(0,1)
+            p = random.uniform(0, 1)
