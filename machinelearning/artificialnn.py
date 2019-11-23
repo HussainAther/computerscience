@@ -71,4 +71,18 @@ class NeuralNetwork:
         # update the weights:
         tmp = hidden_errors * output_vector_hidden * (1.0 - output_vector_hidden)
         self.weights_in_hidden += self.learning_rate * np.dot(tmp, input_vector.T)
-           
+          
+    def run(self, input_vector):
+        """
+        Activation function
+        """
+        # input_vector can be tuple, list or ndarray
+        input_vector = np.array(input_vector, ndmin=2).T
+        output_vector = np.dot(self.weights_in_hidden, input_vector)
+        output_vector = activation_function(output_vector)
+        
+        output_vector = np.dot(self.weights_hidden_out, output_vector)
+        output_vector = activation_function(output_vector)
+    
+        return output_vector
+             
