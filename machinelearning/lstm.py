@@ -19,3 +19,7 @@ np.random.seed(1234)
 dataframe = pandas.read_csv("airline-passengers.csv", usecols=[1], engine="python")
 dataset = dataframe.values
 dataset = dataset.astype("float32")
+
+# Normalize the dataset.
+scaler = MinMaxScaler(feature_range=(0, 1))
+dataset = scaler.fit_transform(dataset)
