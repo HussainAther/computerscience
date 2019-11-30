@@ -1,6 +1,6 @@
-import numpy
+import numpy as np
 import matplotlib.pyplot as plt
-import pandas
+import pandas as pd 
 import math
 
 from keras.models import Sequential
@@ -12,3 +12,10 @@ from sklearn.metrics import mean_squared_error
 """
 Long Short-Term (long short term) Memory network or LSTM.
 """
+
+np.random.seed(1234)
+
+# Load the dataset.
+dataframe = pandas.read_csv("airline-passengers.csv", usecols=[1], engine="python")
+dataset = dataframe.values
+dataset = dataset.astype("float32")
