@@ -14,12 +14,18 @@ Tmax = 10.0
 Tmin = 1e-3
 tau = 1e4
 
-# Function to calculate the magnitude of a vector
 def mag(x):
+    """
+    Function to calculate the magnitude of a vector in 
+    two directions.
+    """
     return np.sqrt(x[0]**2+x[1]**2)
 
-# Function to calculate the total length of the tour
 def distance():
+    """
+    Function to calculate the total length of the tour.
+    How far has the salesman traveled?
+    """
     s = 0.0
     for i in range(N):
         s += mag(r[i+1]-r[i])
@@ -66,7 +72,7 @@ while T>Tmin:
     deltaD = D - oldD
 
     # If the move is rejected, swap them back again
-    if random()>np.exp(-deltaD/T):
+    if random() > np.exp(-deltaD/T):
         r[i,0],r[j,0] = r[j,0],r[i,0]
         r[i,1],r[j,1] = r[j,1],r[i,1]
         D = oldD
