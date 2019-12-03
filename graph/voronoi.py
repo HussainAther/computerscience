@@ -6,7 +6,7 @@ import pandas as pd
 import scipy.spatial as spatial
 
 """
-Voronoi diagrams let us divide spcae into several regions such that each region
+Voronoi diagrams let us divide space into several regions such that each region
 has all the points lcoser to one point than to any other seed point.
 """
 
