@@ -1,7 +1,8 @@
-from math import sqrt,exp
-from numpy import empty
-from random import random,randrange
-from visual import sphere,curve,display
+import matplotlib.pyplot as plt
+import numpy as np
+
+from mpl_toolkits.mplot3d import Axes3D
+from random import random, randrange
 
 """
 Simpler functions
@@ -15,7 +16,7 @@ tau = 1e4
 
 # Function to calculate the magnitude of a vector
 def mag(x):
-    return sqrt(x[0]**2+x[1]**2)
+    return np.sqrt(x[0]**2+x[1]**2)
 
 # Function to calculate the total length of the tour
 def distance():
@@ -25,7 +26,7 @@ def distance():
     return s
 
 # Choose N city locations and calculate the initial distance
-r = empty([N+1,2],float)
+r = np.empty([N+1,2], float)
 for i in range(N):
     r[i,0] = random()
     r[i,1] = random()
@@ -33,10 +34,11 @@ r[N] = r[0]
 D = distance()
 
 # Set up the graphics
-display(center=[0.5,0.5])
-for i in range(N):
-    sphere(pos=r[i],radius=R)
-l = curve(pos=r,radius=R/2)
+u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+x = np.cos(r[-1])
+y = np.sin(r[-1])
+z = np.cos(R)
+ax.plot_wireframe(x, y, z, color="r")
 
 # Main loop
 t = 0
@@ -45,7 +47,7 @@ while T>Tmin:
 
     # Cooling
     t += 1
-    T = Tmax*exp(-t/tau)
+    T = Tmax*np.exp(-t/tau)
 
     # Update the visualization every 100 moves
     if t%100==0:
@@ -64,7 +66,9 @@ while T>Tmin:
     deltaD = D - oldD
 
     # If the move is rejected, swap them back again
-    if random()>exp(-deltaD/T):
+    if random()>np.exp(-deltaD/T):
         r[i,0],r[j,0] = r[j,0],r[i,0]
         r[i,1],r[j,1] = r[j,1],r[i,1]
         D = oldD
+
+plt.figure()
