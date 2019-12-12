@@ -12,6 +12,11 @@ def encode(c, g):
     """
     out = [""] * len(c) # output array
     for i, (cc, gc) in enumerate(zip(c, g)): # for each correct character
-                                             # and guess character
- 
+        if gc in c:                          # and guess character
+            if gc == cc:
+                out[i] = "X"
+            else:
+                out[i] = "-"
+        else:
+            out[i] = "O"   
     return "".join(out)
