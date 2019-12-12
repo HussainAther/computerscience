@@ -20,3 +20,34 @@ def encode(c, g):
         else:
             out[i] = "O"   
     return "".join(out)
+
+def sii(p, 
+        minv, 
+        maxv):
+    """
+    Safe integer input:
+    For a given prompt p, minimun value minv, and maximum value
+    maxv, return the input when asked how long the code to be guessed 
+    should be.
+    """
+    while True:
+        uinput = input(prompt) # userinput
+        try:
+            uinput = int(uinput)
+        except ValueError:
+            continue
+        if minv <= uinput <= maxv:
+            return uinput
+
+print("Welcome to Mastermind.")
+print("You will need to guess a random code.")
+print("For each guess, you will receive a hint.")
+print("In this hint, X denotes a correct letter, and O a letter in the original string but in a different position.")
+print()
+
+# number of letters
+nol = sii("Select a number of possible letters for the code (2-20): ", 2, 20)
+
+# code length
+clength = sii("Select a length for the code (4-10): ", 4, 10)
+
