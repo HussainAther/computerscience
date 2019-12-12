@@ -51,3 +51,21 @@ nol = sii("Select a number of possible letters for the code (2-20): ", 2, 20)
 # code length
 clength = sii("Select a length for the code (4-10): ", 4, 10)
 
+letters = "ABCDEFGHIJKLMNOPQRST"[:number_of_letters]
+code = "".join(random.choices(letters, k=code_length))
+guesses = []
+
+while True:
+    print()
+    guess = input(f"Enter a guess of length {code_length} ({letters}): ").upper().strip()
+    if len(guess) != code_length or any([char not in letters for char in guess]):
+        continue
+    elif guess == code:
+        print(f"\nYour guess {guess} was correct!")
+        break
+    else:
+        guesses.append(f"{len(guesses)+1}: {" ".join(guess)} => {" ".join(encode(code, guess))}")
+    for i_guess in guesses:
+        print("------------------------------------")
+        print(i_guess)
+    print("------------------------------------")
