@@ -15,7 +15,7 @@ def fusc(i):
     """
     def go(n):
         """
-         
+        Move to the next in the sequence. 
         """
         if 0 == n:
             return (1, 0)
@@ -28,4 +28,4 @@ def fusc(i):
     if 1 > i:
         return 0
     else:
-        return go(i-1)[0] 
+        return go(i-1)[0]
