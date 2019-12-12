@@ -8,3 +8,24 @@ The   fusc   integer sequence is defined as:
 + + if n is odd;     
 + + + fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
 """
+
+def fusc(i):
+    """
+    Fusc sequence
+    """
+    def go(n):
+        """
+         
+        """
+        if 0 == n:
+            return (1, 0)
+        else:
+            x, y = go(n // 2)
+            if n % 2 == 0:
+                return (x+y, y)
+            else:
+                return (x, x+y)
+    if 1 > i:
+        return 0
+    else:
+        return go(i-1)[0] 
