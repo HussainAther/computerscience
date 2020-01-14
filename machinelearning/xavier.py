@@ -12,3 +12,4 @@ tf.contrib.layers.xavier_initializer(
     seed=None,
     dtype=tf.float32
 )
+tf.contrib.layers.variance_scaling_initializer(factor=2.0, mode="FAN_IN", uniform=False, seed=None, dtype=tf.float32)
