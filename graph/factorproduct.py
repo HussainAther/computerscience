@@ -24,3 +24,7 @@ def fp(phi1, X1, phi2, X2):
         psi[i] = phi1[j]*phi2[k]
         for l in range(X1.union(X2)[-1]):
             l = l + 1
+
+"""
+TO BE CONTINUED
+"""
