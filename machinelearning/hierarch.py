@@ -103,3 +103,16 @@ non_athletes = right_child
 
 # Bipartition the cluster of athletes.
 left_child_athletes, right_child_athletes = bipartition(athletes, maxiter=100, num_runs=6, seed=1)
+
+baseball            = left_child_athletes
+ice_hockey_football = right_child_athletes
+
+left_child_ihs, right_child_ihs = bipartition(ice_hockey_football, maxiter=100, num_runs=6, seed=1)
+display_single_tf_idf_cluster(left_child_ihs, map_index_to_word)
+display_single_tf_idf_cluster(right_child_ihs, map_index_to_word)
+
+# Bipartition the cluster of non-athletes
+left_child_non_athletes, right_child_non_athletes = bipartition(non_athletes, maxiter=100, num_runs=6, seed=1)
+
+male_non_athletes = left_child_non_athletes
+female_non_athletes = right_child_non_athletes
