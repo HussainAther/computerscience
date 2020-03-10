@@ -31,3 +31,12 @@ map_index_to_word = pd.read_json("people_wiki_map_index_to_word.json", typ="seri
 
 # Normalize the vectors.
 tf_idf = normalize(tf_idf)
+
+def bipartition(cluster, maxiter=400, num_runs=4, seed=None):
+    """cluster: should be a dictionary containing the following keys
+                * dataframe: original dataframe
+                * matrix:    same data, in matrix format
+                * centroid:  centroid for this particular cluster
+    """
+    data_matrix = cluster["matrix"]
+    dataframe   = cluster["dataframe"]
