@@ -11,3 +11,6 @@ from sklearn.preprocessing import normalize
 Hierarchical clustering from University of Washington Coursera's 
 "Machine Learning: Clustering & Retrieval"
 """
+
+# Load the dataset.
+wiki = pd.read_csv("people_wiki.csv")
