@@ -29,5 +29,10 @@ def load_sparse_csr(filename):
     
     return csr_matrix( (data, indices, indptr), shape)
 
-tf_idf = load_sparse_csr("4_tf_idf.npz")  # NOT people_wiki_tf_idf.npz
+tf_idf = load_sparse_csr("4_tf_idf.npz")  
 map_index_to_word = pd.read_json("4_map_index_to_word.json",typ="series")  # NOT people_wiki_map_index_to_word.gl
+
+# Normalize each document.
+tf_idf = normalize(tf_idf)
+
+
