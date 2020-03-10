@@ -28,3 +28,6 @@ def load_sparse_csr(filename):
 
 tf_idf = load_sparse_csr("people_wiki_tf_idf.npz")
 map_index_to_word = pd.read_json("people_wiki_map_index_to_word.json", typ="series")
+
+# Normalize the vectors.
+tf_idf = normalize(tf_idf)
