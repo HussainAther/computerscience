@@ -94,3 +94,12 @@ def display_single_tf_idf_cluster(cluster, map_index_to_word):
         print("* {0:50s} {1:.5f}\n  {2:s}\n  {3:s}".format(wiki_subset.iloc[nearest_neighbors[i]]["name"],
               distances[nearest_neighbors[i]], text[:90], text[90:180] if len(text) > 90 else ""))
     print("")
+
+display_single_tf_idf_cluster(left_child, map_index_to_word)
+
+# Recursive bipartitioning.
+athletes = left_child
+non_athletes = right_child
+
+# Bipartition the cluster of athletes.
+left_child_athletes, right_child_athletes = bipartition(athletes, maxiter=100, num_runs=6, seed=1)
