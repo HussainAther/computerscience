@@ -54,3 +54,13 @@ def bipartition(cluster, maxiter=400, num_runs=4, seed=None):
     cluster_assignment_sa = np.array(cluster_assignment) # minor format conversion
     dataframe_left_child, dataframe_right_child     = dataframe[cluster_assignment_sa==0], \
                                                       dataframe[cluster_assignment_sa==1]
+
+    # Package relevant variables for the child clusters.
+    cluster_left_child  = {"matrix": data_matrix_left_child,
+                           "dataframe": dataframe_left_child,
+                           "centroid": centroids[0]}
+    cluster_right_child = {"matrix": data_matrix_right_child,
+                           "dataframe": dataframe_right_child,
+                           "centroid": centroids[1]}
+    
+    return (cluster_left_child, cluster_right_child)
