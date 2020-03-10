@@ -67,3 +67,30 @@ def bipartition(cluster, maxiter=400, num_runs=4, seed=None):
 
 wiki_data = {"matrix": tf_idf, "dataframe": wiki} # no 'centroid' for the root cluster
 left_child, right_child = bipartition(wiki_data, maxiter=100, num_runs=6, seed=1)
+
+# Visualize.
+def display_single_tf_idf_cluster(cluster, map_index_to_word):
+    """
+    map_index_to_word: SFrame specifying the mapping betweeen words and column indices.
+    """
+    wiki_subset   = cluster["dataframe"]
+    tf_idf_subset = cluster["matrix"]
+    centroid      = cluster["centroid"]
+    
+    # Print top 5 words with largest TF-IDF weights in the cluster.
+    idx = centroid.argsort()[::-1]
+    for i in xrange(5):
+        print('{0:s}:{1:.3f}'.format(map_index_to_word.index[idx[i]], centroid[idx[i]])),
+    print("")
+    
+    # Compute distances from the centroid to all data points in the cluster.
+    distances = pairwise_distances(tf_idf_subset, [centroid], metric="euclidean").flatten()
+    # compute nearest neighbors of the centroid within the cluster.
+    nearest_neighbors = distances.argsort()
+    # For 8 nearest neighbors, print the title as well as first 180 characters of text.
+    # Wrap the text at 80-character mark.
+    for i in xrange(8):
+        text = " ".join(wiki_subset.iloc[nearest_neighbors[i]]["text"].split(None, 25)[0:25])
+        print("* {0:50s} {1:.5f}\n  {2:s}\n  {3:s}".format(wiki_subset.iloc[nearest_neighbors[i]]["name"],
+              distances[nearest_neighbors[i]], text[:90], text[90:180] if len(text) > 90 else ""))
+    print("")
