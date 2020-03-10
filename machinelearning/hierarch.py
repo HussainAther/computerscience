@@ -64,3 +64,6 @@ def bipartition(cluster, maxiter=400, num_runs=4, seed=None):
                            "centroid": centroids[1]}
     
     return (cluster_left_child, cluster_right_child)
+
+wiki_data = {"matrix": tf_idf, "dataframe": wiki} # no 'centroid' for the root cluster
+left_child, right_child = bipartition(wiki_data, maxiter=100, num_runs=6, seed=1)
