@@ -14,3 +14,7 @@ image_test = pd.read_csv("image_test_data.csv")
 
 # Take a look at the data.
 image_train["image"].head()
+
+# Train.
+raw_pixel_model = LogisticRegressionCV()
+le = preprocessing.LabelEncoder()
