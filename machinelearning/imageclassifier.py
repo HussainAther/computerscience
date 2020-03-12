@@ -47,3 +47,14 @@ image_test["deep_features"]=image_test["deep_features"].apply(lambda x:[float(i)
 train_deep_features = [i for i in image_train["deep_features"].values]
 deep_features_model = LogisticRegressionCV()
 deep_features_model.fit(train_deep_features,train_y)
+
+# Apply deep features model to first few images of test set.
+test_deep_features = [i for i in image_test["deep_features"].values]
+le.inverse_transform(deep_features_model.predict(test_deep_features[0:3]))
+
+# Compute accuracy.
+deep_pred = deep_features_model.predict(test_deep_features)
+true_label =le.transform(image_test['label'])
+accuracy_score(true_label,deep_pred)
+
+# ~.808
