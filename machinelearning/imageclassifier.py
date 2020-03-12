@@ -44,3 +44,6 @@ len(image_train)
 
 image_train["deep_features"]=image_train["deep_features"].apply(lambda x:[float(i) for i in x[1:-1].split(" ")])
 image_test["deep_features"]=image_test["deep_features"].apply(lambda x:[float(i) for i in x[1:-1].split(" ")])
+train_deep_features = [i for i in image_train["deep_features"].values]
+deep_features_model = LogisticRegressionCV()
+deep_features_model.fit(train_deep_features,train_y)
