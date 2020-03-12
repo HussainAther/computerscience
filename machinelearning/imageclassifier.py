@@ -39,5 +39,8 @@ accuracy_score(true_label,raw_pred_label)
 
 # Very poor accuracy (~.438)
 
-# Let's use deep learning (deeplearning) to improve the accuracy
+# Use deep learning (deeplearning) to improve the accuracy
 len(image_train)
+
+image_train["deep_features"]=image_train["deep_features"].apply(lambda x:[float(i) for i in x[1:-1].split(" ")])
+image_test["deep_features"]=image_test["deep_features"].apply(lambda x:[float(i) for i in x[1:-1].split(" ")])
