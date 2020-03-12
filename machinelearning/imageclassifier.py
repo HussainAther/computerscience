@@ -38,3 +38,6 @@ raw_pred_label = raw_pixel_model.predict(test_image_array)
 accuracy_score(true_label,raw_pred_label)
 
 # Very poor accuracy (~.438)
+
+# Let's use deep learning (deeplearning) to improve the accuracy
+len(image_train)
