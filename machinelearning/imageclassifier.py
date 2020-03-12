@@ -35,3 +35,6 @@ le.inverse_transform(raw_pixel_model.predict(test_image_array[0:3]))
 # Evaluate.
 true_label = le.transform(image_test["label"])
 raw_pred_label = raw_pixel_model.predict(test_image_array)
+accuracy_score(true_label,raw_pred_label)
+
+# Very poor accuracy (~.438)
