@@ -20,3 +20,8 @@ raw_pixel_model = LogisticRegressionCV()
 le = preprocessing.LabelEncoder()
 image_train["image_array"] = image_train["image_array"].apply(lambda x :[int(i) for i in x[1:-1].split(" ")])
 image_test["image_array"] = image_test["image_array"].apply(lambda x :[int(i) for i in x[1:-1].split(" ")])
+train_image_array = [i for i in image_train["image_array"].values ]
+train_y = le.fit_transform(image_train.label)
+
+# Fit.
+raw_pixel_model.fit(train_image_array,train_y)
