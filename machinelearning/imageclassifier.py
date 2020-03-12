@@ -29,3 +29,4 @@ raw_pixel_model.fit(train_image_array,train_y)
 # Predict.
 test_image_array =  [i for i in image_test["image_array"].values]
 test_y = le.transform(image_test.label)
+le.inverse_transform(raw_pixel_model.predict(test_image_array[0:3]))
