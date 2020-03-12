@@ -25,3 +25,7 @@ train_y = le.fit_transform(image_train.label)
 
 # Fit.
 raw_pixel_model.fit(train_image_array,train_y)
+
+# Predict.
+test_image_array =  [i for i in image_test["image_array"].values]
+test_y = le.transform(image_test.label)
