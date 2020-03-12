@@ -3,6 +3,7 @@ import pandas as pd
 
 from sklearn import preprocessing
 from sklearn.linear_model import LogisticRegressionCV
+from sklearn.metrics import accuracy_score
 
 """
 Build an image classifier
