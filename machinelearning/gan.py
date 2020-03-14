@@ -43,7 +43,7 @@ def get_moments(d):
     std = torch.pow(var, 0.5)
     zscores = diffs / std
     skews = torch.mean(torch.pow(zscores, 3.0))
-    kurtoses = torch.mean(torch.pow(zscores, 4.0)) - 3.0  # excess kurtosis, should be 0 for Gaussian
+    kurtoses = torch.mean(torch.pow(zscores, 4.0)) - 3.0 # excess kurtosis, should be 0 for Gaussian
     final = torch.cat((mean.reshape(1,), std.reshape(1,), skews.reshape(1,), kurtoses.reshape(1,)))
     return final
 
