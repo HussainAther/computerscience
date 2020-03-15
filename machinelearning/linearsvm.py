@@ -19,9 +19,8 @@ def svm_loss_naive(W, X, y, reg):
     Return a tuple of loss as single float and agradient with respect to weights W;
     an array of same shape as W
     """
-    dW = np.zeros(W.shape) # initialize the gradient as zero
-
-    # compute the loss and the gradient
+    dW = np.zeros(W.shape) # Initialize the gradient as zero.
+    # Compute the loss and the gradient.
     num_classes = W.shape[1]
     num_train = X.shape[0]
     loss = 0.0
