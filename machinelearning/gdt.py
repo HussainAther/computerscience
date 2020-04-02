@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
+import matplotlib_utils
 import numpy as np
 import tensorflow as tf
+
+from matplotlib import animation, rc
 
 """
 Gradient descent trajectory (gdt) in tensorflow 
@@ -114,3 +117,72 @@ x_squared, x_squared_der = s.run([scalar_squared, derivative[0]],
 plt.plot(x, x_squared,label="$x^2$")
 plt.plot(x, x_squared_der, label=r"$\frac{dx^2}{dx}$")
 plt.legend()
+
+my_vector = tf.placeholder("float32", [None])
+
+# Compute the gradient of the next weird function over my_scalar and my_vector
+# Warning! Trying to understand the meaning of that function may result in permanent brain damage
+weird_psychotic_function = tf.reduce_mean(
+    (my_vector+my_scalar)**(1+tf.nn.moments(my_vector,[0])[1]) + 
+    1./ tf.atan(my_scalar))/(my_scalar**2 + 1) + 0.01*tf.sin(
+    2*my_scalar**1.5)*(tf.reduce_sum(my_vector)* my_scalar**2
+                      )*tf.exp((my_scalar-4)**2)/(
+    1+tf.exp((my_scalar-4)**2))*(1.-(tf.exp(-(my_scalar-4)**2)
+                                    )/(1+tf.exp(-(my_scalar-4)**2)))**2
+
+der_by_scalar = tf.gradients(weird_psychotic_function, my_scalar)
+der_by_vector = tf.gradients(weird_psychotic_function, my_vector)
+
+# Plotting the derivative
+scalar_space = np.linspace(1, 7, 100)
+
+y = [s.run(weird_psychotic_function, {my_scalar:x, my_vector:[1, 2, 3]})
+     for x in scalar_space]
+
+plt.plot(scalar_space, y, label="function")
+
+y_der_by_scalar = [s.run(der_by_scalar,
+                         {my_scalar:x, my_vector:[1, 2, 3]})
+                   for x in scalar_space]
+
+plt.plot(scalar_space, y_der_by_scalar, label="derivative")
+plt.grid()
+plt.legend()
+
+# Tensorflow optimization methods
+y_guess = tf.Variable(np.zeros(2, dtype="float32"))
+y_true = tf.range(1, 3, dtype="float32")
+loss = tf.reduce_mean((y_guess - y_true + 0.5*tf.random_normal([2]))**2) 
+step = tf.train.MomentumOptimizer(0.03, 0.5).minimize(loss, var_list=y_guess)
+
+# nice figure settings
+fig, ax = plt.subplots()
+y_true_value = s.run(y_true)
+level_x = np.arange(0, 2, 0.02)
+level_y = np.arange(0, 3, 0.02)
+X, Y = np.meshgrid(level_x, level_y)
+Z = (X - y_true_value[0])**2 + (Y - y_true_value[1])**2
+ax.set_xlim(-0.02, 2)
+ax.set_ylim(-0.02, 3)
+s.run(tf.global_variables_initializer())
+ax.scatter(*s.run(y_true), c='red')
+contour = ax.contour(X, Y, Z, 10)
+ax.clabel(contour, inline=1, fontsize=10)
+line, = ax.plot([], [], lw=2)
+
+# start animation with empty trajectory
+def init():
+    line.set_data([], [])
+    return (line,)
+
+trajectory = [s.run(y_guess)]
+
+# one animation step (make one GD step)
+def animate(i):
+    s.run(step)
+    trajectory.append(s.run(y_guess))
+    line.set_data(*zip(*trajectory))
+    return (line,)
+
+anim = animation.FuncAnimation(fig, animate, init_func=init,
+                               frames=100, interval=20, blit=True)
