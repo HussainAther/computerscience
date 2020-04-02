@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
@@ -97,3 +98,19 @@ s.run(shared_vector_1.assign(np.arange(5)))
 
 # Getting that new value
 print("New value", s.run(shared_vector_1))
+
+# gradients
+my_scalar = tf.placeholder("float32")
+scalar_squared = my_scalar**2
+
+# A derivative of scalar_squared by my_scalar
+derivative = tf.gradients(scalar_squared, [my_scalar, ])
+
+# Plot.
+x = np.linspace(-3, 3)
+x_squared, x_squared_der = s.run([scalar_squared, derivative[0]],
+                                 {my_scalar:x})
+
+plt.plot(x, x_squared,label="$x^2$")
+plt.plot(x, x_squared_der, label=r"$\frac{dx^2}{dx}$")
+plt.legend()
