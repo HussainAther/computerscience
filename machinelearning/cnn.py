@@ -76,3 +76,7 @@ def make_model():
     model.add(Activation("softmax"))  # output probabilities
 
     return model
+
+K.clear_session() # Clear default graph.
+model = make_model()
+model.summary()
