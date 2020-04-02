@@ -9,6 +9,7 @@ from keras.datasets import cifar10
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, Dropout
 from keras.layers.advanced_activations import LeakyReLU
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 """
 Convolutional neural network (CNN) in CIFAR-10 dataset
@@ -120,3 +121,13 @@ model.fit(
 y_pred_test = model.predict_proba(x_test2)
 y_pred_test_classes = np.argmax(y_pred_test, axis=1)
 y_pred_test_max_probas = np.max(y_pred_test, axis=1)
+
+# Metrics
+plt.figure(figsize=(7, 6))
+plt.title("Confusion matrix", fontsize=16)
+plt.imshow(confusion_matrix(y_test, y_pred_test_classes))
+plt.xticks(np.arange(10), cifar10_classes, rotation=45, fontsize=12)
+plt.yticks(np.arange(10), cifar10_classes, fontsize=12)
+plt.colorbar()
+plt.show()
+print("Test accuracy:", accuracy_score(y_test, y_pred_test_classes))
