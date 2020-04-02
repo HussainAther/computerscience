@@ -6,6 +6,9 @@ import tensorflow as tf
 
 from keras import backend as K
 from keras.datasets import cifar10
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Activation, Dropout
+from keras.layers.advanced_activations import LeakyReLU
 
 """
 Convolutional neural network (CNN) in CIFAR-10 dataset
