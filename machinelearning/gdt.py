@@ -54,3 +54,31 @@ print(dummy)
 my_transformation.eval({my_vector: dummy, my_vector2: dummy[::-1]})
 writer.add_graph(my_transformation.graph)
 writer.flush()
+
+with tf.name_scope("MSE"):
+    y_true = tf.placeholder("float32", shape=(None,), name="y_true")
+    y_predicted = tf.placeholder("float32", shape=(None,), name="y_predicted")
+    mse = tf.reduce_mean(tf.squared_difference(y_predicted, y_true))
+
+def compute_mse(vector1, vector2):
+    """
+    Mean square error
+    """
+    return mse.eval({y_true: vector1, y_predicted: vector2})
+
+writer.add_graph(mse.graph)
+writer.flush()
+
+# Rigorous local testing of MSE implementation
+import sklearn.metrics
+for n in [1, 5, 10, 10**3]:
+    elems = [np.arange(n), np.arange(n, 0, -1), np.zeros(n),
+             np.ones(n), np.random.random(n), np.random.randint(100, size=n)]
+    for el in elems:
+        for el_2 in elems:
+            true_mse = np.array(sklearn.metrics.mean_squared_error(el, el_2))
+            my_mse = compute_mse(el, el_2)
+            if not np.allclose(true_mse, my_mse):
+                print("mse(%s,%s)" % (el, el_2))
+                print("should be: %f, but your function returned %f" % (true_mse, my_mse))
+                raise ValueError("Wrong result")
