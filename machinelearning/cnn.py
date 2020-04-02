@@ -115,3 +115,8 @@ model.fit(
     shuffle=True,
     verbose=0
 )
+
+# Make test predictions.
+y_pred_test = model.predict_proba(x_test2)
+y_pred_test_classes = np.argmax(y_pred_test, axis=1)
+y_pred_test_max_probas = np.max(y_pred_test, axis=1)
