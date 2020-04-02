@@ -44,3 +44,13 @@ with tf.name_scope("Placeholders_examples"):
 
     # difference between squared vector and vector itself plus one
     vector_squares = input_vector**2 - input_vector + 1
+
+my_vector =  tf.placeholder("float32", shape=(None,), name="VECTOR_1")
+my_vector2 = tf.placeholder("float32", shape=(None,))
+my_transformation = my_vector * my_vector2 / (tf.sin(my_vector) + 1)
+print(my_transformation)
+dummy = np.arange(5).astype("float32")
+print(dummy)
+my_transformation.eval({my_vector: dummy, my_vector2: dummy[::-1]})
+writer.add_graph(my_transformation.graph)
+writer.flush()
