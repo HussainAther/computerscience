@@ -82,3 +82,18 @@ for n in [1, 5, 10, 10**3]:
                 print("mse(%s,%s)" % (el, el_2))
                 print("should be: %f, but your function returned %f" % (true_mse, my_mse))
                 raise ValueError("Wrong result")
+
+# Creating a shared variable
+shared_vector_1 = tf.Variable(initial_value=np.ones(5),
+                              name="example_variable")
+# Initialize variable(s) with initial values
+s.run(tf.global_variables_initializer())
+
+# Evaluating the shared variable
+print("Initial value", s.run(shared_vector_1))
+
+# Setting a new value
+s.run(shared_vector_1.assign(np.arange(5)))
+
+# Getting that new value
+print("New value", s.run(shared_vector_1))
