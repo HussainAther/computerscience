@@ -130,37 +130,37 @@ test_conv2d_transpose(img_size=2, filter_size=2)
 
 def build_deep_autoencoder(img_shape, code_size):
     """
-    PCA's deeper brother. See instructions above. Use `code_size` in layer definitions.
+    Deep autoencoding 
     """
     H,W,C = img_shape
     
     # encoder
     encoder = keras.models.Sequential()
     encoder.add(L.InputLayer(img_shape))
-    encoder.add(L.Conv2D(32, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.Conv2D(32, (3, 3), strides = (1, 1), padding="same", activation="elu"))
     encoder.add(L.MaxPooling2D((2, 2)))
-    encoder.add(L.Conv2D(64, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.Conv2D(64, (3, 3), strides = (1, 1), padding="same", activation="elu"))
     encoder.add(L.MaxPooling2D((2, 2)))
-    encoder.add(L.Conv2D(128, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.Conv2D(128, (3, 3), strides = (1, 1), padding="same", activation="elu"))
     encoder.add(L.MaxPooling2D((2, 2)))
-    encoder.add(L.Conv2D(256, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.Conv2D(256, (3, 3), strides = (1, 1), padding="same", activation="elu"))
     encoder.add(L.MaxPooling2D((2, 2)))
-    encoder.add(L.Flatten())                  #flatten image to vector
-    encoder.add(L.Dense(code_size))           #actual encoder
+    encoder.add(L.Flatten()) # flatten image to vector
+    encoder.add(L.Dense(code_size)) # actual encoder
     
     # decoder
     decoder = keras.models.Sequential()
     decoder.add(L.InputLayer((code_size,)))
     decoder.add(L.Dense(2*2*256))                 #actual encoder 
     decoder.add(L.Reshape((2,2,256)))         #un-flatten
-    decoder.add(L.Conv2DTranspose(filters=128, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
-    decoder.add(L.Conv2DTranspose(filters=64, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
-    decoder.add(L.Conv2DTranspose(filters=32, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
-    decoder.add(L.Conv2DTranspose(filters=3, kernel_size=(3, 3), strides=2, activation=None, padding='same'))
+    decoder.add(L.Conv2DTranspose(filters=128, kernel_size=(3, 3), strides=2, activation="elu", padding="same"))
+    decoder.add(L.Conv2DTranspose(filters=64, kernel_size=(3, 3), strides=2, activation="elu", padding="same"))
+    decoder.add(L.Conv2DTranspose(filters=32, kernel_size=(3, 3), strides=2, activation="elu", padding="same"))
+    decoder.add(L.Conv2DTranspose(filters=3, kernel_size=(3, 3), strides=2, activation=None, padding="same"))
     
     return encoder, decoder
 
-# Check autoencoder shapes along different code_sizes
+# Check autoencoder shapes along different code_sizes.
 get_dim = lambda layer: np.prod(layer.output_shape[1:])
 for code_size in [1,8,32,128,512]:
     s = reset_tf_session()
@@ -174,16 +174,24 @@ for code_size in [1,8,32,128,512]:
         assert get_dim(layer) >= code_size, "Encoder layer %s is smaller than bottleneck (%i units)"%(layer.name,get_dim(layer))
 
 print("All tests passed!")
-s = reset_tf_session()
 
-s = reset_tf_session()
+# Print summary report.
 encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=32)
 encoder.summary()
 decoder.summary()
-s = reset_tf_session()
+
+# Build it.
 encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=32)
 inp = L.Input(IMG_SHAPE)
 code = encoder(inp)
 reconstruction = decoder(code)
 autoencoder = keras.models.Model(inputs=inp, outputs=reconstruction)
-autoencoder.compile(optimizer="adamax", loss='mse')
+autoencoder.compile(optimizer="adamax", loss="mse")
+
+# Fit.
+autoencoder.fit(x=X_train, y=X_train, epochs=25,
+                validation_data=[X_test, X_test],
+                callbacks=[keras_utils.ModelSaveCallback(model_filename),
+                           keras_utils.TqdmProgressCallback()],
+                verbose=0,
+                initial_epoch=last_finished_epoch or 0)#
