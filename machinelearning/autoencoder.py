@@ -127,3 +127,51 @@ def test_conv2d_transpose(img_size, filter_size):
         print(result[0, :, :, 0])
         
 test_conv2d_transpose(img_size=2, filter_size=2)
+
+def build_deep_autoencoder(img_shape, code_size):
+    """
+    PCA's deeper brother. See instructions above. Use `code_size` in layer definitions.
+    """
+    H,W,C = img_shape
+    
+    # encoder
+    encoder = keras.models.Sequential()
+    encoder.add(L.InputLayer(img_shape))
+    encoder.add(L.Conv2D(32, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.MaxPooling2D((2, 2)))
+    encoder.add(L.Conv2D(64, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.MaxPooling2D((2, 2)))
+    encoder.add(L.Conv2D(128, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.MaxPooling2D((2, 2)))
+    encoder.add(L.Conv2D(256, (3, 3), strides = (1, 1), padding="same", activation='elu'))
+    encoder.add(L.MaxPooling2D((2, 2)))
+    encoder.add(L.Flatten())                  #flatten image to vector
+    encoder.add(L.Dense(code_size))           #actual encoder
+    
+    # decoder
+    decoder = keras.models.Sequential()
+    decoder.add(L.InputLayer((code_size,)))
+    decoder.add(L.Dense(2*2*256))                 #actual encoder 
+    decoder.add(L.Reshape((2,2,256)))         #un-flatten
+    decoder.add(L.Conv2DTranspose(filters=128, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
+    decoder.add(L.Conv2DTranspose(filters=64, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
+    decoder.add(L.Conv2DTranspose(filters=32, kernel_size=(3, 3), strides=2, activation='elu', padding='same'))
+    decoder.add(L.Conv2DTranspose(filters=3, kernel_size=(3, 3), strides=2, activation=None, padding='same'))
+    
+    return encoder, decoder
+
+# Check autoencoder shapes along different code_sizes
+get_dim = lambda layer: np.prod(layer.output_shape[1:])
+for code_size in [1,8,32,128,512]:
+    s = reset_tf_session()
+    encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=code_size)
+    print("Testing code size %i" % code_size)
+    assert encoder.output_shape[1:]==(code_size,),"encoder must output a code of required size"
+    assert decoder.output_shape[1:]==IMG_SHAPE, "decoder must output an image of valid shape"
+    assert len(encoder.trainable_weights)>=6, "encoder must contain at least 3 layers"
+    assert len(decoder.trainable_weights)>=6, "decoder must contain at least 3 layers"
+    for layer in encoder.layers + decoder.layers:
+        assert get_dim(layer) >= code_size, "Encoder layer %s is smaller than bottleneck (%i units)"%(layer.name,get_dim(layer))
+
+print("All tests passed!")
+s = reset_tf_session()
