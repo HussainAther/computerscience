@@ -68,9 +68,36 @@ code = encoder(inp)
 reconstruction = decoder(code)
 
 autoencoder = keras.models.Model(inputs=inp, outputs=reconstruction)
-autoencoder.compile(optimizer='adamax', loss='mse')
+autoencoder.compile(optimizer="adamax", loss="mse")
 
 autoencoder.fit(x=X_train, y=X_train, epochs=15,
                 validation_data=[X_test, X_test],
                 callbacks=[keras_utils.TqdmProgressCallback()],
                 verbose=0)
+
+def visualize(img,encoder,decoder):
+    """
+    Draw original, encoded and decoded images.
+    """
+    code = encoder.predict(img[None])[0] # img[None] is the same as img[np.newaxis, :]
+    reco = decoder.predict(code[None])[0]
+
+    plt.subplot(1,3,1)
+    plt.title("Original")
+    show_image(img)
+
+    plt.subplot(1,3,2)
+    plt.title("Code")
+    plt.imshow(code.reshape([code.shape[-1]//2,-1]))
+
+    plt.subplot(1,3,3)
+    plt.title("Reconstructed")
+    show_image(reco)
+    plt.show()
+
+score = autoencoder.evaluate(X_test,X_test,verbose=0)
+print("PCA MSE:", score)
+
+for i in range(5):
+    img = X_test[i]
+    visualize(img,encoder,decoder)
