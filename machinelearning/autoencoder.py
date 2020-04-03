@@ -18,7 +18,25 @@ X, attr = load_lfw_dataset(use_raw=True, dimx=32, dimy=32)
 IMG_SHAPE = X.shape[1:]
 
 # Center images.
-X = X.astype('float32') / 255.0 - 0.5
+X = X.astype("float32") / 255.0 - 0.5
 
 # Split.
 X_train, X_test = train_test_split(X, test_size=0.1, random_state=42)
+
+# Plot.
+def show_image(x):
+    plt.imshow(np.clip(x + 0.5, 0, 1))
+
+plt.title("sample images")
+
+for i in range(6):
+    plt.subplot(2,3,i+1)
+    show_image(X[i])
+
+print("X shape:", X.shape)
+print("attr shape:", attr.shape)
+
+# try to free memory
+del X
+import gc
+gc.collect():
