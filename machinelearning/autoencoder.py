@@ -58,3 +58,19 @@ def build_pca_autoencoder(img_shape, code_size):
     decoder.add(L.Reshape(img_shape)) # un-flatten
     
     return encoder,decoder
+
+s = reset_tf_session()
+
+encoder, decoder = build_pca_autoencoder(IMG_SHAPE, code_size=32)
+
+inp = L.Input(IMG_SHAPE)
+code = encoder(inp)
+reconstruction = decoder(code)
+
+autoencoder = keras.models.Model(inputs=inp, outputs=reconstruction)
+autoencoder.compile(optimizer='adamax', loss='mse')
+
+autoencoder.fit(x=X_train, y=X_train, epochs=15,
+                validation_data=[X_test, X_test],
+                callbacks=[keras_utils.TqdmProgressCallback()],
+                verbose=0)
