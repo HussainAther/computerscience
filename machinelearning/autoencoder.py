@@ -194,4 +194,11 @@ autoencoder.fit(x=X_train, y=X_train, epochs=25,
                 callbacks=[keras_utils.ModelSaveCallback(model_filename),
                            keras_utils.TqdmProgressCallback()],
                 verbose=0,
-                initial_epoch=last_finished_epoch or 0)#
+                initial_epoch=last_finished_epoch or 0)
+
+# See how well it worked.
+reconstruction_mse = autoencoder.evaluate(X_test, X_test, verbose=0)
+print("Convolutional autoencoder MSE:", reconstruction_mse)
+for i in range(5):
+    img = X_test[i]
+    visualize(img,encoder,decoder)
