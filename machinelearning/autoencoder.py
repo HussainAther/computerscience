@@ -9,7 +9,7 @@ from lfw_dataset import load_lfw_dataset
 from sklearn.model_selection import train_test_split
 
 """
-Denoising autoencoders with principal component analysis (PCA)
+Creating autoencoders with principal component analysis (PCA)
 """
 
 # Load data.
@@ -201,4 +201,60 @@ reconstruction_mse = autoencoder.evaluate(X_test, X_test, verbose=0)
 print("Convolutional autoencoder MSE:", reconstruction_mse)
 for i in range(5):
     img = X_test[i]
+    visualize(img,encoder,decoder)
+
+# Denoising.
+def apply_gaussian_noise(X,sigma=0.1):
+    """
+    Add noise from standard normal distribution with standard deviation sigma.
+    :param X: image tensor of shape [batch,height,width,3]
+    Returns X + noise.
+    """
+    noise = np.random.normal(0, sigma, X.shape)
+    return X + noise
+
+# noise tests
+theoretical_std = (X_train[:100].std()**2 + 0.5**2)**.5
+our_std = apply_gaussian_noise(X_train[:100],sigma=0.5).std()
+assert abs(theoretical_std - our_std) < 0.01, "Standard deviation does not match it"s required value. Make sure you use sigma as std."
+assert abs(apply_gaussian_noise(X_train[:100],sigma=0.5).mean() - X_train[:100].mean()) < 0.01, "Mean has changed. Please add zero-mean noise"
+
+# Plot.
+plt.subplot(1,4,1)
+show_image(X_train[0])
+plt.subplot(1,4,2)
+show_image(apply_gaussian_noise(X_train[:1],sigma=0.01)[0])
+plt.subplot(1,4,3)
+show_image(apply_gaussian_noise(X_train[:1],sigma=0.1)[0])
+plt.subplot(1,4,4)
+show_image(apply_gaussian_noise(X_train[:1],sigma=0.5)[0])
+
+# Train.
+s = reset_tf_session()
+
+# we use bigger code size here for better quality
+encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=512)
+assert encoder.output_shape[1:]==(512,), "encoder must output a code of required size"
+
+inp = L.Input(IMG_SHAPE)
+code = encoder(inp)
+reconstruction = decoder(code)
+
+autoencoder = keras.models.Model(inp, reconstruction)
+autoencoder.compile("adamax", "mse")
+
+for i in range(25):
+    print("Epoch %i/25, Generating corrupted samples..."%(i+1))
+    X_train_noise = apply_gaussian_noise(X_train)
+    X_test_noise = apply_gaussian_noise(X_test)
+    autoencoder.fit(x=X_train_noise, y=X_train, epochs=1,
+                    validation_data=[X_test_noise, X_test],
+                    callbacks=[keras_utils.TqdmProgressCallback()],
+                    verbose=0)
+
+X_test_noise = apply_gaussian_noise(X_test)
+denoising_mse = autoencoder.evaluate(X_test_noise, X_test, verbose=0)
+print("Denoising MSE:", denoising_mse)
+for i in range(5):
+    img = X_test_noise[i]
     visualize(img,encoder,decoder)
