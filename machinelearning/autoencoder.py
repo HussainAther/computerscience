@@ -9,7 +9,7 @@ from lfw_dataset import load_lfw_dataset
 from sklearn.model_selection import train_test_split
 
 """
-Denoising autoencoders 
+Denoising autoencoders with principal component analysis (PCA)
 """
 
 # Load data.
@@ -39,4 +39,22 @@ print("attr shape:", attr.shape)
 # try to free memory
 del X
 import gc
-gc.collect():
+gc.collect()
+
+def build_pca_autoencoder(img_shape, code_size):
+    """
+    Here we define a simple linear autoencoder as described above for PCA.
+    We also flatten and un-flatten data to be compatible with image shapes
+    """
+    
+    encoder = keras.models.Sequential()
+    encoder.add(L.InputLayer(img_shape))
+    encoder.add(L.Flatten()) # flatten image to vector
+    encoder.add(L.Dense(code_size)) # actual encoder
+
+    decoder = keras.models.Sequential()
+    decoder.add(L.InputLayer((code_size,)))
+    decoder.add(L.Dense(np.prod(img_shape))) # actual decoder, height*width*3 units
+    decoder.add(L.Reshape(img_shape)) # un-flatten
+    
+    return encoder,decoder
