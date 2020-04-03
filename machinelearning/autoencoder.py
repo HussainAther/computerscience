@@ -175,3 +175,15 @@ for code_size in [1,8,32,128,512]:
 
 print("All tests passed!")
 s = reset_tf_session()
+
+s = reset_tf_session()
+encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=32)
+encoder.summary()
+decoder.summary()
+s = reset_tf_session()
+encoder, decoder = build_deep_autoencoder(IMG_SHAPE, code_size=32)
+inp = L.Input(IMG_SHAPE)
+code = encoder(inp)
+reconstruction = decoder(code)
+autoencoder = keras.models.Model(inputs=inp, outputs=reconstruction)
+autoencoder.compile(optimizer="adamax", loss='mse')
