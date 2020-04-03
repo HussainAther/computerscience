@@ -101,3 +101,29 @@ print("PCA MSE:", score)
 for i in range(5):
     img = X_test[i]
     visualize(img,encoder,decoder)
+
+"""
+Convolutional autoencoder
+"""
+
+def test_conv2d_transpose(img_size, filter_size):
+    """
+    Transpose convolution for the images
+    """
+    print("Transpose convolution test for img_size={}, filter_size={}:".format(img_size, filter_size))
+    x = (np.arange(img_size ** 2, dtype=np.float32) + 1).reshape((1, img_size, img_size, 1))
+    f = (np.ones(filter_size ** 2, dtype=np.float32)).reshape((filter_size, filter_size, 1, 1))
+    conv = tf.nn.conv2d_transpose(x, f, 
+                                  output_shape=(1, img_size * 2, img_size * 2, 1), 
+                                  strides=[1, 2, 2, 1], 
+                                  padding="SAME")
+    with tf.Session() as session:
+        result = session.run(conv)
+        print("input:")
+        print(x[0, :, :, 0])
+        print("filter:")
+        print(f[:, :, 0, 0])
+        print("output:")
+        print(result[0, :, :, 0])
+        
+test_conv2d_transpose(img_size=2, filter_size=2)
