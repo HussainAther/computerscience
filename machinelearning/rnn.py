@@ -34,3 +34,25 @@ get_h_next = Dense(rnn_num_units, activation="tanh")
 
 # a dense layer that maps current hidden state to probabilities of characters [h_t+1]->P(x_t+1|h_t+1)
 get_probas = Dense(n_tokens, activation="softmax")
+
+def rnn_one_step(x_t, h_t):
+    """
+    Recurrent neural network step that produces next state and output
+    given prev input and previous state.
+    Call this method repeatedly to produce the whole sequence.
+    """
+
+    # Convert character id into embedding.
+    x_t_emb = embed_x(tf.reshape(x_t,[-1,1]))[:,0]
+    
+    # Concatenate x embedding and previous h state.
+    x_and_h = concatenate([x_t_emb, h_t])
+    
+    # Compute next state given x_and_h.
+    h_next = get_h_next(x_and_h)
+    #print(h_next.get_shape().as_list())
+    
+    # Get probabilities for language model P(x_next|h_next).
+    output_probas = get_probas(h_next)
+    
+    return output_probas,h_next
