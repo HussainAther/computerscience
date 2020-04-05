@@ -1,9 +1,12 @@
+import keras
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
+from keras.layers import concatenate,Dense,Embedding
+
 """
-Recurrent neural networks with tensorflow
+Recurrent neural networks with tensorflow keras
 """
 
 def to_matrix(names, max_len=None, pad=0, dtype="int32"):
