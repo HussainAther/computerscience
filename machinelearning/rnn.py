@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 
+from IPython.display import clear_output
 from keras import losses
 from keras.layers import concatenate,Dense,Embedding
+from random import sample
 
 """
 Recurrent neural networks with tensorflow keras
@@ -78,3 +80,20 @@ predictions_matrix = tf.reshape(predicted_probas[:-1],[-1,len(tokens)])
 answers_matrix = tf.one_hot(tf.reshape(input_sequence[1:],[-1]), n_tokens)
 loss = losses.categorical_crossentropy(answers_matrix, predictions_matrix)
 optimize = tf.train.AdamOptimizer().minimize(loss)
+
+s = keras.backend.get_session()
+s.run(tf.global_variables_initializer())
+history = []
+
+
+for i in range(1000):
+    batch = to_matrix(sample(names,32),max_len=MAX_LENGTH)
+    loss_i,_ = s.run([loss,optimize],{input_sequence:batch})
+    history.append(loss_i)
+    if (i+1)%100==0:
+        clear_output(True)
+        plt.plot(history,label="loss")
+        plt.legend()
+        plt.show()
+
+assert np.mean(history[:10]) > np.mean(history[-10:]), "RNN didn"t converge."
