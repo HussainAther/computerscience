@@ -2,6 +2,8 @@ import nltk
 import numpy as np
 import sys
 
+from sklearn.cross_validation import train_test_split
+
 # Parts of speech (POS) recurrent neural networks with keras
 
 """
@@ -24,5 +26,7 @@ nltk.download("brown")
 nltk.download("universal_tagset")
 data = nltk.corpus.brown.tagged_sents(tagset="universal")
 all_tags = ["#EOS#","#UNK#","ADV", "NOUN", "ADP", "PRON", "DET", ".", "PRT", "VERB", "X", "NUM", "CONJ", "ADJ"]
-
 data = np.array([ [(word.lower(),tag) for word,tag in sentence] for sentence in data ])
+
+# Split between training and testing data.
+train_data, test_data = train_test_split(data, test_size=0.25, random_state=42)
