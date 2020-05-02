@@ -118,3 +118,23 @@ class EvaluateAccuracy(keras.callbacks.Callback):
         print("\nValidation accuracy: %.5f\n"%acc)
         sys.stdout.flush()
         
+# Compile and fit.
+model.compile("adam","categorical_crossentropy")
+model.fit_generator(generate_batches(train_data),len(train_data)/BATCH_SIZE,
+                    callbacks=[EvaluateAccuracy()], epochs=5,)
+
+# Test accuracy.
+acc = compute_test_accuracy(model)
+print("Final accuracy: %.5f"%acc)
+
+# Define a model that utilizes bidirectional SimpleRNN.
+model = keras.models.Sequential()
+
+model.add(L.InputLayer([None],dtype="int32"))
+model.add(L.Embedding(len(all_words),50))
+model.add(L.Bidirectional(L.SimpleRNN(64,return_sequences=True)))
+
+# Add top layer that predicts tag probabilities.
+stepwise_dense = L.Dense(len(all_tags),activation="softmax")
+stepwise_dense = L.TimeDistributed(stepwise_dense)
+model.add(stepwise_dense)
