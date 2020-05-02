@@ -141,6 +141,8 @@ model.add(stepwise_dense)
 
 # Rinse, repeat.
 model.compile("adam","categorical_crossentropy")
-
 model.fit_generator(generate_batches(train_data),len(train_data)/BATCH_SIZE,
                     callbacks=[EvaluateAccuracy()], epochs=5,)
+acc = compute_test_accuracy(model)
+print("\nFinal accuracy: %.5f"%acc)
+
