@@ -2,7 +2,7 @@ import nltk
 import numpy as np
 import sys
 
-from collections import Counter
+from collections import Counter, defaultdict
 from sklearn.cross_validation import train_test_split
 
 # Parts of speech (POS) recurrent neural networks with keras
@@ -43,3 +43,6 @@ all_words = ["#EOS#","#UNK#"]+list(list(zip(*word_counts.most_common(10000)))[0]
 
 # Measure what fraction of data words are in the dictionary.
 print("Coverage = %.5f"%(float(sum(word_counts[w] for w in all_words)) / sum(word_counts.values())))
+
+word_to_id = defaultdict(lambda:1, {word:i for i,word in enumerate(all_words)})
+tag_to_id = {tag:i for i,tag in enumerate(all_tags)}
