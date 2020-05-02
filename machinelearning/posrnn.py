@@ -38,3 +38,8 @@ word_counts = Counter()
 for sentence in data:
     words, tags = zip(*sentence)
     word_counts.update(words)
+
+all_words = ["#EOS#","#UNK#"]+list(list(zip(*word_counts.most_common(10000)))[0])
+
+# Measure what fraction of data words are in the dictionary.
+print("Coverage = %.5f"%(float(sum(word_counts[w] for w in all_words)) / sum(word_counts.values())))
