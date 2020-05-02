@@ -95,3 +95,26 @@ def generate_batches(sentences, batch_size=BATCH_SIZE, max_len=None, pad=0):
 
             batch_tags_1hot = to_categorical(batch_tags,len(all_tags)).reshape(batch_tags.shape+(-1,))
             yield batch_words,batch_tags_1hot
+
+def compute_test_accuracy(model):
+    test_words,test_tags = zip(*[zip(*sentence) for sentence in test_data])
+    test_words,test_tags = to_matrix(test_words,word_to_id),to_matrix(test_tags,tag_to_id)
+
+    # Predict tag probabilities of shape [batch, time, n_tags].
+    predicted_tag_probabilities = model.predict(test_words,verbose=1)
+    predicted_tags = predicted_tag_probabilities.argmax(axis=-1)
+
+    # Compute accurary excluding padding.
+    numerator = np.sum(np.logical_and((predicted_tags == test_tags),(test_words != 0)))
+    denominator = np.sum(test_words != 0)
+    return float(numerator)/denominator
+
+
+class EvaluateAccuracy(keras.callbacks.Callback):
+    def on_epoch_end(self,epoch,logs=None):
+        sys.stdout.flush()
+        print("\nMeasuring validation accuracy...")
+        acc = compute_test_accuracy(self.model)
+        print("\nValidation accuracy: %.5f\n"%acc)
+        sys.stdout.flush()
+        
