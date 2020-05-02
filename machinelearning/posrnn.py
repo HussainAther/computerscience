@@ -138,3 +138,9 @@ model.add(L.Bidirectional(L.SimpleRNN(64,return_sequences=True)))
 stepwise_dense = L.Dense(len(all_tags),activation="softmax")
 stepwise_dense = L.TimeDistributed(stepwise_dense)
 model.add(stepwise_dense)
+
+# Rinse, repeat.
+model.compile("adam","categorical_crossentropy")
+
+model.fit_generator(generate_batches(train_data),len(train_data)/BATCH_SIZE,
+                    callbacks=[EvaluateAccuracy()], epochs=5,)
