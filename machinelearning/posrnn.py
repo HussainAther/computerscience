@@ -46,3 +46,19 @@ print("Coverage = %.5f"%(float(sum(word_counts[w] for w in all_words)) / sum(wor
 
 word_to_id = defaultdict(lambda:1, {word:i for i,word in enumerate(all_words)})
 tag_to_id = {tag:i for i,tag in enumerate(all_tags)}
+
+def to_matrix(lines, token_to_id, max_len=None, pad=0, dtype="int32", time_major=False):
+    """
+    Converts a list of names into rnn-digestable matrix with paddings added after the end.
+    """
+    
+    max_len = max_len or max(map(len,lines))
+    matrix = np.empty([len(lines),max_len],dtype)
+    matrix.fill(pad)
+
+    for i in range(len(lines)):
+        line_ix = list(map(token_to_id.__getitem__,lines[i]))[:max_len]
+        matrix[i,:len(line_ix)] = line_ix
+
+    return matrix.T if time_major else matrix
+
