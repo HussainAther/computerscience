@@ -5,6 +5,7 @@ import numpy as np
 import sys
 
 from collections import Counter, defaultdict
+from keras.utils.np_utils import to_categorical
 from sklearn.cross_validation import train_test_split
 
 # Parts of speech (POS) recurrent neural networks with keras
@@ -76,3 +77,21 @@ model.add(L.SimpleRNN(64,return_sequences=True))
 stepwise_dense = L.Dense(len(all_tags),activation="softmax")
 stepwise_dense = L.TimeDistributed(stepwise_dense)
 model.add(stepwise_dense)
+
+BATCH_SIZE=32
+def generate_batches(sentences, batch_size=BATCH_SIZE, max_len=None, pad=0):
+    while True:
+        indices = np.random.permutation(np.arange(len(sentences)))
+        for start in range(0,len(indices)-1,batch_size):
+            batch_indices = indices[start:start+batch_size]
+            batch_words,batch_tags = [],[]
+            for sent in sentences[batch_indices]:
+                words,tags = zip(*sent)
+                batch_words.append(words)
+                batch_tags.append(tags)
+
+            batch_words = to_matrix(batch_words,word_to_id,max_len,pad)
+            batch_tags = to_matrix(batch_tags,tag_to_id,max_len,pad)
+
+            batch_tags_1hot = to_categorical(batch_tags,len(all_tags)).reshape(batch_tags.shape+(-1,))
+            yield batch_words,batch_tags_1hot
