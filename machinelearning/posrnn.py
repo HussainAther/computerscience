@@ -62,3 +62,5 @@ def to_matrix(lines, token_to_id, max_len=None, pad=0, dtype="int32", time_major
 
     return matrix.T if time_major else matrix
 
+batch_words, batch_tags = zip(*[zip(*sentence) for sentence in data[-3:]])
+
