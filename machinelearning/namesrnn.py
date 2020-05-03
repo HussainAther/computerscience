@@ -12,3 +12,9 @@ start_token = " "
 with open("names") as f:
     names = f.read()[:-1].split("\n")
     names = [start_token+name for name in names]
+
+MAX_LENGTH = max(map(len,names))
+print("max length =", MAX_LENGTH)
+
+plt.title("Sequence length distribution")
+plt.hist(list(map(len,names)),bins=25);
