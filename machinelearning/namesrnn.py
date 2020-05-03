@@ -17,4 +17,18 @@ MAX_LENGTH = max(map(len,names))
 print("max length =", MAX_LENGTH)
 
 plt.title("Sequence length distribution")
-plt.hist(list(map(len,names)),bins=25);
+plt.hist(list(map(len,names)),bins=25)
+
+# Character tokens
+# All unique characters go here
+tokens = set()
+for name in names:
+    tokens = tokens.union(set(name))
+
+tokens = list(tokens)
+
+n_tokens = len(tokens)
+print("n_tokens = ",n_tokens)
+
+assert 50 < n_tokens < 60
+
