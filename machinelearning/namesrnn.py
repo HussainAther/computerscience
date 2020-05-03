@@ -6,6 +6,7 @@ import tensorflow as tf
 
 from keras import losses
 from keras.layers import concatenate,Dense,Embedding
+from random import sample
 
 """
 Generate names with recurrent neural networks.
@@ -98,3 +99,8 @@ predictions_matrix = tf.reshape(predicted_probas[:-1],[-1,len(tokens)])
 answers_matrix = tf.one_hot(tf.reshape(input_sequence[1:],[-1]), n_tokens)
 loss = losses.categorical_crossentropy(answers_matrix, predictions_matrix)
 optimize = tf.train.AdamOptimizer().minimize(loss)
+
+# training loop
+s = keras.backend.get_session()
+s.run(tf.global_variables_initializer())
+history = []
