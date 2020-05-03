@@ -4,6 +4,7 @@ import numpy as np
 import os
 import tensorflow as tf
 
+from keras import losses
 from keras.layers import concatenate,Dense,Embedding
 
 """
@@ -83,15 +84,17 @@ def rnn_one_step(x_t, h_t):
 
 input_sequence = tf.placeholder("int32",(MAX_LENGTH,None))
 batch_size = tf.shape(input_sequence)[1]
-
 predicted_probas = []
 h_prev = tf.zeros([batch_size,rnn_num_units]) #initial hidden state
 
 for t in range(MAX_LENGTH):
     x_t = input_sequence[t]
     probas_next,h_next = rnn_one_step(x_t,h_prev)
-    
     h_prev = h_next
     predicted_probas.append(probas_next)
     
 predicted_probas = tf.stack(predicted_probas)
+predictions_matrix = tf.reshape(predicted_probas[:-1],[-1,len(tokens)])
+answers_matrix = tf.one_hot(tf.reshape(input_sequence[1:],[-1]), n_tokens)
+loss = losses.categorical_crossentropy(answers_matrix, predictions_matrix)
+optimize = tf.train.AdamOptimizer().minimize(loss)
