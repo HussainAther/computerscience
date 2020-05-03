@@ -104,3 +104,28 @@ optimize = tf.train.AdamOptimizer().minimize(loss)
 s = keras.backend.get_session()
 s.run(tf.global_variables_initializer())
 history = []
+
+# sampling
+x_t = tf.placeholder("int32",(1,))
+h_t = tf.Variable(np.zeros([1,rnn_num_units],"float32"))
+next_probs,next_h = rnn_one_step(x_t,h_t)
+
+def generate_sample(seed_phrase=" ",max_length=MAX_LENGTH):
+    """
+    The function generates text given a phrase of length at least SEQ_LENGTH.
+        
+    parameters:
+        The phrase is set using the variable seed_phrase
+        The optional input "N" is used to set the number of characters of text to predict.     
+    """
+    x_sequence = [token_to_id[token] for token in seed_phrase]
+    s.run(tf.assign(h_t,h_t.initial_value))
+    for ix in x_sequence[:-1]:
+         s.run(tf.assign(h_t,next_h),{x_t:[ix]})
+    
+    # Generate.
+    for _ in range(max_length-len(seed_phrase)):
+        x_probs,_ = s.run([next_probs,tf.assign(h_t,next_h)],{x_t:[x_sequence[-1]]})
+        x_sequence.append(np.random.choice(n_tokens,p=x_probs[0]))
+        
+    return "".join([tokens[ix] for ix in x_sequence])
