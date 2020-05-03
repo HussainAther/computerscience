@@ -129,3 +129,35 @@ def generate_sample(seed_phrase=" ",max_length=MAX_LENGTH):
         x_sequence.append(np.random.choice(n_tokens,p=x_probs[0]))
         
     return "".join([tokens[ix] for ix in x_sequence])
+
+# dynamic RNN
+class CustomRNN(tf.nn.rnn_cell.BasicRNNCell):
+    def call(self,input,state):
+        return rnn_one_step(input[:,0],state)
+    
+    @property
+    def output_size(self):
+        return n_tokens
+
+cell = CustomRNN(rnn_num_units)
+
+input_sequence = tf.placeholder("int32",(None,None))
+    
+predicted_probas, last_state = tf.nn.dynamic_rnn(cell,input_sequence[:,:,None],
+                                                 time_major=True,dtype="float32")
+
+print predicted_probas.eval({input_sequence:to_matrix(names[:10],max_len=50)}).shape
+
+for obj in dir(tf.nn.rnn_cell)+dir(tf.contrib.rnn):
+    if obj.endswith("Cell"):
+        print (obj)
+
+input_sequence = tf.placeholder("int32",(None,None))
+
+inputs_embedded = embed_x(input_sequence)
+
+cell = tf.nn.rnn_cell.LSTMCell(rnn_num_units)
+
+state_sequence,last_state = tf.nn.dynamic_rnn(cell,inputs_embedded,dtype="float32")
+
+print("LSTM visible states[time,batch,unit]:", state_sequence)
