@@ -179,3 +179,128 @@ vocab_inverse = {idx: w for w, idx in vocab.items()}
 # Replace tokens with indices.
 train_captions_indexed = caption_tokens_to_indices(train_captions, vocab)
 val_captions_indexed = caption_tokens_to_indices(val_captions, vocab)
+
+def batch_captions_to_matrix(batch_captions, pad_idx, max_len=None):
+    """
+    `batch_captions` is an array of arrays:
+    [
+        [vocab[START], ..., vocab[END]],
+        [vocab[START], ..., vocab[END]],
+        ...
+    ]
+    Put vocabulary indexed captions into np.array of shape (len(batch_captions), columns),
+        where "columns" is max(map(len, batch_captions)) when max_len is None
+        and "columns" = min(max_len, max(map(len, batch_captions))) otherwise.
+    Add padding with vocab[PAD] where necessary.
+    Input example: [[1, 2, 3], [4, 5]]
+    Output example: np.array([[1, 2, 3], [4, 5, vocab[PAD]]]) if max_len=None
+    Output example: np.array([[1, 2], [4, 5]]) if max_len=2
+    Output example: np.array([[1, 2, 3], [4, 5, vocab[PAD]]]) if max_len=100
+    Try to use numpy, we need this function to be fast!
+    """
+    if max_len is None:
+        max_len = max(map(len, batch_captions))
+    else:
+        max_len = min(max_len, max(map(len, batch_captions)))
+    matrix = np.zeros((len(batch_captions), max_len), dtype='int32') + pad_idx
+    for row_idx, row in enumerate(batch_captions):
+        row = row[:max_len]
+        matrix[row_idx, :len(row)] = row
+    return matrix
+
+IMG_EMBED_SIZE = train_img_embeds.shape[1]
+IMG_EMBED_BOTTLENECK = 120
+WORD_EMBED_SIZE = 100
+LSTM_UNITS = 300
+LOGIT_BOTTLENECK = 120
+pad_idx = vocab[PAD]
+
+tf.reset_default_graph()
+tf.set_random_seed(42)
+s = tf.InteractiveSession()
+
+class decoder:
+    # [batch_size, IMG_EMBED_SIZE] of CNN image features
+    img_embeds = tf.placeholder('float32', [None, IMG_EMBED_SIZE])
+    # [batch_size, time steps] of word ids
+    sentences = tf.placeholder('int32', [None, None])
+    
+    # we use bottleneck here to reduce the number of parameters
+    # image embedding -> bottleneck
+    img_embed_to_bottleneck = L.Dense(IMG_EMBED_BOTTLENECK, 
+                                      input_shape=(None, IMG_EMBED_SIZE), 
+                                      activation='elu')
+    # image embedding bottleneck -> lstm initial state
+    img_embed_bottleneck_to_h0 = L.Dense(LSTM_UNITS,
+                                         input_shape=(None, IMG_EMBED_BOTTLENECK),
+                                         activation='elu')
+    # word -> embedding
+    word_embed = L.Embedding(len(vocab), WORD_EMBED_SIZE)
+    # lstm cell (from tensorflow)
+    lstm = tf.nn.rnn_cell.LSTMCell(LSTM_UNITS)
+    
+    # we use bottleneck here to reduce model complexity
+    # lstm output -> logits bottleneck
+    token_logits_bottleneck = L.Dense(LOGIT_BOTTLENECK, activation="elu")
+    # logits bottleneck -> logits for next token prediction
+    token_logits = L.Dense(len(vocab))
+    
+    # initial lstm cell state of shape (None, LSTM_UNITS),
+    # we need to condition it on `img_embeds` placeholder.
+    c0 = h0 = img_embed_bottleneck_to_h0(img_embed_to_bottleneck(img_embeds))
+
+    # embed all tokens but the last for lstm input,
+    # remember that L.Embedding is callable,
+    # use `sentences` placeholder as input.
+    word_embeds = word_embed(sentences[:, :-1])
+    
+    # during training we use ground truth tokens `word_embeds` as context for next token prediction.
+    # that means that we know all the inputs for our lstm and can get 
+    # all the hidden states with one tensorflow operation (tf.nn.dynamic_rnn).
+    # `hidden_states` has a shape of [batch_size, time steps, LSTM_UNITS].
+    hidden_states, _ = tf.nn.dynamic_rnn(lstm, word_embeds,
+                                         initial_state=tf.nn.rnn_cell.LSTMStateTuple(c0, h0))
+
+    # now we need to calculate token logits for all the hidden states
+    
+    # first, we reshape `hidden_states` to [-1, LSTM_UNITS]
+    flat_hidden_states = tf.reshape(hidden_states, [-1, LSTM_UNITS])
+
+    # then, we calculate logits for next tokens using `token_logits` layer
+    flat_token_logits = token_logits(token_logits_bottleneck(flat_hidden_states))
+    
+    # then, we flatten the ground truth token ids.
+    # remember, that we predict next tokens for each time step,
+    # use `sentences` placeholder.
+    flat_ground_truth = tf.reshape(sentences[:, 1:], [-1])
+
+    # we need to know where we have real tokens (not padding) in `flat_ground_truth`,
+    # we don't want to propagate the loss for padded output tokens,
+    # fill `flat_loss_mask` with 1.0 for real tokens (not vocab[PAD]) and 0.0 otherwise.
+    flat_loss_mask = tf.cast(tf.not_equal(flat_ground_truth, pad_idx), 'float32')
+
+    # compute cross-entropy between `flat_ground_truth` and `flat_token_logits` predicted by lstm
+    xent = tf.nn.sparse_softmax_cross_entropy_with_logits(
+        labels=flat_ground_truth, 
+        logits=flat_token_logits
+    )
+
+    # compute average `xent` over tokens with nonzero `flat_loss_mask`.
+    # we don't want to account misclassification of PAD tokens, because that doesn't make sense,
+    # we have PAD tokens for batching purposes only!
+    loss = tf.reduce_sum(xent * flat_loss_mask) / tf.reduce_sum(flat_loss_mask)
+
+# define optimizer operation to minimize the loss
+optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+train_step = optimizer.minimize(decoder.loss)
+
+# will be used to save/load network weights.
+# you need to reset your default graph and define it in the same way to be able to load the saved weights!
+saver = tf.train.Saver()
+
+# intialize all variables
+s.run(tf.global_variables_initializer())
+
+# Train.
+train_captions_indexed = np.array(train_captions_indexed)
+val_captions_indexed = np.array(val_captions_indexed)
