@@ -89,3 +89,19 @@ val_captions = get_captions_for_fns(val_img_fns, "captions_train-val2014.zip",
 # Check shape.
 print(len(train_img_fns), len(train_captions))
 print(len(val_img_fns), len(val_captions))
+
+def show_trainig_example(train_img_fns, train_captions, example_idx=0):
+    """
+    You can change example_idx and see different images
+    """
+    zf = zipfile.ZipFile("train2014_sample.zip")
+    captions_by_file = dict(zip(train_img_fns, train_captions))
+    all_files = set(train_img_fns)
+    found_files = list(filter(lambda x: x.filename.rsplit("/")[-1] in all_files, zf.filelist))
+    example = found_files[example_idx]
+    img = utils.decode_image_from_buf(zf.read(example))
+    plt.imshow(utils.image_center_crop(img))
+    plt.title("\n".join(captions_by_file[example.filename.rsplit("/")[-1]]))
+    plt.show()
+    
+show_trainig_example(train_img_fns, train_captions, example_idx=142)
