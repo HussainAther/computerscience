@@ -68,3 +68,24 @@ val_img_fns = utils.read_pickle("val_img_fns.pickle")
 # Check shapes.
 print(train_img_embeds.shape, len(train_img_fns))
 print(val_img_embeds.shape, len(val_img_fns))
+
+# Extract captions.
+def get_captions_for_fns(fns, zip_fn, zip_json_path):
+    zf = zipfile.ZipFile(zip_fn)
+    j = json.loads(zf.read(zip_json_path).decode("utf8"))
+    id_to_fn = {img["id"]: img["file_name"] for img in j["images"]}
+    fn_to_caps = defaultdict(list)
+    for cap in j['annotations']:
+        fn_to_caps[id_to_fn[cap['image_id']]].append(cap['caption'])
+    fn_to_caps = dict(fn_to_caps)
+    return list(map(lambda x: fn_to_caps[x], fns))
+    
+train_captions = get_captions_for_fns(train_img_fns, "captions_train-val2014.zip", 
+                                      "annotations/captions_train2014.json")
+
+val_captions = get_captions_for_fns(val_img_fns, "captions_train-val2014.zip", 
+                                      "annotations/captions_val2014.json")
+
+# Check shape.
+print(len(train_img_fns), len(train_captions))
+print(len(val_img_fns), len(val_captions))
