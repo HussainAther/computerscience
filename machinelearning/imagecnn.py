@@ -90,7 +90,7 @@ val_captions = get_captions_for_fns(val_img_fns, "captions_train-val2014.zip",
 print(len(train_img_fns), len(train_captions))
 print(len(val_img_fns), len(val_captions))
 
-def show_trainig_example(train_img_fns, train_captions, example_idx=0):
+def show_training_example(train_img_fns, train_captions, example_idx=0):
     """
     You can change example_idx and see different images
     """
@@ -105,3 +105,69 @@ def show_trainig_example(train_img_fns, train_captions, example_idx=0):
     plt.show()
     
 show_trainig_example(train_img_fns, train_captions, example_idx=142)
+
+# special tokens
+PAD = "#PAD#"
+UNK = "#UNK#"
+START = "#START#"
+END = "#END#"
+
+# split sentence into tokens (split into lowercased words)
+def split_sentence(sentence):
+    return list(filter(lambda x: len(x) > 0, re.split('\W+', sentence.lower())))
+
+def generate_vocabulary(train_captions):
+    """
+    Return {token: index} for all train tokens (words) that occur 5 times or more, 
+        `index` should be from 0 to N, where N is a number of unique tokens in the resulting dictionary.
+    Also, add PAD (for batch padding), UNK (unknown, out of vocabulary), 
+        START (start of sentence) and END (end of sentence) tokens into the vocabulary.
+    """
+    vocab = defaultdict(int)
+    for caps in train_captions:
+        for cap in caps:
+            for token in split_sentence(cap):
+                vocab[token] += 1
+    vocab = [token for token, count in vocab.items() if count >= 5]
+    vocab.extend([PAD, UNK, START, END])
+    return {token: index for index, token in enumerate(sorted(vocab))}
+    
+def caption_tokens_to_indices(captions, vocab):
+    """
+    `captions` argument is an array of arrays:
+    [
+        [
+            "image1 caption1",
+            "image1 caption2",
+            ...
+        ],
+        [
+            "image2 caption1",
+            "image2 caption2",
+            ...
+        ],
+        ...
+    ]
+    Use `split_sentence` function to split sentence into tokens.
+    Replace all tokens with vocabulary indices, use UNK for unknown words (out of vocabulary).
+    Add START and END tokens to start and end of each sentence respectively.
+    For the example above you should produce the following:
+    [
+        [
+            [vocab[START], vocab["image1"], vocab["caption1"], vocab[END]],
+            [vocab[START], vocab["image1"], vocab["caption2"], vocab[END]],
+            ...
+        ],
+        ...
+    ]
+    """
+    unk_idx = vocab[UNK]
+    res = []
+    for caps in captions:
+        res_for_image = []
+        for cap in caps:
+            cap_indices = list(map(lambda token: vocab.get(token, unk_idx),
+                                   [START] + split_sentence(cap) + [END]))
+            res_for_image.append(cap_indices)
+        res.append(res_for_image)
+    return res
