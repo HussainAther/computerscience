@@ -175,3 +175,7 @@ def caption_tokens_to_indices(captions, vocab):
 # Prepare vocabulary.
 vocab = generate_vocabulary(train_captions)
 vocab_inverse = {idx: w for w, idx in vocab.items()}
+
+# Replace tokens with indices.
+train_captions_indexed = caption_tokens_to_indices(train_captions, vocab)
+val_captions_indexed = caption_tokens_to_indices(val_captions, vocab)
