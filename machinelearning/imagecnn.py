@@ -329,3 +329,46 @@ def generate_batch(images_embeddings, indexed_captions, batch_size, max_len=None
     
     return {decoder.img_embeds: batch_image_embeddings, 
             decoder.sentences: batch_captions_matrix}
+
+batch_size = 64
+n_epochs = 12
+n_batches_per_epoch = 1000
+n_validation_batches = 100 
+
+# actual training loop
+MAX_LEN = 20  # truncate long captions to speed up training
+
+# to make training reproducible
+np.random.seed(42)
+random.seed(42)
+
+for epoch in range(n_epochs):
+    
+    train_loss = 0
+    pbar = tqdm.tqdm_notebook(range(n_batches_per_epoch))
+    counter = 0
+    for _ in pbar:
+        train_loss += s.run([decoder.loss, train_step], 
+                            generate_batch(train_img_embeds, 
+                                           train_captions_indexed, 
+                                           batch_size, 
+                                           MAX_LEN))[0]
+        counter += 1
+        pbar.set_description("Training loss: %f" % (train_loss / counter))
+        
+    train_loss /= n_batches_per_epoch
+    
+    val_loss = 0
+    for _ in range(n_validation_batches):
+        val_loss += s.run(decoder.loss, generate_batch(val_img_embeds,
+                                                       val_captions_indexed, 
+                                                       batch_size, 
+                                                       MAX_LEN))
+    val_loss /= n_validation_batches
+    
+    print('Epoch: {}, train loss: {}, val loss: {}'.format(epoch, train_loss, val_loss))
+    
+    # save weights after finishing epoch
+    saver.save(s, "weights_{}".format(epoch))
+
+print("Finished!")
