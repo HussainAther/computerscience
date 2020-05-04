@@ -171,3 +171,7 @@ def caption_tokens_to_indices(captions, vocab):
             res_for_image.append(cap_indices)
         res.append(res_for_image)
     return res
+
+# Prepare vocabulary.
+vocab = generate_vocabulary(train_captions)
+vocab_inverse = {idx: w for w, idx in vocab.items()}
