@@ -58,3 +58,13 @@ def sample_zip(fn_in, fn_out, rate=0.01, seed=42):
             
 sample_zip("train2014.zip", "train2014_sample.zip")
 sample_zip("val2014.zip", "val2014_sample.zip")
+
+# Load prepared embeddings.
+train_img_embeds = utils.read_pickle("train_img_embeds.pickle")
+train_img_fns = utils.read_pickle("train_img_fns.pickle")
+val_img_embeds = utils.read_pickle("val_img_embeds.pickle")
+val_img_fns = utils.read_pickle("val_img_fns.pickle")
+
+# Check shapes.
+print(train_img_embeds.shape, len(train_img_fns))
+print(val_img_embeds.shape, len(val_img_fns))
