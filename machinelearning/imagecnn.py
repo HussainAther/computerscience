@@ -290,17 +290,42 @@ class decoder:
     # we have PAD tokens for batching purposes only!
     loss = tf.reduce_sum(xent * flat_loss_mask) / tf.reduce_sum(flat_loss_mask)
 
-# define optimizer operation to minimize the loss
+# Define optimizer operation to minimize the loss.
 optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
 train_step = optimizer.minimize(decoder.loss)
-
-# will be used to save/load network weights.
-# you need to reset your default graph and define it in the same way to be able to load the saved weights!
 saver = tf.train.Saver()
 
-# intialize all variables
 s.run(tf.global_variables_initializer())
 
 # Train.
 train_captions_indexed = np.array(train_captions_indexed)
 val_captions_indexed = np.array(val_captions_indexed)
+
+def generate_batch(images_embeddings, indexed_captions, batch_size, max_len=None):
+    """
+    `images_embeddings` is a np.array of shape [number of images, IMG_EMBED_SIZE].
+    `indexed_captions` holds 5 vocabulary indexed captions for each image:
+    [
+        [
+            [vocab[START], vocab["image1"], vocab["caption1"], vocab[END]],
+            [vocab[START], vocab["image1"], vocab["caption2"], vocab[END]],
+            ...
+        ],
+        ...
+    ]
+    Generate a random batch of size `batch_size`.
+    Take random images and choose one random caption for each image.
+    Remember to use `batch_captions_to_matrix` for padding and respect `max_len` parameter.
+    Return feed dict {decoder.img_embeds: ..., decoder.sentences: ...}.
+    """
+    # sample random images indices
+    random_images_idx = np.random.randint(0, len(images_embeddings), size=batch_size)
+    batch_image_embeddings = images_embeddings[random_images_idx]
+    
+    # pick 1 from several captions for each image
+    batch_captions = list(map(choice, indexed_captions[random_images_idx]))
+    # convert batch_captions to matrix
+    batch_captions_matrix = batch_captions_to_matrix(batch_captions, pad_idx, max_len=max_len)
+    
+    return {decoder.img_embeds: batch_image_embeddings, 
+            decoder.sentences: batch_captions_matrix}
